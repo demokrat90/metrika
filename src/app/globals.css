@@ -1,26 +1,392 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ptserif/v18/EJRVQgYoZZY2vCFuvAFWzr8.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ptserif/v18/EJRSQgYoZZY2vCFuvAnt66qSVy0.woff2') format('woff2');
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-dark: #171717;
+  --color-dark-secondary: #292929;
+  --color-gold: #a39466;
+  --color-gray: #333333;
+  --color-light-gray: #c9c9c9;
+  --color-white: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-dark);
+  --color-foreground: var(--color-white);
+  --color-gold: var(--color-gold);
+  --color-dark-secondary: var(--color-dark-secondary);
+  --font-serif: 'PT Serif', serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-dark);
+  color: var(--color-white);
+  font-family: 'PT Serif', serif;
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+
+/* Button flash animation */
+@keyframes flash {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.btn-flash {
+  background: linear-gradient(
+    90deg,
+    var(--color-gold) 0%,
+    var(--color-gold) 40%,
+    #d4c896 50%,
+    var(--color-gold) 60%,
+    var(--color-gold) 100%
+  );
+  background-size: 200% 100%;
+  animation: flash 3s infinite;
+}
+
+.btn-flash:hover {
+  animation-play-state: paused;
+  background: #b8a775;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Menu animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.menu-open {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.menu-close {
+  animation: slideOut 0.3s ease-out forwards;
+}
+
+/* Quiz step transitions */
+.quiz-step-enter {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.quiz-step-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.quiz-step-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.quiz-step-exit-active {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Enhanced Quiz Animations */
+@keyframes quizStepFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes quizCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes successPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 60px rgba(163, 148, 102, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 80px rgba(163, 148, 102, 0.7);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(163, 148, 102, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 40px rgba(163, 148, 102, 0.5);
+  }
+}
+
+.quiz-step-animate {
+  animation: quizStepFadeIn 0.6s ease-out forwards;
+}
+
+.quiz-card {
+  animation: quizCardIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.quiz-card-selected {
+  animation: none;
+  opacity: 1;
+}
+
+.quiz-success-animate {
+  animation: quizStepFadeIn 0.8s ease-out forwards;
+}
+
+.quiz-success-animate > div:first-child {
+  animation: successPulse 2s ease-in-out infinite;
+}
+
+.quiz-btn-glow {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.quiz-btn-glow:hover {
+  animation: none;
+}
+
+/* Phone input styles */
+.phone-input-container {
+  direction: ltr;
+  text-align: left;
+}
+
+/* React Phone Number Input Styles */
+.phone-input-wrapper {
+  direction: ltr;
+}
+
+.phone-input-wrapper .PhoneInput {
+  display: flex;
+  align-items: center;
+  background: #1f1f1f;
+  border: 2px solid #333;
+  border-radius: 0.75rem;
+  padding: 0;
+  transition: all 0.3s;
+}
+
+.phone-input-wrapper .PhoneInput:focus-within {
+  border-color: #a39466;
+  box-shadow: 0 0 20px rgba(163, 148, 102, 0.2);
+}
+
+.phone-input-wrapper .PhoneInputCountry {
+  padding: 1rem 0.75rem 1rem 1rem;
+  background: #292929;
+  border-left: 2px solid #333;
+  margin: 0;
+}
+
+.phone-input-wrapper .PhoneInputCountryIcon {
+  width: 1.5rem;
+  height: 1.125rem;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.phone-input-wrapper .PhoneInputCountryIcon--border {
+  background-color: transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.phone-input-wrapper .PhoneInputCountrySelectArrow {
+  color: #a39466;
+  opacity: 1;
+  margin-right: 0.5rem;
+  border-color: #a39466;
+}
+
+.phone-input-wrapper .PhoneInputCountrySelect {
+  background: #1f1f1f;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+}
+
+.phone-input-wrapper .PhoneInputCountrySelect option {
+  background: #1f1f1f;
+  color: white;
+  padding: 0.5rem;
+}
+
+.phone-input-wrapper .PhoneInputInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 1rem 1.25rem;
+  color: white;
+  font-size: 1.125rem;
+  font-family: 'PT Serif', serif;
+  outline: none;
+}
+
+.phone-input-wrapper .PhoneInputInput::placeholder {
+  color: #555;
+}
+
+/* Country select dropdown styling */
+.phone-input-wrapper .PhoneInputCountrySelect:focus {
+  outline: none;
+}
+
+.phone-input-wrapper .PhoneInputCountrySelect option:hover {
+  background: #a39466;
+}
+
+/* Slider/Stories carousel */
+.stories-container {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.story-card {
+  scroll-snap-align: start;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+/* Form input styles */
+input[type="text"],
+input[type="tel"],
+input[type="email"] {
+  background: transparent;
+  border: 1px solid var(--color-light-gray);
+  color: var(--color-white);
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-family: 'PT Serif', serif;
+  font-size: 16px;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+input::placeholder {
+  color: var(--color-light-gray);
+}
+
+/* Checkbox styles */
+.custom-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-light-gray);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-checkbox:checked {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.custom-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-dark);
+  font-size: 14px;
 }
