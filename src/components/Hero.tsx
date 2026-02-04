@@ -11,7 +11,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/dubai-skyline.jpg')",
+          backgroundImage: "url('/images/112233.jpg')",
         }}
       >
         {/* Dark Overlay */}
