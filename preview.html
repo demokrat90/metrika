@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metrika Preview</title>
+  <style>
+    :root {
+      --color-dark: #171717;
+      --color-dark-secondary: #292929;
+      --color-gold: #a39466;
+      --color-light-gray: #c9c9c9;
+      --color-white: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--color-dark);
+      color: var(--color-white);
+      font-family: 'PT Serif', serif;
+      direction: rtl;
+      text-align: right;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: transparent;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+    .logo {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('/images/112233.jpg') center/cover no-repeat;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 16px;
+    }
+    h1 {
+      margin: 0 0 24px;
+      font-size: clamp(28px, 4vw, 60px);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    .accent { color: var(--color-gold); }
+    p {
+      margin: 0 0 32px;
+      font-size: clamp(16px, 2vw, 22px);
+      color: var(--color-light-gray);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(163,148,102,0.0); }
+      50% { box-shadow: 0 8px 40px rgba(163,148,102,0.5); }
+    }
+    .quiz-btn-glow { animation: glowPulse 2s ease-in-out infinite; }
+
+    .cta {
+      display: inline-block;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 16px 40px;
+      border-radius: 12px;
+      color: #171717;
+      background: linear-gradient(to left, #a39466, #b8a775);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(163,148,102,0.4);
+    }
+
+    @media (max-width: 640px) {
+      .cta { font-size: 16px; padding: 14px 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="#">
+        <img class="logo" src="/images/logo.png" alt="Metrika" />
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
+      <h1 class="animate-fade-in">
+        شقق جديدة للبيع في دبي<br />
+        <span class="accent">بأسعار تبدأ من 750,000 درهم إماراتي</span>
+      </h1>
+      <p class="animate-fade-in" style="animation-delay:0.2s;">
+        استثمر في العقارات الفاخرة في دبي مع خبراء السوق المحليين
+      </p>
+      <button class="cta quiz-btn-glow animate-fade-in" style="animation-delay:0.4s;">
+        اختيار العقارات
+      </button>
+    </div>
+  </section>
+</body>
+</html>

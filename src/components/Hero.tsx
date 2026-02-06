@@ -34,7 +34,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
 
         <button
           onClick={onCtaClick}
-          className="btn-flash text-[#171717] font-bold text-lg md:text-xl px-10 py-4 rounded transition-all duration-300 animate-fade-in"
+          className="quiz-btn-glow bg-gradient-to-l from-[#a39466] to-[#b8a775] text-[#171717] font-bold text-lg md:text-xl px-10 py-4 rounded-xl transition-all duration-300 hover:shadow-[0_8px_32px_rgba(163,148,102,0.4)] hover:-translate-y-0.5 animate-fade-in"
           style={{ animationDelay: '0.4s' }}
         >
           اختيار العقارات
