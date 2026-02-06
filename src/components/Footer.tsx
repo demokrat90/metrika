@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:justify-items-center md:text-center">
           {/* Logo */}
-          <div className="flex justify-center md:justify-center md:mt-6">
+          <div className="flex justify-center md:justify-center md:mt-10">
             <Image
               src="/images/logo.png"
               alt="Metrika"
