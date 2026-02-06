@@ -3,6 +3,8 @@
 import { useRef } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import InvestmentSection from '@/components/InvestmentSection';
+import TaxResidencySection from '@/components/TaxResidencySection';
 import { QuizContainer } from '@/components/Quiz';
 import Footer from '@/components/Footer';
 import { QuizAnswers } from '@/lib/quiz-data';
@@ -30,6 +32,10 @@ export default function Home() {
       <Header />
 
       <Hero onCtaClick={scrollToQuiz} />
+
+      <InvestmentSection />
+
+      <TaxResidencySection />
 
       <div ref={quizRef}>
         <QuizContainer onComplete={handleQuizComplete} />
