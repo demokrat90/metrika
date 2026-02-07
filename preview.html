@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metrika Preview</title>
+  <style>
+    :root {
+      --color-dark: #171717;
+      --color-dark-secondary: #292929;
+      --color-gold: #a39466;
+      --color-light-gray: #c9c9c9;
+      --color-white: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--color-dark);
+      color: var(--color-white);
+      font-family: 'PT Serif', serif;
+      direction: rtl;
+      text-align: right;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('/images/112233.jpg') center/cover no-repeat;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 16px;
+    }
+    h1 {
+      margin: 0 0 24px;
+      font-size: clamp(28px, 4vw, 60px);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    .accent { color: var(--color-gold); }
+    p {
+      margin: 0 0 32px;
+      font-size: clamp(16px, 2vw, 22px);
+      color: var(--color-light-gray);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(163,148,102,0.0); }
+      50% { box-shadow: 0 8px 40px rgba(163,148,102,0.5); }
+    }
+    .quiz-btn-glow { animation: glowPulse 2s ease-in-out infinite; }
+    .cta {
+      display: inline-block;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 16px 40px;
+      border-radius: 12px;
+      color: #171717;
+      background: linear-gradient(to left, #a39466, #b8a775);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(163,148,102,0.4);
+    }
+
+    .invest {
+      position: relative;
+      background: #171717;
+      padding: 80px 0;
+      overflow: hidden;
+    }
+    .invest::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle_at_20%_20%, rgba(163,148,102,0.12), transparent 55%),
+                  radial-gradient(circle_at_80%_80%, rgba(255,255,255,0.05), transparent 60%);
+    }
+    .invest-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .invest-inner { grid-template-columns: 1fr 1fr; }
+    }
+    .invest-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #2b2b2b;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+    }
+    .invest-card img { width: 100%; height: auto; display: block; }
+    .badge {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      background: rgba(23,23,23,0.8);
+      border: 1px solid #333;
+      color: #f5f5f5;
+    }
+    .eyebrow { color: var(--color-gold); font-size: 12px; letter-spacing: 0.2em; margin-bottom: 16px; }
+    .invest h2 { margin: 0 0 24px; font-size: clamp(24px, 3vw, 36px); color: #fff; }
+    .bullets { list-style: none; padding: 0; margin: 0; }
+    .bullets li { display: flex; gap: 12px; color: var(--color-light-gray); margin-bottom: 14px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-gold); margin-top: 6px; box-shadow: 0 0 10px rgba(163,148,102,0.6); }
+
+    .tax { position: relative; background: #171717; padding: 40px 0; overflow: hidden; }
+    .tax-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 900px) { .tax-inner { grid-template-columns: 1fr 1fr; } }
+    .panel {
+      background: #171717;
+      border: 1px solid #2b2b2b;
+      border-radius: 20px;
+      padding: 24px;
+    }
+    .panel .label { font-size: 12px; letter-spacing: 0.18em; color: var(--color-gold); }
+    .panel .split { margin: 16px 0; height: 1px; background: #2b2b2b; }
+    .tax-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 80px; }
+    .tax-block { min-height: 80px; display: flex; align-items: center; }
+    .tax-value { font-size: 48px; font-weight: 700; color: var(--color-gold); }
+    .panel p { margin: 0; color: var(--color-light-gray); line-height: 1.7; }
+    .panel h4 { margin: 0 0 8px; color: #fff; }
+    .nowrap { white-space: nowrap; }
+    .tax-text { font-size: 16px; }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <h1 class="animate-fade-in">
+        شقق جديدة للبيع في دبي<br />
+        <span class="accent">بأسعار تبدأ من 750,000 درهم إماراتي</span>
+      </h1>
+      <p class="animate-fade-in" style="animation-delay:0.2s;">
+        استثمر في العقارات الفاخرة في دبي مع خبراء السوق المحليين
+      </p>
+      <button class="cta quiz-btn-glow animate-fade-in" style="animation-delay:0.4s;">
+        اختيار العقارات
+      </button>
+    </div>
+  </section>
+
+  <section class="invest">
+    <div class="container">
+      <div class="invest-inner">
+        <div class="invest-card">
+          <img src="/images/dubai-skyline.jpg" alt="أفق دبي" />
+          <div class="badge">دبي</div>
+        </div>
+        <div>
+          <div class="eyebrow">الاستثمار العقاري في الإمارات</div>
+          <h2>استثمر في الإمارات بأمان وربحية</h2>
+          <ul class="bullets">
+            <li><span class="dot"></span><span>طلب مرتفع على الإيجار طوال العام</span></li>
+            <li><span class="dot"></span><span>عائدات سنوية نموذجية بين 6-9% (حسب الموقع وفئة الأصل)</span></li>
+            <li><span class="dot"></span><span>تملك حر للأجانب في مناطق محددة</span></li>
+            <li><span class="dot"></span><span>رقابة هيئة التنظيم العقاري وحسابات ضمان للمشاريع على الخارطة</span></li>
+            <li><span class="dot"></span><span>ارتباط الدرهم الإماراتي بالدولار الأمريكي يقلل مخاطر سعر الصرف</span></li>
+            <li><span class="dot"></span><span>خطط سداد مرنة من المطور (تشمل خيارات ما بعد التسليم)</span></li>
+            <li><span class="dot"></span><span>بنية تحتية عالمية واتصال عالمي</span></li>
+            <li><span class="dot"></span><span>أسواق أولية وثانوية عالية السيولة</span></li>
+            <li><span class="dot"></span><span>عمولة 0% عند الشراء مباشرة من المطور</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tax">
+    <div class="container">
+      <div class="tax-inner">
+        <div class="panel">
+          <div class="label">وفّر في الضرائب</div>
+          <div style="margin-top:16px;">
+            <div class="tax-row">
+              <div class="tax-value">0%</div>
+              <p class="tax-text">ضريبة أرباح رأس المال عند إعادة البيع (للأفراد)</p>
+            </div>
+            <div class="split"></div>
+            <div class="tax-row">
+              <div class="tax-value">0%</div>
+              <p class="tax-text">ضريبة الدخل الشخصي على دخل الإيجار</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="label">الإقامة عبر التملك</div>
+          <div style="margin-top:16px;">
+            <div class="tax-block">
+              <div>
+                <h4 style="margin:0 0 4px;">تأشيرة مستثمر (سنتان):</h4>
+                <p class="tax-text">ابتداءً من قيمة عقار 750,000 درهم إماراتي</p>
+              </div>
+            </div>
+            <div class="split"></div>
+            <div class="tax-block">
+              <div>
+                <h4 style="margin:0 0 4px;">الإقامة الذهبية (10 سنوات):</h4>
+                <p class="tax-text">ابتداءً من قيمة عقار 2,000,000 درهم إماراتي</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
