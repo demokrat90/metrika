@@ -121,17 +121,6 @@
       box-shadow: 0 25px 60px rgba(0,0,0,0.35);
     }
     .invest-card img { width: 100%; height: auto; display: block; }
-    .badge {
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-size: 14px;
-      background: rgba(23,23,23,0.8);
-      border: 1px solid #333;
-      color: #f5f5f5;
-    }
     .eyebrow { color: var(--color-gold); font-size: 12px; letter-spacing: 0.2em; margin-bottom: 16px; }
     .invest h2 { margin: 0 0 24px; font-size: clamp(24px, 3vw, 36px); color: #fff; }
     .bullets { list-style: none; padding: 0; margin: 0; }
@@ -139,13 +128,6 @@
     .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-gold); margin-top: 6px; box-shadow: 0 0 10px rgba(163,148,102,0.6); }
 
     .tax { position: relative; background: #171717; padding: 40px 0; overflow: hidden; }
-    .tax::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle_at_20%_20%, rgba(163,148,102,0.12), transparent 55%),
-                  radial-gradient(circle_at_80%_80%, rgba(255,255,255,0.05), transparent 60%);
-    }
     .tax-inner {
       position: relative;
       z-index: 1;
@@ -195,7 +177,6 @@
       <div class="invest-inner">
         <div class="invest-card">
           <img src="/images/dubai-skyline.jpg" alt="أفق دبي" />
-          <div class="badge">دبي</div>
         </div>
         <div>
           <div class="eyebrow">الاستثمار العقاري في الإمارات</div>

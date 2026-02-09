@@ -33,9 +33,6 @@ export default function InvestmentSection() {
                 priority={false}
               />
             </div>
-            <div className="absolute bottom-4 right-4 px-4 py-2 rounded-full text-sm text-[#f5f5f5] bg-[#171717]/80 border border-[#333]">
-              دبي
-            </div>
           </div>
 
           <div>

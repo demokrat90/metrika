@@ -15,9 +15,9 @@ export default function Header({ onMenuToggle }: HeaderProps) {
             <Image
               src="/images/logo.png"
               alt="Metrika"
-              width={150}
-              height={50}
-              className="h-10 w-auto"
+              width={190}
+              height={64}
+              className="h-12 md:h-14 w-auto"
               priority
             />
           </a>
