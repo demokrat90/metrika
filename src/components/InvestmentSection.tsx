@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import TaxResidencySection from '@/components/TaxResidencySection';
 
 const benefits = [
   'طلب مرتفع على الإيجار طوال العام',
@@ -50,6 +51,8 @@ export default function InvestmentSection() {
             </ul>
           </div>
         </div>
+
+        <TaxResidencySection />
       </div>
     </section>
   );
