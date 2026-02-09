@@ -25,9 +25,10 @@ const residencyItems = [
 export default function TaxResidencySection() {
   return (
     <section className="relative bg-[#171717] py-10 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(163,148,102,0.12),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.05),transparent_60%)]" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-[#2b2b2b] bg-[#171717]/90 p-6 backdrop-blur-[1px]">
+          <div className="rounded-2xl border border-[#2b2b2b] bg-[#171717]/75 p-6 backdrop-blur-[1px]">
             <p className="text-sm text-[#a39466] tracking-widest">وفّر في الضرائب</p>
             <div className="mt-4 grid gap-4">
               <div className="h-16 md:h-20 flex items-center">
@@ -54,7 +55,7 @@ export default function TaxResidencySection() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[#2b2b2b] bg-[#171717]/90 p-6 backdrop-blur-[1px]">
+          <div className="rounded-2xl border border-[#2b2b2b] bg-[#171717]/75 p-6 backdrop-blur-[1px]">
             <p className="text-sm text-[#a39466] tracking-widest">الإقامة عبر التملك</p>
             <div className="mt-4 grid gap-4">
               <div className="min-h-[64px] md:min-h-[80px] flex flex-col justify-center">
