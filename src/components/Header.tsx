@@ -8,8 +8,8 @@ interface HeaderProps {
 export default function Header({ onMenuToggle }: HeaderProps) {
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <header className="fixed top-4 right-4 md:top-6 md:right-8 z-50 bg-transparent">
+        <div className="flex items-center">
           {/* Logo */}
           <a href="#" className="flex items-center">
             <Image
