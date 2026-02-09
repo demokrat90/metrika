@@ -139,21 +139,31 @@
     .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-gold); margin-top: 6px; box-shadow: 0 0 10px rgba(163,148,102,0.6); }
 
     .tax { position: relative; background: #171717; padding: 40px 0; overflow: hidden; }
+    .tax::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle_at_20%_20%, rgba(163,148,102,0.12), transparent 55%),
+                  radial-gradient(circle_at_80%_80%, rgba(255,255,255,0.05), transparent 60%);
+    }
     .tax-inner {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 1fr;
       gap: 16px;
     }
     @media (min-width: 900px) { .tax-inner { grid-template-columns: 1fr 1fr; } }
     .panel {
-      background: #171717;
+      background: rgba(23,23,23,0.9);
       border: 1px solid #2b2b2b;
       border-radius: 20px;
       padding: 24px;
+      backdrop-filter: blur(1px);
     }
     .panel .label { font-size: 12px; letter-spacing: 0.18em; color: var(--color-gold); }
     .panel .split { margin: 16px 0; height: 1px; background: #2b2b2b; }
-    .tax-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 80px; }
+    .tax-row { display: flex; align-items: center; justify-content: flex-start; gap: 16px; height: 80px; }
     .tax-block { min-height: 80px; display: flex; align-items: center; }
     .tax-value { font-size: 48px; font-weight: 700; color: var(--color-gold); }
     .panel p { margin: 0; color: var(--color-light-gray); line-height: 1.7; }
