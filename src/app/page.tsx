@@ -7,6 +7,7 @@ import InvestmentSection from '@/components/InvestmentSection';
 import { QuizContainer } from '@/components/Quiz';
 import Footer from '@/components/Footer';
 import { QuizAnswers } from '@/lib/quiz-data';
+import { pushEvent } from '@/lib/gtm';
 
 export default function Home() {
   const quizRef = useRef<HTMLDivElement>(null);
@@ -16,14 +17,7 @@ export default function Home() {
   };
 
   const handleQuizComplete = (answers: QuizAnswers) => {
-    // GTM data layer push
-    if (typeof window !== 'undefined' && (window as unknown as { dataLayer?: unknown[] }).dataLayer) {
-      (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
-        event: 'quiz_complete',
-        quizAnswers: answers,
-      });
-    }
-    console.log('Quiz completed:', answers);
+    pushEvent('quiz_complete', { quizAnswers: answers });
   };
 
   return (

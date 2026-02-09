@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { quizSteps, QuizAnswers } from '@/lib/quiz-data';
+import { pushEvent, trackConversion } from '@/lib/gtm';
 import QuizStep from './QuizStep';
 
 interface QuizContainerProps {
@@ -88,6 +89,11 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
 
       if (response.ok) {
         setIsCompleted(true);
+        pushEvent('quiz_complete', {
+          formName: 'quiz',
+          contactMethod: contactInfo.contactMethod,
+        });
+        trackConversion();
         onComplete(finalAnswers);
       }
     } catch (error) {

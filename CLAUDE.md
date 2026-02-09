@@ -55,3 +55,67 @@ Remote patterns configured in `next.config.ts` for Tilda CDN:
 ### Path Alias
 
 `@/*` maps to `./src/*` (configured in tsconfig.json)
+
+## Google Ads Offline Conversions
+
+Офлайн-конверсии отправляются в Google Ads через Google Sheets.
+
+### Архитектура
+
+```
+AmoCRM (смена статуса) → Webhook → Cloudflare Worker → Google Sheets → Google Ads (раз в день)
+```
+
+### Cloudflare Workers
+
+**Активный:** `https://offline.singularity-mcp.workers.dev` — офлайн-конверсии.
+
+**Неактивный:** Worker "amocrm" (прокси для sGTM `ss.metrika.ae/amo-webhook`) — вебхук не настроен, можно удалить.
+
+**Секреты Worker (offline):**
+- `AMO_ACCESS_TOKEN` — токен AmoCRM API
+- `GOOGLE_SERVICE_ACCOUNT_EMAIL` — email сервисного аккаунта Google
+- `GOOGLE_PRIVATE_KEY` — приватный ключ сервисного аккаунта
+- `GOOGLE_SHEET_ID` — ID Google таблицы
+- `LEAD_CACHE` — KV namespace (создан, но не используется в коде)
+
+**Логика:**
+1. Получает webhook от AmoCRM (URL-encoded формат)
+2. Проверяет поле `live_lead` в AmoCRM — если "yes", пропускает
+3. Извлекает GCLID из поля `gclid` или из cookies
+4. Получает email и телефон из привязанного контакта
+5. Хеширует email и телефон (SHA256)
+6. Пропускает лид, если нет ни GCLID, ни email, ни телефона
+7. Записывает в Google Sheets
+8. Ставит `live_lead = yes` в AmoCRM
+
+**Время конверсии:** `new Date()` в Cloudflare Workers возвращает UTC. Worker вручную сдвигает на +4 часа (Dubai) перед записью с суффиксом `+04:00`.
+
+**Поле live_lead:** field_id = `970831`
+
+### Google Sheets
+
+**ID:** `18pZXGnuUSF2ISRGGixf7KR7_zevAx4_86yKqOdV_XGE`
+
+**Структура (Лист1):**
+| Колонка | Поле |
+|---------|------|
+| A | Conversion_Time |
+| B | Google_Click_ID (GCLID) |
+| C | Email (SHA256 hash) |
+| D | Phone (SHA256 hash, E.164) |
+| E | Conversion_Value |
+| F | Currency (AED) |
+| G | Order_ID (lead ID) |
+
+### AmoCRM Webhook
+
+Настроен на событие `leads[status]` (смена статуса сделки).
+URL: `https://offline.singularity-mcp.workers.dev`
+
+**Важно:** Не использовать `leads[update]` — триггерит при любом изменении сделки.
+
+### Google Ads Import
+
+Расписание: каждый день 19:00–20:00 (GMT+04:00).
+Google Ads читает всю таблицу, дедуплицирует по `Order_ID`.
