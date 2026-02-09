@@ -8,7 +8,7 @@ interface HeaderProps {
 export default function Header({ onMenuToggle }: HeaderProps) {
   return (
     <>
-      <header className="fixed top-4 right-4 md:top-6 md:right-8 z-50 bg-transparent">
+      <header className="absolute top-4 right-4 md:top-6 md:right-8 z-50 bg-transparent">
         <div className="flex items-center">
           {/* Logo */}
           <a href="#" className="flex items-center">
