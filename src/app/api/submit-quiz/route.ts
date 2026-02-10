@@ -49,8 +49,11 @@ export async function POST(request: NextRequest) {
     if (amoConfigured) {
       try {
         const answersText = Object.entries(quizAnswersLabels)
-          .map(([index, label]) => `${label}: ${data[Number(index)] || '-'}`)
-          .join('\n');
+          .map(([index, label], itemIndex) => {
+            const answer = data[Number(index)] || '-';
+            return [`Q${itemIndex + 1}: ${label}`, `A${itemIndex + 1}: ${answer}`].join('\n');
+          })
+          .join('\n\n');
 
         await submitAmoLead({
           leadName: `Quiz Lead - ${fullName}`,
