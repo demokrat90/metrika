@@ -37,6 +37,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
     <div className="phone-input-wrapper">
       <PhoneInputWithCountry
         international
+        limitMaxLength
         countryCallingCodeEditable={false}
         country={country}
         onCountryChange={(nextCountry) => {
@@ -47,7 +48,9 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
           const nextValue = newValue || '';
 
           if (nextValue && country) {
-            const lengthValidation = validatePhoneNumberLength(nextValue, country);
+            const lengthValidation = validatePhoneNumberLength(nextValue, {
+              defaultCountry: country,
+            });
             if (lengthValidation === 'TOO_LONG') {
               return;
             }
