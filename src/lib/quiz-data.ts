@@ -111,7 +111,7 @@ export const quizSteps: QuizStep[] = [
       },
       {
         name: 'email',
-        label: 'البريد الإلكتروني',
+        label: 'البريد الإلكتروني (اختياري)',
         type: 'email',
         placeholder: 'example@email.com',
         required: false,

@@ -91,16 +91,6 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
       return false;
     };
 
-    const localeCountry = navigator.language.split('-')[1] || '';
-    trySetCountry(localeCountry);
-
-    for (const locale of navigator.languages) {
-      const localeParts = locale.split('-');
-      if (trySetCountry(localeParts[1])) {
-        break;
-      }
-    }
-
     const detectCountry = async () => {
       const endpoints = [
         'https://ipapi.co/json/',
