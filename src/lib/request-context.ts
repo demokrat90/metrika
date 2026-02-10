@@ -19,7 +19,8 @@ export type RequestTrackingKey =
   | '_ym_counter'
   | 'yclid'
   | 'gclid'
-  | 'fbclid';
+  | 'fbclid'
+  | 'cookies';
 export type RequestTrackingData = Partial<Record<RequestTrackingKey, string>>;
 type RequestTrackingOptions = {
   rawCookieHeader?: string;
@@ -166,6 +167,7 @@ export function extractRequestTracking(
 
   const openstatFromParam = parseOpenstat(fromQuery('openstat'));
   const openstatFromCookie = parseOpenstat(fromCookie('_openstat') || fromCookie('openstat'));
+  const rawCookies = sanitizeTrackingValue(options?.rawCookieHeader || request.headers.get('cookie'));
 
   return {
     utm_content: firstNonEmpty(fromQuery('utm_content'), fromCookie('utm_content')),
@@ -200,6 +202,7 @@ export function extractRequestTracking(
       fromCookie('fbclid'),
       parseFbclidFromFbcCookie(fromCookie('_fbc'))
     ),
+    cookies: rawCookies,
   };
 }
 

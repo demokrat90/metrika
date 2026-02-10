@@ -9,6 +9,7 @@ const AMOCRM_PIPELINE_NAME = process.env.AMOCRM_PIPELINE_NAME?.trim() || 'Admini
 const AMOCRM_STATUS_NAME = process.env.AMOCRM_STATUS_NAME?.trim() || 'Incoming';
 const AMOCRM_MAX_NOTE_LENGTH = 12000;
 const AMOCRM_CUSTOM_FIELDS_CACHE_TTL_MS = 5 * 60 * 1000;
+const AMOCRM_COOKIES_MAX_LENGTH = 3500;
 
 type AmoLeadContactValue = {
   value: string;
@@ -130,6 +131,10 @@ const TRACKING_FIELD_MATCHERS: Record<RequestTrackingKey, TrackingFieldMatcher> 
   fbclid: {
     codes: ['FBCLID'],
     names: ['fbclid'],
+  },
+  cookies: {
+    codes: ['COOKIES'],
+    names: ['cookies'],
   },
 };
 
@@ -329,14 +334,22 @@ async function buildLeadTrackingCustomFields(
 
   for (const [trackingKey, trackingValue] of trackingEntries) {
     const matcher = TRACKING_FIELD_MATCHERS[trackingKey];
+    if (!matcher) {
+      continue;
+    }
+
     const fieldId = resolveTrackingFieldId(leadFields, matcher);
     if (!fieldId || usedFieldIds.has(fieldId)) {
       continue;
     }
 
+    const valueToSend = trackingKey === 'cookies'
+      ? trackingValue.slice(0, AMOCRM_COOKIES_MAX_LENGTH)
+      : trackingValue;
+
     result.push({
       field_id: fieldId,
-      values: [{ value: trackingValue }],
+      values: [{ value: valueToSend }],
     });
     usedFieldIds.add(fieldId);
   }
