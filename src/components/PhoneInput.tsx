@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PhoneInputWithCountry from 'react-phone-number-input';
 import { validatePhoneNumberLength, type CountryCode } from 'libphonenumber-js';
 import 'react-phone-number-input/style.css';
@@ -12,22 +12,22 @@ interface PhoneInputProps {
 }
 
 export default function PhoneInput({ value, onChange, placeholder }: PhoneInputProps) {
-  const [country, setCountry] = useState<CountryCode>('AE');
+  const [country, setCountry] = useState<CountryCode>('FI');
+  const manualCountryChangeRef = useRef(false);
   const MAX_E164_DIGITS = 15;
 
-  // Auto-detect country on mount
   useEffect(() => {
     const detectCountry = async () => {
       try {
-        // Using free IP geolocation API
         const response = await fetch('https://ipapi.co/json/');
+        if (!response.ok) return;
         const data = await response.json();
-        if (data.country_code) {
-          setCountry(data.country_code as CountryCode);
+        const detected = data?.country_code as CountryCode | undefined;
+        if (detected && !manualCountryChangeRef.current) {
+          setCountry(detected);
         }
-      } catch (error) {
-        // Default to UAE if detection fails
-        console.log('Country detection failed, using default');
+      } catch {
+        // Keep default country when detection is unavailable.
       }
     };
     detectCountry();
@@ -41,7 +41,8 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
         countryCallingCodeEditable={false}
         country={country}
         onCountryChange={(nextCountry) => {
-          setCountry(nextCountry || 'AE');
+          manualCountryChangeRef.current = true;
+          setCountry(nextCountry || 'FI');
         }}
         value={value}
         onChange={(newValue) => {
