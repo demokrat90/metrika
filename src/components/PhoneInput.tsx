@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import PhoneInputWithCountry from 'react-phone-number-input';
-import type { CountryCode } from 'libphonenumber-js';
+import { validatePhoneNumberLength, type CountryCode } from 'libphonenumber-js';
 import 'react-phone-number-input/style.css';
 
 interface PhoneInputProps {
@@ -12,7 +12,7 @@ interface PhoneInputProps {
 }
 
 export default function PhoneInput({ value, onChange, placeholder }: PhoneInputProps) {
-  const [defaultCountry, setDefaultCountry] = useState<CountryCode>('AE');
+  const [country, setCountry] = useState<CountryCode>('AE');
   const MAX_E164_DIGITS = 15;
 
   // Auto-detect country on mount
@@ -23,7 +23,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         if (data.country_code) {
-          setDefaultCountry(data.country_code as CountryCode);
+          setCountry(data.country_code as CountryCode);
         }
       } catch (error) {
         // Default to UAE if detection fails
@@ -38,10 +38,21 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
       <PhoneInputWithCountry
         international
         countryCallingCodeEditable={false}
-        defaultCountry={defaultCountry}
+        country={country}
+        onCountryChange={(nextCountry) => {
+          setCountry(nextCountry || 'AE');
+        }}
         value={value}
         onChange={(newValue) => {
           const nextValue = newValue || '';
+
+          if (nextValue && country) {
+            const lengthValidation = validatePhoneNumberLength(nextValue, country);
+            if (lengthValidation === 'TOO_LONG') {
+              return;
+            }
+          }
+
           const digits = nextValue.replace(/\D/g, '');
           if (digits.length > MAX_E164_DIGITS) {
             return;
