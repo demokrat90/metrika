@@ -48,10 +48,14 @@ export async function POST(request: NextRequest) {
     // If AmoCRM is configured, send the lead
     if (amoConfigured) {
       try {
+        const LRM = '\u200E';
         const answersText = Object.entries(quizAnswersLabels)
           .map(([index, label], itemIndex) => {
             const answer = data[Number(index)] || '-';
-            return [`Q${itemIndex + 1}: ${label}`, `A${itemIndex + 1}: ${answer}`].join('\n');
+            return [
+              `${LRM}Q${itemIndex + 1}${LRM}: ${label}`,
+              `${LRM}A${itemIndex + 1}${LRM}: ${answer}`,
+            ].join('\n');
           })
           .join('\n\n');
 
