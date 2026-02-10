@@ -7,13 +7,16 @@ interface LeadData {
   phone: string;
   category: string;
   source: string;
+  trackingCookies?: string;
 }
 
 export async function POST(request: NextRequest) {
   try {
     const data: LeadData = await request.json();
     const requestContextNote = buildRequestContextNote(request);
-    const requestTracking = extractRequestTracking(request);
+    const requestTracking = extractRequestTracking(request, {
+      rawCookieHeader: data.trackingCookies,
+    });
     const amoConfigured = isAmoConfigured();
     let amoSynced = !amoConfigured;
     let amoError = '';

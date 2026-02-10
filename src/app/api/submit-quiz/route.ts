@@ -6,6 +6,7 @@ interface QuizData {
   fullName?: string;
   phone?: string;
   email?: string;
+  trackingCookies?: string;
   [key: number]: string;
 }
 
@@ -13,7 +14,9 @@ export async function POST(request: NextRequest) {
   try {
     const data: QuizData = await request.json();
     const requestContextNote = buildRequestContextNote(request);
-    const requestTracking = extractRequestTracking(request);
+    const requestTracking = extractRequestTracking(request, {
+      rawCookieHeader: data.trackingCookies,
+    });
     const fullName = data.fullName?.trim() || 'Unknown';
     const phone = data.phone?.trim() || '';
     const amoConfigured = isAmoConfigured();

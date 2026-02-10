@@ -79,6 +79,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
       fullName: contactInfo.fullName,
       phone: contactInfo.phone,
       email: contactInfo.email,
+      trackingCookies: typeof document !== 'undefined' ? document.cookie : '',
     };
 
     try {

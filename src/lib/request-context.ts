@@ -1,29 +1,29 @@
 import { NextRequest } from 'next/server';
 
-const TRACKING_KEYS = [
-  'utm_content',
-  'utm_medium',
-  'utm_campaign',
-  'utm_source',
-  'utm_term',
-  'utm_referrer',
-  'roistat',
-  'referrer',
-  'openstat_service',
-  'openstat_campaign',
-  'openstat_ad',
-  'openstat_source',
-  'from',
-  'gclientid',
-  '_ym_uid',
-  '_ym_counter',
-  'yclid',
-  'gclid',
-  'fbclid',
-] as const;
-
-export type RequestTrackingKey = typeof TRACKING_KEYS[number];
+export type RequestTrackingKey =
+  | 'utm_content'
+  | 'utm_medium'
+  | 'utm_campaign'
+  | 'utm_source'
+  | 'utm_term'
+  | 'utm_referrer'
+  | 'roistat'
+  | 'referrer'
+  | 'openstat_service'
+  | 'openstat_campaign'
+  | 'openstat_ad'
+  | 'openstat_source'
+  | 'from'
+  | 'gclientid'
+  | '_ym_uid'
+  | '_ym_counter'
+  | 'yclid'
+  | 'gclid'
+  | 'fbclid';
 export type RequestTrackingData = Partial<Record<RequestTrackingKey, string>>;
+type RequestTrackingOptions = {
+  rawCookieHeader?: string;
+};
 
 function sanitizeReferer(rawReferer: string): string {
   if (!rawReferer || rawReferer === '-') return '-';
@@ -49,6 +49,31 @@ function sanitizeTrackingValue(value?: string | null): string | undefined {
 
 function firstNonEmpty(...values: Array<string | undefined>): string | undefined {
   return values.find((item) => Boolean(item));
+}
+
+function parseCookieHeader(rawCookieHeader?: string): Record<string, string> {
+  if (!rawCookieHeader) return {};
+
+  return rawCookieHeader
+    .split(';')
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .reduce<Record<string, string>>((acc, item) => {
+      const separatorIndex = item.indexOf('=');
+      if (separatorIndex === -1) return acc;
+
+      const key = item.slice(0, separatorIndex).trim();
+      const value = item.slice(separatorIndex + 1).trim();
+      if (!key) return acc;
+
+      try {
+        acc[key] = decodeURIComponent(value);
+      } catch {
+        acc[key] = value;
+      }
+
+      return acc;
+    }, {});
 }
 
 function parseUrl(value: string): URL | null {
@@ -109,15 +134,35 @@ function parseGaClientId(raw?: string): string | undefined {
   return `${partA}.${partB}`;
 }
 
-export function extractRequestTracking(request: NextRequest): RequestTrackingData {
+function parseGclidFromGclCookie(raw?: string): string | undefined {
+  if (!raw) return undefined;
+  const chunks = raw.split('.');
+  return sanitizeTrackingValue(chunks[chunks.length - 1]);
+}
+
+function parseFbclidFromFbcCookie(raw?: string): string | undefined {
+  if (!raw) return undefined;
+  const chunks = raw.split('.');
+  return sanitizeTrackingValue(chunks[chunks.length - 1]);
+}
+
+export function extractRequestTracking(
+  request: NextRequest,
+  options?: RequestTrackingOptions
+): RequestTrackingData {
   const refererHeader = request.headers.get('referer') || '';
   const refererUrl = parseUrl(refererHeader);
+  const cookieHeader = options?.rawCookieHeader || request.headers.get('cookie') || '';
+  const parsedCookieHeader = parseCookieHeader(cookieHeader);
 
   const fromQuery = (param: string): string | undefined =>
     sanitizeTrackingValue(refererUrl?.searchParams.get(param));
 
   const fromCookie = (cookieName: string): string | undefined =>
-    sanitizeTrackingValue(request.cookies.get(cookieName)?.value);
+    sanitizeTrackingValue(
+      request.cookies.get(cookieName)?.value ||
+      parsedCookieHeader[cookieName]
+    );
 
   const openstatFromParam = parseOpenstat(fromQuery('openstat'));
   const openstatFromCookie = parseOpenstat(fromCookie('_openstat') || fromCookie('openstat'));
@@ -136,30 +181,33 @@ export function extractRequestTracking(request: NextRequest): RequestTrackingDat
     openstat_ad: firstNonEmpty(fromQuery('openstat_ad'), fromCookie('openstat_ad'), openstatFromParam.openstat_ad, openstatFromCookie.openstat_ad),
     openstat_source: firstNonEmpty(fromQuery('openstat_source'), fromCookie('openstat_source'), openstatFromParam.openstat_source, openstatFromCookie.openstat_source),
     from: firstNonEmpty(fromQuery('from'), fromCookie('from')),
-    gclientid: firstNonEmpty(fromQuery('gclientid'), fromCookie('gclientid'), parseGaClientId(fromCookie('_ga'))),
+    gclientid: firstNonEmpty(
+      fromQuery('gclientid'),
+      fromCookie('gclientid'),
+      parseGaClientId(fromCookie('_ga'))
+    ),
     _ym_uid: firstNonEmpty(fromQuery('_ym_uid'), fromCookie('_ym_uid')),
     _ym_counter: firstNonEmpty(fromQuery('_ym_counter'), fromCookie('_ym_counter')),
     yclid: firstNonEmpty(fromQuery('yclid'), fromCookie('yclid')),
-    gclid: firstNonEmpty(fromQuery('gclid'), fromCookie('gclid')),
-    fbclid: firstNonEmpty(fromQuery('fbclid'), fromCookie('fbclid')),
+    gclid: firstNonEmpty(
+      fromQuery('gclid'),
+      fromCookie('gclid'),
+      parseGclidFromGclCookie(fromCookie('_gcl_aw')),
+      parseGclidFromGclCookie(fromCookie('_gcl_dc'))
+    ),
+    fbclid: firstNonEmpty(
+      fromQuery('fbclid'),
+      fromCookie('fbclid'),
+      parseFbclidFromFbcCookie(fromCookie('_fbc'))
+    ),
   };
 }
 
 export function buildRequestContextNote(request: NextRequest): string {
   const referer = sanitizeReferer(request.headers.get('referer') || '-');
-  const tracking = extractRequestTracking(request);
-
-  const trackingLines = TRACKING_KEYS
-    .map((key) => {
-      const value = tracking[key];
-      return value ? `${key}: ${value}` : undefined;
-    })
-    .filter((line): line is string => Boolean(line));
 
   return [
     'Request context:',
     `Referer: ${referer}`,
-    `Tracking fields captured: ${trackingLines.length}`,
-    ...(trackingLines.length > 0 ? trackingLines : ['Tracking fields: -']),
   ].join('\n');
 }

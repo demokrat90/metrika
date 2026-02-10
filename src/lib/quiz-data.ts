@@ -125,4 +125,5 @@ export type QuizAnswers = {
   fullName?: string;
   phone?: string;
   email?: string;
+  trackingCookies?: string;
 };
