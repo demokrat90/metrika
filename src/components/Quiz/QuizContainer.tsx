@@ -214,7 +214,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
         </div>
 
         {/* Current Step */}
-        <div className="quiz-content-wrapper">
+        <div className="quiz-content-wrapper" style={{ minHeight: '340px' }}>
           <QuizStep
             key={currentStep}
             step={quizSteps[currentStep]}

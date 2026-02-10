@@ -60,7 +60,6 @@ export default function QuizStep({
                 }
                 border-2 overflow-hidden
               `}
-              style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Glow effect on selected */}
               {isSelected(option.value) && (

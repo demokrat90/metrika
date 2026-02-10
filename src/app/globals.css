@@ -137,49 +137,15 @@ body {
   animation: slideOut 0.3s ease-out forwards;
 }
 
-/* Quiz step transitions */
-.quiz-step-enter {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.quiz-step-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.quiz-step-exit {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.quiz-step-exit-active {
-  opacity: 0;
-  transform: translateX(20px);
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-/* Enhanced Quiz Animations */
+/* Quiz step animation */
 @keyframes quizStepFadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes quizCardIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }
 
@@ -204,17 +170,8 @@ body {
 }
 
 .quiz-step-animate {
-  animation: quizStepFadeIn 0.6s ease-out forwards;
-}
-
-.quiz-card {
-  animation: quizCardIn 0.5s ease-out forwards;
-  opacity: 0;
-}
-
-.quiz-card-selected {
-  animation: none;
-  opacity: 1;
+  will-change: opacity, transform;
+  animation: quizStepFadeIn 0.3s ease-out forwards;
 }
 
 .quiz-success-animate {
@@ -349,23 +306,23 @@ body {
   border-bottom: 1px solid #dcdcdc;
 }
 
-.phone-country-search {
+.phone-country-list .phone-country-search {
   width: 100%;
   padding: 0.5rem 0.75rem;
   background: #fff;
   border: 1.5px solid #dcdcdc;
   border-radius: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-family: 'PT Serif', serif;
   color: #171717;
   outline: none;
 }
 
-.phone-country-search:focus {
+.phone-country-list .phone-country-search:focus {
   border-color: #a39466;
 }
 
-.phone-country-search::placeholder {
+.phone-country-list .phone-country-search::placeholder {
   color: #999;
 }
 
@@ -373,7 +330,7 @@ body {
   padding: 1.5rem 1rem;
   text-align: center;
   color: #999;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .phone-country-option {
@@ -382,13 +339,13 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   border: none;
   background: transparent;
   color: #171717;
   text-align: left;
   cursor: pointer;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
 }
 
 .phone-country-option:hover,
@@ -411,7 +368,7 @@ body {
 }
 
 .phone-country-option-flag {
-  width: 1.5rem;
+  width: 1.25rem;
   height: auto;
   border-radius: 2px;
   flex-shrink: 0;
