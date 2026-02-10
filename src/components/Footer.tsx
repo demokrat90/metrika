@@ -53,17 +53,17 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-4">السياسات</h4>
             <ul className="space-y-2 text-[#c9c9c9]">
               <li>
-                <a href="#" className="hover:text-[#a39466] transition-colors">
+                <a href="https://metrika.ae/privacy-policy" className="hover:text-[#a39466] transition-colors">
                   سياسة الخصوصية
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a39466] transition-colors">
+                <a href="https://metrika.ae/cookie-policy" className="hover:text-[#a39466] transition-colors">
                   سياسة ملفات تعريف الارتباط
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a39466] transition-colors">
+                <a href="https://metrika.ae/terms_of_use" className="hover:text-[#a39466] transition-colors">
                   شروط الاستخدام
                 </a>
               </li>
