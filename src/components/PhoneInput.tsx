@@ -73,7 +73,11 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
       ? digits.slice(dialDigits.length)
       : digits;
 
-    return formatPhoneByCountry(country, nationalDigits);
+    const full = formatPhoneByCountry(country, nationalDigits);
+    // Strip country code prefix — already shown in trigger button
+    return full.startsWith(selectedDialCode)
+      ? full.slice(selectedDialCode.length).trimStart()
+      : full;
   }, [country, selectedDialCode, value]);
 
   // IP-based country detection
@@ -172,9 +176,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
   }, [isCountryListOpen, country]);
 
   const handlePhoneInputChange = (nextValue: string) => {
-    const digits = nextValue.replace(/\D/g, '');
-    const dialDigits = selectedDialCode.replace(/\D/g, '');
-    let nationalDigits = digits.startsWith(dialDigits) ? digits.slice(dialDigits.length) : digits;
+    let nationalDigits = nextValue.replace(/\D/g, '');
 
     // Find the longest valid prefix and cap there (strict metadata for accurate limits)
     let maxValidLen = 0;
