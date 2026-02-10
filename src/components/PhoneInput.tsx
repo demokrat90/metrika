@@ -12,6 +12,7 @@ import {
   type Examples,
 } from 'libphonenumber-js';
 import examples from 'libphonenumber-js/examples.mobile.json';
+import * as Flags from 'country-flag-icons/react/3x2';
 
 interface PhoneInputProps {
   value: string;
@@ -41,7 +42,6 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
           code: item,
           dialCode: `+${getCountryCallingCode(item)}`,
           name: countryNames.of(item) || item,
-          flag: countryCodeToFlagEmoji(item),
         }))
         .sort((a, b) => a.name.localeCompare(b.name)),
     [countryNames],
@@ -59,7 +59,6 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
   }, [countries, searchQuery]);
 
   const selectedDialCode = useMemo(() => `+${getCountryCallingCode(country)}`, [country]);
-  const selectedFlag = useMemo(() => countryCodeToFlagEmoji(country), [country]);
 
   const dynamicPlaceholder = useMemo(() => getPlaceholderMask(country), [country]);
 
@@ -231,7 +230,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
           aria-expanded={isCountryListOpen}
           aria-label="Select country"
         >
-          <span className="phone-country-flag">{selectedFlag}</span>
+          <FlagIcon code={country} className="phone-country-flag" />
           <span className="phone-country-code">{selectedDialCode}</span>
           <svg
             className={`phone-country-arrow${isCountryListOpen ? ' phone-country-arrow-open' : ''}`}
@@ -290,7 +289,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
                 <span className="phone-country-option-name">{item.name}</span>
                 <span className="phone-country-option-meta">
                   <span className="phone-country-option-code">{item.dialCode}</span>
-                  <span className="phone-country-option-flag">{item.flag}</span>
+                  <FlagIcon code={item.code} className="phone-country-option-flag" />
                 </span>
               </button>
             ))
@@ -301,10 +300,12 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
   );
 }
 
-function countryCodeToFlagEmoji(code: string): string {
-  return code
-    .toUpperCase()
-    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
+const FlagComponents = Flags as unknown as Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>>;
+
+function FlagIcon({ code, className }: { code: string; className?: string }) {
+  const Flag = FlagComponents[code];
+  if (!Flag) return null;
+  return <Flag className={className} />;
 }
 
 function formatPhoneByCountry(country: CountryCode, nationalDigits: string): string {

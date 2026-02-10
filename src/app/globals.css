@@ -280,8 +280,10 @@ body {
 }
 
 .phone-country-flag {
-  font-size: 1.1rem;
-  line-height: 1;
+  width: 1.4rem;
+  height: auto;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .phone-country-code {
@@ -409,8 +411,10 @@ body {
 }
 
 .phone-country-option-flag {
-  font-size: 1.2rem;
-  line-height: 1;
+  width: 1.5rem;
+  height: auto;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 /* Slider/Stories carousel */
