@@ -5,15 +5,7 @@ function sanitizeReferer(rawReferer: string): string {
 
   try {
     const url = new URL(rawReferer);
-    const keys = Array.from(url.searchParams.keys());
-
-    for (const key of keys) {
-      if (key.toLowerCase().startsWith('utm_')) {
-        url.searchParams.delete(key);
-      }
-    }
-
-    return url.toString();
+    return `${url.origin}${url.pathname}`;
   } catch {
     return rawReferer;
   }
