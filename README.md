@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Metrika Landing
 
-## Getting Started
+## Run locally
 
-First, run the development server:
+Install dependencies and start development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## AmoCRM integration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project sends leads from:
+- `POST /api/submit-lead`
+- `POST /api/submit-quiz`
 
-## Learn More
+Configure environment variables in `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Use one of these:
+AMOCRM_BASE_URL=https://yourcompany.amocrm.ru
+# AMOCRM_BASE_URL=https://yourcompany.kommo.com
+# or short subdomain form:
+# AMOCRM_SUBDOMAIN=yourcompany
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+AMOCRM_ACCESS_TOKEN=your_long_lived_token
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Target funnel/stage by names (default behavior in code)
+AMOCRM_PIPELINE_NAME=Administrators
+AMOCRM_STATUS_NAME=Incoming
 
-## Deploy on Vercel
+# Optional explicit IDs (override names when both are set)
+AMOCRM_PIPELINE_ID=1234567
+AMOCRM_STATUS_ID=7654321
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Notes:
+- `AMOCRM_ACCESS_TOKEN` is required.
+- Either `AMOCRM_BASE_URL` or `AMOCRM_SUBDOMAIN` must be set.
+- Leads are created via `/api/v4/leads/complex` directly in the configured funnel/stage.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Build
+
+```bash
+npm run build
+npm run start
+```

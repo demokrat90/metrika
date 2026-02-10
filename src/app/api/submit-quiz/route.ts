@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// AmoCRM configuration - set these environment variables
-const AMOCRM_SUBDOMAIN = process.env.AMOCRM_SUBDOMAIN;
-const AMOCRM_ACCESS_TOKEN = process.env.AMOCRM_ACCESS_TOKEN;
-const AMOCRM_PIPELINE_ID = process.env.AMOCRM_PIPELINE_ID;
+import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
 
 interface QuizData {
   fullName?: string;
@@ -15,6 +11,8 @@ interface QuizData {
 export async function POST(request: NextRequest) {
   try {
     const data: QuizData = await request.json();
+    const fullName = data.fullName?.trim() || 'Unknown';
+    const phone = data.phone?.trim() || '';
 
     // Build quiz answers summary
     const quizAnswersLabels: Record<number, string> = {
@@ -36,73 +34,33 @@ export async function POST(request: NextRequest) {
     // Log the submission (for development)
     console.log('Quiz submission:', {
       name: data.fullName,
-      phone: data.phone,
+      phone,
       contactMethod: data[5],
       email: data.email,
       quizAnswers,
     });
 
     // If AmoCRM is configured, send the lead
-    if (AMOCRM_SUBDOMAIN && AMOCRM_ACCESS_TOKEN) {
+    if (isAmoConfigured()) {
       try {
-        const leadData = {
-          source_name: 'Quiz - Arabic Landing',
-          source_uid: `quiz-${Date.now()}`,
-          pipeline_id: AMOCRM_PIPELINE_ID ? parseInt(AMOCRM_PIPELINE_ID) : undefined,
-          created_at: Math.floor(Date.now() / 1000),
-          metadata: {
-            form_name: 'Quiz Form',
-            form_page: 'metrika-clone.vercel.app',
-          },
-          _embedded: {
-            leads: [
+        await submitAmoLead({
+          leadName: `Quiz Lead - ${fullName}`,
+          leadFields: Object.entries(quizAnswers).map(([key, value]) => ({
+            field_name: key,
+            values: [{ value }],
+          })),
+          contact: {
+            fullName,
+            phone,
+            email: data.email,
+            extraFields: [
               {
-                name: `Quiz Lead - ${data.fullName}`,
-                custom_fields_values: Object.entries(quizAnswers).map(([key, value]) => ({
-                  field_name: key,
-                  values: [{ value }],
-                })),
-              },
-            ],
-            contacts: [
-              {
-                name: data.fullName,
-                first_name: data.fullName?.split(' ')[0] || '',
-                last_name: data.fullName?.split(' ').slice(1).join(' ') || '',
-                custom_fields_values: [
-                  {
-                    field_code: 'PHONE',
-                    values: [{ value: data.phone, enum_code: 'MOB' }],
-                  },
-                  {
-                    field_name: 'طريقة التواصل المفضلة',
-                    values: [{ value: data[5] }],
-                  },
-                  ...(data.email ? [{
-                    field_code: 'EMAIL',
-                    values: [{ value: data.email, enum_code: 'WORK' }],
-                  }] : []),
-                ],
+                field_name: 'طريقة التواصل المفضلة',
+                values: [{ value: data[5] }],
               },
             ],
           },
-        };
-
-        const response = await fetch(
-          `https://${AMOCRM_SUBDOMAIN}/api/v4/leads/unsorted/forms`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${AMOCRM_ACCESS_TOKEN}`,
-            },
-            body: JSON.stringify([leadData]),
-          }
-        );
-
-        if (!response.ok) {
-          console.error('AmoCRM API error:', await response.text());
-        }
+        });
       } catch (amoCrmError) {
         console.error('Error sending to AmoCRM:', amoCrmError);
         // Don't fail the request if AmoCRM fails
