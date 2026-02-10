@@ -174,6 +174,41 @@ async function addLeadNote(baseUrl: string, leadId: number, noteText: string): P
   }
 }
 
+function extractLeadId(payload: unknown): number | undefined {
+  if (Array.isArray(payload)) {
+    const firstWithId = payload.find(
+      (item) => typeof item === 'object' && item !== null && typeof (item as { id?: unknown }).id === 'number'
+    ) as { id: number } | undefined;
+    return firstWithId?.id;
+  }
+
+  if (!payload || typeof payload !== 'object') {
+    return undefined;
+  }
+
+  const objectPayload = payload as {
+    id?: unknown;
+    _embedded?: { leads?: Array<{ id?: unknown }> };
+    leads?: Array<{ id?: unknown }>;
+  };
+
+  if (typeof objectPayload.id === 'number') {
+    return objectPayload.id;
+  }
+
+  const embeddedLeadId = objectPayload._embedded?.leads?.find((item) => typeof item.id === 'number')?.id;
+  if (typeof embeddedLeadId === 'number') {
+    return embeddedLeadId;
+  }
+
+  const directLeadId = objectPayload.leads?.find((item) => typeof item.id === 'number')?.id;
+  if (typeof directLeadId === 'number') {
+    return directLeadId;
+  }
+
+  return undefined;
+}
+
 export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
   const baseUrl = normalizeAmoBaseUrl();
   if (!baseUrl || !AMOCRM_ACCESS_TOKEN) {
@@ -246,13 +281,10 @@ export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
     throw new Error(`AmoCRM API error (${response.status}): ${body}`);
   }
 
-  const result = await response.json() as {
-    _embedded?: { leads?: Array<{ id: number }> };
-  };
-
-  const leadId = result?._embedded?.leads?.[0]?.id;
+  const result = await response.json().catch(() => null);
+  const leadId = extractLeadId(result);
   if (payload.noteText && !leadId) {
-    throw new Error('AmoCRM lead created without id, cannot attach note.');
+    throw new Error(`AmoCRM lead created but id not found in response: ${JSON.stringify(result)}`);
   }
 
   if (payload.noteText && leadId) {
