@@ -258,7 +258,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
             <button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="group relative px-12 py-4 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden bg-[#333] text-[#555] hover:bg-gradient-to-l hover:from-[#a39466] hover:to-[#b8a775] hover:text-[#171717] hover:shadow-[0_8px_32px_rgba(163,148,102,0.4)] disabled:hover:bg-[#333] disabled:hover:text-[#555] disabled:hover:shadow-none disabled:cursor-not-allowed"
+              className="quiz-btn-glow group relative px-12 py-4 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden bg-gradient-to-l from-[#a39466] to-[#b8a775] text-[#171717] shadow-[0_8px_32px_rgba(163,148,102,0.35)] hover:shadow-[0_8px_32px_rgba(163,148,102,0.45)] hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-100"
             >
               <span className="relative z-10">التالي</span>
             </button>
