@@ -7,7 +7,6 @@ import {
   getCountryCallingCode,
   getExampleNumber,
   isSupportedCountry,
-  validatePhoneNumberLength,
   type CountryCode,
   type Examples,
 } from 'libphonenumber-js';
@@ -176,17 +175,17 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
     const dialDigits = selectedDialCode.replace(/\D/g, '');
     let nationalDigits = digits.startsWith(dialDigits) ? digits.slice(dialDigits.length) : digits;
 
-    while (nationalDigits.length > 0) {
-      const candidate = `${selectedDialCode}${nationalDigits}`;
-      const lengthValidation = validatePhoneNumberLength(candidate, {
-        defaultCountry: country,
-      });
-
-      if (lengthValidation !== 'TOO_LONG') {
-        break;
+    // Find the longest valid prefix and cap there
+    let maxValidLen = 0;
+    for (let len = 1; len <= nationalDigits.length; len++) {
+      const f = new AsYouType(country);
+      f.input(`${selectedDialCode}${nationalDigits.slice(0, len)}`);
+      if (f.isValid()) {
+        maxValidLen = len;
       }
-
-      nationalDigits = nationalDigits.slice(0, -1);
+    }
+    if (maxValidLen > 0 && nationalDigits.length > maxValidLen) {
+      nationalDigits = nationalDigits.slice(0, maxValidLen);
     }
 
     if (!nationalDigits) {
