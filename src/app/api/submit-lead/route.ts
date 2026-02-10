@@ -11,6 +11,9 @@ interface LeadData {
 export async function POST(request: NextRequest) {
   try {
     const data: LeadData = await request.json();
+    const amoConfigured = isAmoConfigured();
+    let amoSynced = !amoConfigured;
+    let amoError = '';
 
     // Log the submission (for development)
     console.log('Lead submission:', {
@@ -21,34 +24,45 @@ export async function POST(request: NextRequest) {
     });
 
     // If AmoCRM is configured, send the lead
-    if (isAmoConfigured()) {
+    if (amoConfigured) {
       try {
         await submitAmoLead({
           leadName: `${data.category} - ${data.fullName}`,
-          leadFields: [
-            {
-              field_name: 'فئة العقار',
-              values: [{ value: data.category }],
-            },
-            {
-              field_name: 'مصدر الطلب',
-              values: [{ value: data.source }],
-            },
-          ],
+          tags: [data.category, data.source, 'popup-form'],
+          noteText: [
+            'Lead source: popup form',
+            `Category: ${data.category}`,
+            `Source: ${data.source}`,
+            `Phone: ${data.phone}`,
+          ].join('\n'),
           contact: {
             fullName: data.fullName,
             phone: data.phone,
           },
         });
+        amoSynced = true;
       } catch (amoCrmError) {
         console.error('Error sending to AmoCRM:', amoCrmError);
-        // Don't fail the request if AmoCRM fails
+        amoError = amoCrmError instanceof Error ? amoCrmError.message : 'Unknown AmoCRM error';
       }
+    }
+
+    if (!amoSynced) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'AmoCRM rejected the lead',
+          amoSynced: false,
+          amoError,
+        },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({
       success: true,
       message: 'Lead submitted successfully',
+      amoSynced: true,
       gtmEvent: {
         event: 'lead_submit',
         formName: 'popup',

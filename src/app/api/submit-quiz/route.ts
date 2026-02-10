@@ -13,6 +13,9 @@ export async function POST(request: NextRequest) {
     const data: QuizData = await request.json();
     const fullName = data.fullName?.trim() || 'Unknown';
     const phone = data.phone?.trim() || '';
+    const amoConfigured = isAmoConfigured();
+    let amoSynced = !amoConfigured;
+    let amoError = '';
 
     // Build quiz answers summary
     const quizAnswersLabels: Record<number, string> = {
@@ -41,36 +44,54 @@ export async function POST(request: NextRequest) {
     });
 
     // If AmoCRM is configured, send the lead
-    if (isAmoConfigured()) {
+    if (amoConfigured) {
       try {
+        const answersText = Object.entries(quizAnswers)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join('\n');
+
         await submitAmoLead({
           leadName: `Quiz Lead - ${fullName}`,
-          leadFields: Object.entries(quizAnswers).map(([key, value]) => ({
-            field_name: key,
-            values: [{ value }],
-          })),
+          tags: ['quiz-form', data[0], data[1], data[5]].filter(Boolean) as string[],
+          noteText: [
+            'Lead source: quiz form',
+            `Contact method: ${data[5] || '-'}`,
+            `Phone: ${phone || '-'}`,
+            `Email: ${data.email || '-'}`,
+            '',
+            'Quiz answers:',
+            answersText || '-',
+          ].join('\n'),
           contact: {
             fullName,
             phone,
             email: data.email,
-            extraFields: [
-              {
-                field_name: 'طريقة التواصل المفضلة',
-                values: [{ value: data[5] }],
-              },
-            ],
           },
         });
+        amoSynced = true;
       } catch (amoCrmError) {
         console.error('Error sending to AmoCRM:', amoCrmError);
-        // Don't fail the request if AmoCRM fails
+        amoError = amoCrmError instanceof Error ? amoCrmError.message : 'Unknown AmoCRM error';
       }
+    }
+
+    if (!amoSynced) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'AmoCRM rejected the lead',
+          amoSynced: false,
+          amoError,
+        },
+        { status: 502 }
+      );
     }
 
     // Push to GTM data layer (client-side will handle this)
     return NextResponse.json({
       success: true,
       message: 'Quiz submitted successfully',
+      amoSynced: true,
       gtmEvent: {
         event: 'quiz_complete',
         formName: 'quiz',

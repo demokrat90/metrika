@@ -20,6 +20,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const totalSteps = quizSteps.length;
   const progress = ((currentStep + 1) / totalSteps) * 100;
@@ -70,6 +71,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
   const handleSubmit = async () => {
     if (!canProceed()) return;
 
+    setSubmitError('');
     setIsSubmitting(true);
 
     const finalAnswers: QuizAnswers = {
@@ -88,6 +90,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
         body: JSON.stringify(finalAnswers),
       });
 
+      const responsePayload = await response.json().catch(() => null);
       if (response.ok) {
         setIsCompleted(true);
         pushEvent('quiz_complete', {
@@ -96,9 +99,14 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
         });
         trackConversion();
         onComplete(finalAnswers);
+      } else {
+        setSubmitError(
+          responsePayload?.message || 'تعذر إرسال الطلب. يرجى المحاولة مرة أخرى.'
+        );
       }
     } catch (error) {
       console.error('Error submitting quiz:', error);
+      setSubmitError('تعذر الاتصال بالخادم. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsSubmitting(false);
     }
@@ -264,6 +272,9 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
             </button>
           )}
         </div>
+        {submitError && (
+          <p className="mt-4 text-center text-sm text-[#ff8d8d]">{submitError}</p>
+        )}
 
       </div>
     </section>

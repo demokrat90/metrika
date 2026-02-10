@@ -11,26 +11,30 @@ type AmoLeadContactValue = {
   enum_code?: string;
 };
 
-type AmoCustomFieldByName = {
-  field_name: string;
-  values: AmoLeadContactValue[];
-};
-
 type AmoCustomFieldByCode = {
   field_code: string;
   values: AmoLeadContactValue[];
 };
 
-export type AmoCustomField = AmoCustomFieldByName | AmoCustomFieldByCode;
+type AmoCustomFieldById = {
+  field_id: number;
+  values: AmoLeadContactValue[];
+};
+
+export type AmoCustomField = AmoCustomFieldByCode | AmoCustomFieldById;
+
+type AmoTag = {
+  name: string;
+};
 
 type AmoLeadPayload = {
   leadName: string;
-  leadFields?: AmoCustomField[];
+  tags?: string[];
+  noteText?: string;
   contact: {
     fullName?: string;
     phone?: string;
     email?: string;
-    extraFields?: AmoCustomField[];
   };
 };
 
@@ -135,6 +139,37 @@ function splitFullName(fullName?: string): { firstName: string; lastName: string
   };
 }
 
+function toAmoTags(tags: string[] | undefined): AmoTag[] {
+  if (!tags) return [];
+  const unique = Array.from(new Set(tags.map((item) => item.trim()).filter(Boolean)));
+  return unique.map((name) => ({ name }));
+}
+
+async function addLeadNote(baseUrl: string, leadId: number, noteText: string): Promise<void> {
+  const text = noteText.trim();
+  if (!text) return;
+
+  const response = await fetch(`${baseUrl}/api/v4/leads/notes`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${AMOCRM_ACCESS_TOKEN}`,
+    },
+    body: JSON.stringify([
+      {
+        entity_id: leadId,
+        note_type: 'common',
+        params: { text },
+      },
+    ]),
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`AmoCRM notes API error (${response.status}): ${body}`);
+  }
+}
+
 export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
   const baseUrl = normalizeAmoBaseUrl();
   if (!baseUrl || !AMOCRM_ACCESS_TOKEN) {
@@ -157,8 +192,41 @@ export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
           values: [{ value: payload.contact.email, enum_code: 'WORK' }],
         } satisfies AmoCustomField]
       : []),
-    ...(payload.contact.extraFields || []),
   ];
+
+  const requestBody: {
+    name: string;
+    pipeline_id: number;
+    status_id: number;
+    tags_to_add?: AmoTag[];
+    _embedded: {
+      contacts: Array<{
+        name: string;
+        first_name: string;
+        last_name: string;
+        custom_fields_values: AmoCustomField[];
+      }>;
+    };
+  } = {
+    name: payload.leadName,
+    pipeline_id: pipelineId,
+    status_id: statusId,
+    _embedded: {
+      contacts: [
+        {
+          name: payload.contact.fullName || 'Unknown',
+          first_name: nameParts.firstName,
+          last_name: nameParts.lastName,
+          custom_fields_values: contactFields,
+        },
+      ],
+    },
+  };
+
+  const tagsToAdd = toAmoTags(payload.tags);
+  if (tagsToAdd.length > 0) {
+    requestBody.tags_to_add = tagsToAdd;
+  }
 
   const response = await fetch(`${baseUrl}/api/v4/leads/complex`, {
     method: 'POST',
@@ -166,28 +234,24 @@ export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${AMOCRM_ACCESS_TOKEN}`,
     },
-    body: JSON.stringify([
-      {
-        name: payload.leadName,
-        pipeline_id: pipelineId,
-        status_id: statusId,
-        custom_fields_values: payload.leadFields || [],
-        _embedded: {
-          contacts: [
-            {
-              name: payload.contact.fullName || 'Unknown',
-              first_name: nameParts.firstName,
-              last_name: nameParts.lastName,
-              custom_fields_values: contactFields,
-            },
-          ],
-        },
-      },
-    ]),
+    body: JSON.stringify([requestBody]),
   });
 
   if (!response.ok) {
     const body = await response.text();
     throw new Error(`AmoCRM API error (${response.status}): ${body}`);
+  }
+
+  const result = await response.json() as {
+    _embedded?: { leads?: Array<{ id: number }> };
+  };
+
+  const leadId = result?._embedded?.leads?.[0]?.id;
+  if (payload.noteText && leadId) {
+    try {
+      await addLeadNote(baseUrl, leadId, payload.noteText);
+    } catch (noteError) {
+      console.error('Error adding AmoCRM lead note:', noteError);
+    }
   }
 }
