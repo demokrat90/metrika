@@ -5,10 +5,13 @@ import {
   AsYouType,
   getCountries,
   getCountryCallingCode,
+  getExampleNumber,
   isSupportedCountry,
   validatePhoneNumberLength,
   type CountryCode,
+  type Examples,
 } from 'libphonenumber-js';
+import examples from 'libphonenumber-js/examples.mobile.json';
 
 interface PhoneInputProps {
   value: string;
@@ -19,8 +22,11 @@ interface PhoneInputProps {
 export default function PhoneInput({ value, onChange, placeholder }: PhoneInputProps) {
   const [country, setCountry] = useState<CountryCode>('AE');
   const [isCountryListOpen, setIsCountryListOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const manualCountryChangeRef = useRef(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const countryListRef = useRef<HTMLDivElement>(null);
 
   const countryNames = useMemo(
     () => new Intl.DisplayNames(['en'], { type: 'region' }),
@@ -41,8 +47,21 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
     [countryNames],
   );
 
+  const filteredCountries = useMemo(() => {
+    if (!searchQuery.trim()) return countries;
+    const q = searchQuery.trim().toLowerCase();
+    return countries.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.dialCode.includes(q) ||
+        c.code.toLowerCase().includes(q),
+    );
+  }, [countries, searchQuery]);
+
   const selectedDialCode = useMemo(() => `+${getCountryCallingCode(country)}`, [country]);
   const selectedFlag = useMemo(() => countryCodeToFlagEmoji(country), [country]);
+
+  const dynamicPlaceholder = useMemo(() => getPlaceholderMask(country), [country]);
 
   const formattedValue = useMemo(() => {
     if (!value) {
@@ -58,6 +77,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
     return formatPhoneByCountry(country, nationalDigits);
   }, [country, selectedDialCode, value]);
 
+  // IP-based country detection
   useEffect(() => {
     const trySetCountry = (rawCountry: unknown) => {
       const candidate = typeof rawCountry === 'string' ? rawCountry.toUpperCase() : '';
@@ -108,6 +128,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
     detectCountry();
   }, []);
 
+  // Click outside to close
   useEffect(() => {
     const onDocumentClick = (event: MouseEvent) => {
       if (!rootRef.current?.contains(event.target as Node)) {
@@ -120,6 +141,36 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
       document.removeEventListener('click', onDocumentClick);
     };
   }, []);
+
+  // Escape key to close dropdown
+  useEffect(() => {
+    if (!isCountryListOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsCountryListOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isCountryListOpen]);
+
+  // Auto-focus search & scroll to selected on open
+  useEffect(() => {
+    if (!isCountryListOpen) return;
+
+    requestAnimationFrame(() => {
+      searchInputRef.current?.focus();
+
+      const selected = countryListRef.current?.querySelector(
+        `[data-country="${country}"]`,
+      );
+      selected?.scrollIntoView({ block: 'center' });
+    });
+  }, [isCountryListOpen, country]);
 
   const handlePhoneInputChange = (nextValue: string) => {
     const digits = nextValue.replace(/\D/g, '');
@@ -160,6 +211,7 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
     manualCountryChangeRef.current = true;
     setCountry(nextCountry);
     setIsCountryListOpen(false);
+    setSearchQuery('');
 
     if (nationalDigits) {
       onChange(`+${nextDialDigits}${nationalDigits}`);
@@ -172,20 +224,35 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
         <button
           type="button"
           className="phone-country-trigger"
-          onClick={() => setIsCountryListOpen((open) => !open)}
+          onClick={() => {
+            setIsCountryListOpen((open) => !open);
+            setSearchQuery('');
+          }}
           aria-expanded={isCountryListOpen}
           aria-label="Select country"
         >
           <span className="phone-country-flag">{selectedFlag}</span>
           <span className="phone-country-code">{selectedDialCode}</span>
-          <span className="phone-country-arrow">v</span>
+          <svg
+            className={`phone-country-arrow${isCountryListOpen ? ' phone-country-arrow-open' : ''}`}
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M2 4l4 4 4-4" />
+          </svg>
         </button>
 
         <input
           type="tel"
           value={formattedValue}
           onChange={(event) => handlePhoneInputChange(event.target.value)}
-          placeholder={placeholder}
+          placeholder={dynamicPlaceholder || placeholder}
           className="phone-number-input"
           dir="ltr"
           inputMode="tel"
@@ -194,23 +261,40 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
       </div>
 
       {isCountryListOpen && (
-        <div className="phone-country-list" role="listbox">
-          {countries.map((item) => (
-            <button
-              key={item.code}
-              type="button"
-              className="phone-country-option"
-              onClick={() => selectCountry(item.code)}
-              role="option"
-              aria-selected={item.code === country}
-            >
-              <span className="phone-country-option-name">{item.name}</span>
-              <span className="phone-country-option-meta">
-                <span className="phone-country-option-code">{item.dialCode}</span>
-                <span className="phone-country-option-flag">{item.flag}</span>
-              </span>
-            </button>
-          ))}
+        <div className="phone-country-list" role="listbox" ref={countryListRef}>
+          <div className="phone-country-search-wrapper">
+            <input
+              ref={searchInputRef}
+              type="text"
+              className="phone-country-search"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+
+          {filteredCountries.length === 0 ? (
+            <div className="phone-country-no-results">No results</div>
+          ) : (
+            filteredCountries.map((item) => (
+              <button
+                key={item.code}
+                type="button"
+                className="phone-country-option"
+                data-country={item.code}
+                onClick={() => selectCountry(item.code)}
+                role="option"
+                aria-selected={item.code === country}
+              >
+                <span className="phone-country-option-name">{item.name}</span>
+                <span className="phone-country-option-meta">
+                  <span className="phone-country-option-code">{item.dialCode}</span>
+                  <span className="phone-country-option-flag">{item.flag}</span>
+                </span>
+              </button>
+            ))
+          )}
         </div>
       )}
     </div>
@@ -227,4 +311,17 @@ function formatPhoneByCountry(country: CountryCode, nationalDigits: string): str
   const dialCode = getCountryCallingCode(country);
   const formatter = new AsYouType(country);
   return formatter.input(`+${dialCode}${nationalDigits}`);
+}
+
+function getPlaceholderMask(country: CountryCode): string {
+  try {
+    const example = getExampleNumber(country, examples as unknown as Examples);
+    if (!example) return '';
+
+    const formatter = new AsYouType(country);
+    const formatted = formatter.input(example.number as string);
+    return formatted.replace(/\d/g, '0');
+  } catch {
+    return '';
+  }
 }

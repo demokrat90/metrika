@@ -291,8 +291,12 @@ body {
 .phone-country-arrow {
   color: #a39466;
   margin-right: 0.125rem;
-  font-size: 0.8rem;
   line-height: 1;
+  transition: transform 0.2s;
+}
+
+.phone-country-arrow-open {
+  transform: rotate(180deg);
 }
 
 .phone-input-wrapper .phone-number-input {
@@ -331,6 +335,43 @@ body {
   border-radius: 0.75rem;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
   padding: 0.25rem 0;
+  scroll-behavior: smooth;
+}
+
+.phone-country-search-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f2f2f2;
+  padding: 0.5rem;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.phone-country-search {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  border: 1.5px solid #dcdcdc;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-family: 'PT Serif', serif;
+  color: #171717;
+  outline: none;
+}
+
+.phone-country-search:focus {
+  border-color: #a39466;
+}
+
+.phone-country-search::placeholder {
+  color: #999;
+}
+
+.phone-country-no-results {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: #999;
+  font-size: 0.95rem;
 }
 
 .phone-country-option {
