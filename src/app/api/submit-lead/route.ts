@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
-import { buildRequestContextNote } from '@/lib/request-context';
+import { buildRequestContextNote, extractRequestTracking } from '@/lib/request-context';
 
 interface LeadData {
   fullName: string;
@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const data: LeadData = await request.json();
     const requestContextNote = buildRequestContextNote(request);
+    const requestTracking = extractRequestTracking(request);
     const amoConfigured = isAmoConfigured();
     let amoSynced = !amoConfigured;
     let amoError = '';
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
             '',
             requestContextNote,
           ].join('\n'),
+          tracking: requestTracking,
           contact: {
             fullName: data.fullName,
             phone: data.phone,

@@ -1,3 +1,5 @@
+import { type RequestTrackingData, type RequestTrackingKey } from '@/lib/request-context';
+
 const AMOCRM_SUBDOMAIN = process.env.AMOCRM_SUBDOMAIN?.trim();
 const AMOCRM_BASE_URL = process.env.AMOCRM_BASE_URL?.trim();
 const AMOCRM_ACCESS_TOKEN = process.env.AMOCRM_ACCESS_TOKEN?.trim();
@@ -6,6 +8,7 @@ const AMOCRM_STATUS_ID = process.env.AMOCRM_STATUS_ID?.trim();
 const AMOCRM_PIPELINE_NAME = process.env.AMOCRM_PIPELINE_NAME?.trim() || 'Administrators';
 const AMOCRM_STATUS_NAME = process.env.AMOCRM_STATUS_NAME?.trim() || 'Incoming';
 const AMOCRM_MAX_NOTE_LENGTH = 12000;
+const AMOCRM_CUSTOM_FIELDS_CACHE_TTL_MS = 5 * 60 * 1000;
 
 type AmoLeadContactValue = {
   value: string;
@@ -32,12 +35,111 @@ type AmoLeadPayload = {
   leadName: string;
   tags?: string[];
   noteText?: string;
+  tracking?: RequestTrackingData;
   contact: {
     fullName?: string;
     phone?: string;
     email?: string;
   };
 };
+
+type AmoLeadCustomFieldDefinition = {
+  id: number;
+  code?: string | null;
+  name: string;
+};
+
+type TrackingFieldMatcher = {
+  codes: string[];
+  names: string[];
+};
+
+const TRACKING_FIELD_MATCHERS: Record<RequestTrackingKey, TrackingFieldMatcher> = {
+  utm_content: {
+    codes: ['UTM_CONTENT'],
+    names: ['utm_content', 'utm content'],
+  },
+  utm_medium: {
+    codes: ['UTM_MEDIUM'],
+    names: ['utm_medium', 'utm medium'],
+  },
+  utm_campaign: {
+    codes: ['UTM_CAMPAIGN'],
+    names: ['utm_campaign', 'utm campaign'],
+  },
+  utm_source: {
+    codes: ['UTM_SOURCE'],
+    names: ['utm_source', 'utm source'],
+  },
+  utm_term: {
+    codes: ['UTM_TERM'],
+    names: ['utm_term', 'utm term'],
+  },
+  utm_referrer: {
+    codes: ['UTM_REFERRER'],
+    names: ['utm_referrer', 'utm referrer'],
+  },
+  roistat: {
+    codes: ['ROISTAT'],
+    names: ['roistat'],
+  },
+  referrer: {
+    codes: ['REFERRER'],
+    names: ['referrer'],
+  },
+  openstat_service: {
+    codes: ['OPENSTAT_SERVICE'],
+    names: ['openstat_service', 'openstat service'],
+  },
+  openstat_campaign: {
+    codes: ['OPENSTAT_CAMPAIGN'],
+    names: ['openstat_campaign', 'openstat campaign'],
+  },
+  openstat_ad: {
+    codes: ['OPENSTAT_AD'],
+    names: ['openstat_ad', 'openstat ad'],
+  },
+  openstat_source: {
+    codes: ['OPENSTAT_SOURCE'],
+    names: ['openstat_source', 'openstat source'],
+  },
+  from: {
+    codes: ['FROM'],
+    names: ['from'],
+  },
+  gclientid: {
+    codes: ['GCLIENTID', 'CLIENT_ID'],
+    names: ['gclientid', 'clientid', 'client_id', 'google client id'],
+  },
+  _ym_uid: {
+    codes: ['YM_UID'],
+    names: ['_ym_uid', 'ym_uid'],
+  },
+  _ym_counter: {
+    codes: ['YM_COUNTER'],
+    names: ['_ym_counter', 'ym_counter'],
+  },
+  yclid: {
+    codes: ['YCLID'],
+    names: ['yclid'],
+  },
+  gclid: {
+    codes: ['GCLID'],
+    names: ['gclid'],
+  },
+  fbclid: {
+    codes: ['FBCLID'],
+    names: ['fbclid'],
+  },
+};
+
+let leadCustomFieldsCache:
+  | {
+      baseUrl: string;
+      expiresAt: number;
+      fields: AmoLeadCustomFieldDefinition[];
+    }
+  | undefined;
 
 function normalizeAmoBaseUrl(): string | null {
   const raw = AMOCRM_BASE_URL || AMOCRM_SUBDOMAIN;
@@ -72,6 +174,17 @@ export function isAmoConfigured(): boolean {
 
 function normalizeName(value?: string): string {
   return (value || '').trim().toLowerCase();
+}
+
+function normalizeFieldIdentifier(value: string): string {
+  return value.trim().toLowerCase().replace(/\s+/g, '_');
+}
+
+function sanitizeTrackingValue(value?: string): string | undefined {
+  if (!value) return undefined;
+  const normalized = value.trim();
+  if (!normalized || normalized === '-') return undefined;
+  return normalized;
 }
 
 async function fetchAmo<T>(baseUrl: string, path: string): Promise<T> {
@@ -125,6 +238,110 @@ async function resolvePipelineAndStatusIds(baseUrl: string): Promise<{ pipelineI
   }
 
   return { pipelineId: pipeline.id, statusId: status.id };
+}
+
+async function fetchAllLeadCustomFields(baseUrl: string): Promise<AmoLeadCustomFieldDefinition[]> {
+  const pageSize = 250;
+  const customFields: AmoLeadCustomFieldDefinition[] = [];
+  let page = 1;
+
+  while (true) {
+    const response = await fetchAmo<{
+      _embedded?: {
+        custom_fields?: AmoLeadCustomFieldDefinition[];
+      };
+    }>(baseUrl, `/api/v4/leads/custom_fields?limit=${pageSize}&page=${page}`);
+
+    const currentPage = response._embedded?.custom_fields || [];
+    customFields.push(...currentPage);
+
+    if (currentPage.length < pageSize) {
+      break;
+    }
+
+    page += 1;
+  }
+
+  return customFields;
+}
+
+async function getLeadCustomFields(baseUrl: string): Promise<AmoLeadCustomFieldDefinition[]> {
+  const now = Date.now();
+  if (
+    leadCustomFieldsCache &&
+    leadCustomFieldsCache.baseUrl === baseUrl &&
+    leadCustomFieldsCache.expiresAt > now
+  ) {
+    return leadCustomFieldsCache.fields;
+  }
+
+  const fields = await fetchAllLeadCustomFields(baseUrl);
+  leadCustomFieldsCache = {
+    baseUrl,
+    fields,
+    expiresAt: now + AMOCRM_CUSTOM_FIELDS_CACHE_TTL_MS,
+  };
+
+  return fields;
+}
+
+function resolveTrackingFieldId(
+  fields: AmoLeadCustomFieldDefinition[],
+  matcher: TrackingFieldMatcher
+): number | undefined {
+  for (const code of matcher.codes) {
+    const byCode = fields.find((field) => normalizeName(field.code || '') === normalizeName(code));
+    if (byCode) {
+      return byCode.id;
+    }
+  }
+
+  for (const name of matcher.names) {
+    const normalized = normalizeFieldIdentifier(name);
+    const byName = fields.find((field) => normalizeFieldIdentifier(field.name) === normalized);
+    if (byName) {
+      return byName.id;
+    }
+  }
+
+  return undefined;
+}
+
+async function buildLeadTrackingCustomFields(
+  baseUrl: string,
+  tracking?: RequestTrackingData
+): Promise<AmoCustomField[]> {
+  if (!tracking) {
+    return [];
+  }
+
+  const trackingEntries = Object.entries(tracking)
+    .map(([key, value]) => [key as RequestTrackingKey, sanitizeTrackingValue(value)] as const)
+    .filter((entry): entry is readonly [RequestTrackingKey, string] => Boolean(entry[1]));
+
+  if (trackingEntries.length === 0) {
+    return [];
+  }
+
+  const leadFields = await getLeadCustomFields(baseUrl);
+  const usedFieldIds = new Set<number>();
+  const result: AmoCustomField[] = [];
+
+  for (const [trackingKey, trackingValue] of trackingEntries) {
+    const matcher = TRACKING_FIELD_MATCHERS[trackingKey];
+    const fieldId = resolveTrackingFieldId(leadFields, matcher);
+    if (!fieldId || usedFieldIds.has(fieldId)) {
+      continue;
+    }
+
+    result.push({
+      field_id: fieldId,
+      values: [{ value: trackingValue }],
+    });
+    usedFieldIds.add(fieldId);
+  }
+
+  return result;
 }
 
 function splitFullName(fullName?: string): { firstName: string; lastName: string } {
@@ -233,10 +450,18 @@ export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
       : []),
   ];
 
+  let leadCustomFields: AmoCustomField[] = [];
+  try {
+    leadCustomFields = await buildLeadTrackingCustomFields(baseUrl, payload.tracking);
+  } catch (error) {
+    console.warn('Could not map tracking fields to AmoCRM custom fields:', error);
+  }
+
   const requestBody: {
     name: string;
     pipeline_id: number;
     status_id: number;
+    custom_fields_values?: AmoCustomField[];
     tags_to_add?: AmoTag[];
     _embedded: {
       contacts: Array<{
@@ -261,6 +486,10 @@ export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
       ],
     },
   };
+
+  if (leadCustomFields.length > 0) {
+    requestBody.custom_fields_values = leadCustomFields;
+  }
 
   const tagsToAdd = toAmoTags(payload.tags);
   if (tagsToAdd.length > 0) {

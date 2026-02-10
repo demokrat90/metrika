@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
-import { buildRequestContextNote } from '@/lib/request-context';
+import { buildRequestContextNote, extractRequestTracking } from '@/lib/request-context';
 
 interface QuizData {
   fullName?: string;
@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const data: QuizData = await request.json();
     const requestContextNote = buildRequestContextNote(request);
+    const requestTracking = extractRequestTracking(request);
     const fullName = data.fullName?.trim() || 'Unknown';
     const phone = data.phone?.trim() || '';
     const amoConfigured = isAmoConfigured();
@@ -74,6 +75,7 @@ export async function POST(request: NextRequest) {
             '',
             requestContextNote,
           ].join('\n'),
+          tracking: requestTracking,
           contact: {
             fullName,
             phone,
