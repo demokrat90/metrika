@@ -10,6 +10,7 @@ import {
   type CountryCode,
   type Examples,
 } from 'libphonenumber-js';
+import { AsYouType as AsYouTypeStrict } from 'libphonenumber-js/max';
 import examples from 'libphonenumber-js/examples.mobile.json';
 import * as Flags from 'country-flag-icons/react/3x2';
 
@@ -175,10 +176,10 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
     const dialDigits = selectedDialCode.replace(/\D/g, '');
     let nationalDigits = digits.startsWith(dialDigits) ? digits.slice(dialDigits.length) : digits;
 
-    // Find the longest valid prefix and cap there
+    // Find the longest valid prefix and cap there (strict metadata for accurate limits)
     let maxValidLen = 0;
     for (let len = 1; len <= nationalDigits.length; len++) {
-      const f = new AsYouType(country);
+      const f = new AsYouTypeStrict(country);
       f.input(`${selectedDialCode}${nationalDigits.slice(0, len)}`);
       if (f.isValid()) {
         maxValidLen = len;
@@ -318,9 +319,14 @@ function getPlaceholderMask(country: CountryCode): string {
     const example = getExampleNumber(country, examples as unknown as Examples);
     if (!example) return '';
 
+    const dialCode = `+${getCountryCallingCode(country)}`;
     const formatter = new AsYouType(country);
     const formatted = formatter.input(example.number as string);
-    return formatted.replace(/\d/g, '0');
+    // Strip country code prefix — it's already shown in the trigger button
+    const national = formatted.startsWith(dialCode)
+      ? formatted.slice(dialCode.length).trimStart()
+      : formatted;
+    return national.replace(/\d/g, '0');
   } catch {
     return '';
   }
