@@ -16,106 +16,105 @@ export interface QuizStep {
     placeholder?: string;
     required?: boolean;
   }[];
+  description?: string;
+  checkboxLabel?: string;
 }
 
 export const quizSteps: QuizStep[] = [
   {
     id: 0,
-    title: 'طريقة الدفع المفضلة',
+    title: 'ما نوع العقار الذي تهتم به؟',
     type: 'single',
     options: [
-      { id: 'cash', label: 'نقداً', value: 'نقداً' },
-      { id: 'installments', label: 'أقساط بدون فوائد', value: 'أقساط بدون فوائد' },
+      { id: 'dont-know-property', label: 'لا أعرف بعد', value: 'لا أعرف بعد' },
+      { id: 'apartments', label: 'شقق', value: 'شقق' },
+      { id: 'villas', label: 'فلل', value: 'فلل' },
+      { id: 'townhouses', label: 'تاون هاوس', value: 'تاون هاوس' },
     ],
   },
   {
     id: 1,
-    title: 'المبلغ المستثمر',
+    title: 'ما هدفك من الشراء؟',
     type: 'single',
     options: [
-      { id: 'under-750k', label: 'أقل من 750,000 درهم', value: 'أقل من 750,000 درهم' },
-      { id: '750k-1m', label: '750,000 - 1,000,000 درهم', value: '750,000 - 1,000,000 درهم' },
-      { id: '1m-1.5m', label: '1,000,000 - 1,500,000 درهم', value: '1,000,000 - 1,500,000 درهم' },
-      { id: '1.5m-2.5m', label: '1,500,000 - 2,500,000 درهم', value: '1,500,000 - 2,500,000 درهم' },
-      { id: 'over-2.5m', label: 'أكثر من 2,500,000 درهم', value: 'أكثر من 2,500,000 درهم' },
+      { id: 'for-myself', label: 'لنفسي', value: 'لنفسي' },
+      { id: 'investing', label: 'للاستثمار', value: 'للاستثمار' },
     ],
   },
   {
     id: 2,
-    title: 'فترة الاستثمار',
+    title: 'كم عدد غرف النوم التي تريدها؟',
     type: 'single',
     options: [
-      { id: '1yr', label: 'سنة واحدة', value: 'سنة واحدة' },
-      { id: '2-3yr', label: '2-3 سنوات', value: '2-3 سنوات' },
-      { id: '4-5yr', label: '4-5 سنوات', value: '4-5 سنوات' },
-      { id: '5-10yr', label: '5-10 سنوات', value: '5-10 سنوات' },
+      { id: 'dont-know-bedrooms', label: 'لا أعرف بعد', value: 'لا أعرف بعد' },
+      { id: '1-bedroom', label: 'غرفة نوم واحدة', value: 'غرفة نوم واحدة' },
+      { id: '2-bedroom', label: 'غرفتا نوم', value: 'غرفتا نوم' },
+      { id: '3-bedroom', label: '3 غرف نوم', value: '3 غرف نوم' },
+      { id: '4-bedroom-more', label: '4 غرف نوم فأكثر', value: '4 غرف نوم فأكثر' },
     ],
   },
   {
     id: 3,
-    title: 'كم عدد غرف النوم',
+    title: 'حدد نطاق السعر المقبول',
     type: 'single',
     options: [
-      { id: 'studio', label: 'استوديو', value: 'استوديو' },
-      { id: '1br', label: 'غرفة نوم واحدة', value: 'غرفة نوم واحدة' },
-      { id: '2br', label: 'غرفتي نوم', value: 'غرفتي نوم' },
-      { id: '3br', label: '3 غرف نوم', value: '3 غرف نوم' },
-      { id: '4br+', label: '4 غرف نوم أو أكثر', value: '4 غرف نوم أو أكثر' },
+      { id: '250k-300k', label: '250,000$ - 300,000$', value: '250,000$ - 300,000$' },
+      { id: '300k-500k', label: '300,000$ - 500,000$', value: '300,000$ - 500,000$' },
+      { id: '500k-1m', label: '500,000$ - 1,000,000$', value: '500,000$ - 1,000,000$' },
+      { id: '1m-1.5m', label: '1,000,000$ - 1,500,000$', value: '1,000,000$ - 1,500,000$' },
+      { id: '1.5m-more', label: '1,500,000$ فأكثر', value: '1,500,000$ فأكثر' },
     ],
   },
   {
     id: 4,
-    title: 'ما هو الغرض من الشراء',
+    title: 'موعد تسليم المشروع أو الاستلام؟',
     type: 'single',
     options: [
-      { id: 'investment', label: 'استثمار', value: 'استثمار' },
-      { id: 'living', label: 'للسكن', value: 'للسكن' },
-      { id: 'both', label: 'كلاهما', value: 'كلاهما' },
+      { id: 'new-launch', label: 'إطلاق جديد', value: 'إطلاق جديد' },
+      { id: '2026', label: '2026', value: '2026' },
+      { id: '2027', label: '2027', value: '2027' },
+      { id: '2028', label: '2028', value: '2028' },
+      { id: '2029', label: '2029', value: '2029' },
+      { id: '2030', label: '2030', value: '2030' },
     ],
   },
   {
     id: 5,
-    title: 'الميزانية المطلوبة',
+    title: 'كيف تفضل أن نتواصل معك لمناقشة استفسارك بشكل أوسع؟',
     type: 'single',
     options: [
-      { id: 'budget-750k-1m', label: '750,000 - 1,000,000 درهم', value: '750K-1M' },
-      { id: 'budget-1m-1.5m', label: '1,000,000 - 1,500,000 درهم', value: '1M-1.5M' },
-      { id: 'budget-1.5m-2.5m', label: '1,500,000 - 2,500,000 درهم', value: '1.5M-2.5M' },
-      { id: 'budget-over-2.5m', label: 'أكثر من 2,500,000 درهم', value: '>2.5M' },
+      { id: 'phone-call', label: 'عبر مكالمة هاتفية', value: 'عبر مكالمة هاتفية' },
+      { id: 'whatsapp', label: 'عبر واتساب', value: 'عبر واتساب' },
+      { id: 'telegram', label: 'عبر تيليجرام', value: 'عبر تيليجرام' },
     ],
   },
   {
     id: 6,
-    title: 'حالة العقار',
-    type: 'single',
-    options: [
-      { id: 'ready', label: 'جاهز للتسليم', value: 'جاهز للتسليم' },
-      { id: 'off-plan', label: 'على الخارطة', value: 'على الخارطة' },
-      { id: 'any-status', label: 'أي حالة', value: 'أي حالة' },
-    ],
-  },
-  {
-    id: 7,
-    title: 'كيف تفضل الاتصال',
+    title: 'معلومات التواصل',
     type: 'contact',
-    options: [
-      { id: 'whatsapp', label: 'واتساب', value: 'واتساب' },
-      { id: 'call', label: 'مكالمة هاتفية', value: 'مكالمة هاتفية' },
-    ],
+    description: 'يرجى إدخال الاسم ورقم الهاتف الذي سنرسل إليه الخيارات',
+    checkboxLabel: 'أوافق على سياسة الخصوصية',
     fields: [
       {
         name: 'fullName',
-        label: 'الاسم الكامل',
+        label: 'الاسم',
         type: 'text',
-        placeholder: 'أدخل اسمك الكامل',
+        placeholder: 'أدخل الاسم',
         required: true,
       },
       {
         name: 'phone',
         label: 'رقم الهاتف',
         type: 'tel',
-        placeholder: '50 123 4567',
+        placeholder: '000-0000000',
         required: true,
+      },
+      {
+        name: 'email',
+        label: 'البريد الإلكتروني',
+        type: 'email',
+        placeholder: 'example@email.com',
+        required: false,
       },
     ],
   },
@@ -125,5 +124,5 @@ export type QuizAnswers = {
   [key: number]: string | string[];
   fullName?: string;
   phone?: string;
-  contactMethod?: string;
+  email?: string;
 };

@@ -8,7 +8,7 @@ const AMOCRM_PIPELINE_ID = process.env.AMOCRM_PIPELINE_ID;
 interface QuizData {
   fullName?: string;
   phone?: string;
-  contactMethod?: string;
+  email?: string;
   [key: number]: string;
 }
 
@@ -18,17 +18,16 @@ export async function POST(request: NextRequest) {
 
     // Build quiz answers summary
     const quizAnswersLabels: Record<number, string> = {
-      0: 'طريقة الدفع',
-      1: 'المبلغ المستثمر',
-      2: 'فترة الاستثمار',
-      3: 'عدد غرف النوم',
-      4: 'الغرض من الشراء',
-      5: 'الميزانية',
-      6: 'حالة العقار',
+      0: 'نوع العقار',
+      1: 'هدف الشراء',
+      2: 'عدد غرف النوم',
+      3: 'نطاق السعر',
+      4: 'موعد التسليم',
+      5: 'طريقة التواصل المفضلة',
     };
 
     const quizAnswers: Record<string, string> = {};
-    for (let i = 0; i <= 6; i++) {
+    for (let i = 0; i <= 5; i++) {
       if (data[i]) {
         quizAnswers[quizAnswersLabels[i]] = data[i];
       }
@@ -38,7 +37,8 @@ export async function POST(request: NextRequest) {
     console.log('Quiz submission:', {
       name: data.fullName,
       phone: data.phone,
-      contactMethod: data.contactMethod,
+      contactMethod: data[5],
+      email: data.email,
       quizAnswers,
     });
 
@@ -76,8 +76,12 @@ export async function POST(request: NextRequest) {
                   },
                   {
                     field_name: 'طريقة التواصل المفضلة',
-                    values: [{ value: data.contactMethod }],
+                    values: [{ value: data[5] }],
                   },
+                  ...(data.email ? [{
+                    field_code: 'EMAIL',
+                    values: [{ value: data.email, enum_code: 'WORK' }],
+                  }] : []),
                 ],
               },
             ],
@@ -112,7 +116,7 @@ export async function POST(request: NextRequest) {
       gtmEvent: {
         event: 'quiz_complete',
         formName: 'quiz',
-        contactMethod: data.contactMethod,
+        contactMethod: data[5],
       },
     });
   } catch (error) {

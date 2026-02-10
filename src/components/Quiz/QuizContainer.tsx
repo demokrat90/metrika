@@ -15,7 +15,8 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
   const [contactInfo, setContactInfo] = useState({
     fullName: '',
     phone: '',
-    contactMethod: '',
+    email: '',
+    privacyAgreed: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -36,7 +37,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
     }
   }, [currentStep, totalSteps]);
 
-  const handleContactChange = useCallback((field: string, value: string) => {
+  const handleContactChange = useCallback((field: string, value: string | boolean) => {
     setContactInfo((prev) => ({
       ...prev,
       [field]: value,
@@ -47,8 +48,8 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
     if (currentStep === totalSteps - 1) {
       return (
         contactInfo.fullName.trim() !== '' &&
-        contactInfo.phone.length >= 10 &&
-        contactInfo.contactMethod !== ''
+        contactInfo.phone.trim() !== '' &&
+        contactInfo.privacyAgreed
       );
     }
     return answers[currentStep] !== undefined;
@@ -75,7 +76,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
       ...answers,
       fullName: contactInfo.fullName,
       phone: contactInfo.phone,
-      contactMethod: contactInfo.contactMethod,
+      email: contactInfo.email,
     };
 
     try {
@@ -91,7 +92,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
         setIsCompleted(true);
         pushEvent('quiz_complete', {
           formName: 'quiz',
-          contactMethod: contactInfo.contactMethod,
+          contactMethod: answers[5],
         });
         trackConversion();
         onComplete(finalAnswers);
@@ -221,6 +222,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
             contactInfo={contactInfo}
             onSelect={handleSelect}
             onContactChange={handleContactChange}
+            onPrivacyChange={(checked) => handleContactChange('privacyAgreed', checked)}
           />
         </div>
 
@@ -263,15 +265,6 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
           )}
         </div>
 
-        {/* Privacy Note */}
-        {currentStep === totalSteps - 1 && (
-          <p className="text-center text-sm text-[#555] mt-10 max-w-md mx-auto">
-            عند إدخال معلوماتك فإنك تقبل{' '}
-            <a href="#" className="text-[#a39466] hover:underline transition-colors">
-              سياسة الخصوصية
-            </a>
-          </p>
-        )}
       </div>
     </section>
   );

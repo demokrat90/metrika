@@ -3,244 +3,449 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Metrika Preview</title>
+  <title>Quiz Arabic Preview</title>
   <style>
     :root {
-      --color-dark: #171717;
-      --color-dark-secondary: #292929;
-      --color-gold: #a39466;
-      --color-light-gray: #c9c9c9;
-      --color-white: #ffffff;
+      --bg: #171717;
+      --panel: #1f1f1f;
+      --line: #333;
+      --gold: #a39466;
+      --gold-2: #b8a775;
+      --text: #fff;
+      --muted: #b7b7b7;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background: var(--color-dark);
-      color: var(--color-white);
-      font-family: 'PT Serif', serif;
-      direction: rtl;
-      text-align: right;
+      background: radial-gradient(circle at 15% 15%, rgba(163,148,102,0.12), transparent 35%),
+                  radial-gradient(circle at 85% 85%, rgba(163,148,102,0.08), transparent 38%),
+                  var(--bg);
+      color: var(--text);
+      font-family: "Tahoma", "Arial", sans-serif;
+      min-height: 100vh;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 16px;
+
+    .wrap {
+      width: min(980px, 92vw);
+      margin: 32px auto;
+      padding: 24px;
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      background: rgba(23, 23, 23, 0.85);
+      backdrop-filter: blur(3px);
     }
-    .hero {
-      position: relative;
-      min-height: 90vh;
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(22px, 3vw, 32px);
+      text-align: center;
+    }
+
+    .sub {
+      margin: 0 0 24px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .progress {
+      height: 6px;
+      border-radius: 999px;
+      background: #2a2a2a;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(to left, var(--gold), var(--gold-2));
+      width: 0;
+      transition: width .25s ease;
+    }
+
+    .step-index {
+      text-align: center;
+      color: var(--gold);
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .card {
+      border: 1px solid #2e2e2e;
+      background: #191919;
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .question {
+      font-size: clamp(20px, 2.6vw, 30px);
+      text-align: center;
+      margin: 0 0 20px;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .opt {
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      min-height: 58px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: .2s ease;
+    }
+
+    .opt:hover {
+      border-color: rgba(163,148,102,.6);
+      transform: translateY(-1px);
+    }
+
+    .opt.active {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(163,148,102,.2);
+      color: #e8ddb8;
+    }
+
+    .contact-lead {
+      color: var(--muted);
+      margin: 0 0 14px;
+      text-align: center;
+    }
+
+    .field { margin-bottom: 12px; }
+
+    .field label {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      height: 48px;
+      border: 2px solid var(--line);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 0 12px;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--gold);
+    }
+
+    .phone-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 10px;
+    }
+
+    .agree {
       display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      gap: 10px;
+      margin-top: 8px;
+      color: #d5d5d5;
+      font-size: 14px;
     }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: url('/images/112233.jpg') center/cover no-repeat;
+
+    .agree input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--gold);
     }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
     }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 0 16px;
-    }
-    h1 {
-      margin: 0 0 24px;
-      font-size: clamp(28px, 4vw, 60px);
-      font-weight: 400;
-      line-height: 1.2;
-    }
-    .accent { color: var(--color-gold); }
-    p {
-      margin: 0 0 32px;
-      font-size: clamp(16px, 2vw, 22px);
-      color: var(--color-light-gray);
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
-    @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 0 0 rgba(163,148,102,0.0); }
-      50% { box-shadow: 0 8px 40px rgba(163,148,102,0.5); }
-    }
-    .quiz-btn-glow { animation: glowPulse 2s ease-in-out infinite; }
-    .cta {
-      display: inline-block;
+
+    .btn {
       border: 0;
+      border-radius: 10px;
+      min-height: 46px;
+      padding: 0 18px;
+      font-size: 15px;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 18px;
-      padding: 16px 40px;
-      border-radius: 12px;
+    }
+
+    .btn.prev {
+      background: transparent;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+    }
+
+    .btn.next {
       color: #171717;
-      background: linear-gradient(to left, #a39466, #b8a775);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(163,148,102,0.4);
+      font-weight: 700;
+      background: linear-gradient(to left, var(--gold), var(--gold-2));
     }
 
-    .invest {
-      position: relative;
-      background: #171717;
-      padding: 80px 0;
-      overflow: hidden;
+    .btn[disabled] {
+      opacity: .45;
+      cursor: not-allowed;
     }
-    .invest::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle_at_20%_20%, rgba(163,148,102,0.12), transparent 55%),
-                  radial-gradient(circle_at_80%_80%, rgba(255,255,255,0.05), transparent 60%);
-    }
-    .invest-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    @media (min-width: 900px) {
-      .invest-inner { grid-template-columns: 1fr 1fr; }
-    }
-    .invest-card {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid #2b2b2b;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-    }
-    .invest-card img { width: 100%; height: auto; display: block; }
-    .eyebrow { color: var(--color-gold); font-size: 12px; letter-spacing: 0.2em; margin-bottom: 16px; }
-    .invest h2 { margin: 0 0 24px; font-size: clamp(24px, 3vw, 36px); color: #fff; }
-    .bullets { list-style: none; padding: 0; margin: 0; }
-    .bullets li { display: flex; gap: 12px; color: var(--color-light-gray); margin-bottom: 14px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-gold); margin-top: 6px; box-shadow: 0 0 10px rgba(163,148,102,0.6); }
 
-    .tax { position: relative; background: #171717; padding: 40px 0; overflow: hidden; }
-    .tax::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle_at_20%_20%, rgba(163,148,102,0.12), transparent 55%),
-                  radial-gradient(circle_at_80%_80%, rgba(255,255,255,0.05), transparent 60%);
+    .hint {
+      margin-top: 10px;
+      text-align: center;
+      color: #7e7e7e;
+      font-size: 12px;
     }
-    .tax-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
+
+    @media (max-width: 700px) {
+      .options { grid-template-columns: 1fr; }
+      .phone-row { grid-template-columns: 1fr; }
+      .wrap { padding: 16px; margin: 16px auto; }
     }
-    @media (min-width: 900px) { .tax-inner { grid-template-columns: 1fr 1fr; } }
-    .panel {
-      background: rgba(23,23,23,0.75);
-      border: 1px solid #2b2b2b;
-      border-radius: 20px;
-      padding: 24px;
-      backdrop-filter: blur(1px);
-    }
-    .panel .label { font-size: 12px; letter-spacing: 0.18em; color: var(--color-gold); }
-    .panel .split { margin: 16px 0; height: 1px; background: #2b2b2b; }
-    .tax-row { display: flex; align-items: center; justify-content: flex-start; gap: 16px; height: 80px; }
-    .tax-block { min-height: 80px; display: flex; align-items: center; }
-    .tax-value { font-size: 48px; font-weight: 700; color: var(--color-gold); }
-    .panel p { margin: 0; color: var(--color-light-gray); line-height: 1.7; }
-    .panel h4 { margin: 0 0 8px; color: #fff; }
-    .nowrap { white-space: nowrap; }
-    .tax-text { font-size: 16px; }
   </style>
 </head>
 <body>
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content container">
-      <h1 class="animate-fade-in">
-        شقق جديدة للبيع في دبي<br />
-        <span class="accent">بأسعار تبدأ من 750,000 درهم إماراتي</span>
-      </h1>
-      <p class="animate-fade-in" style="animation-delay:0.2s;">
-        استثمر في العقارات الفاخرة في دبي مع خبراء السوق المحليين
-      </p>
-      <button class="cta quiz-btn-glow animate-fade-in" style="animation-delay:0.4s;">
-        اختيار العقارات
-      </button>
-    </div>
-  </section>
+  <div class="wrap">
+    <h1>معاينة الكويز</h1>
+    <p class="sub">نفس الأسئلة الجديدة مع نموذج تواصل قابل للتجربة</p>
 
-  <section class="invest">
-    <div class="container">
-      <div class="invest-inner">
-        <div class="invest-card">
-          <img src="/images/dubai-skyline.jpg" alt="أفق دبي" />
-        </div>
-        <div>
-          <div class="eyebrow">الاستثمار العقاري في الإمارات</div>
-          <h2>استثمر في الإمارات بأمان وربحية</h2>
-          <ul class="bullets">
-            <li><span class="dot"></span><span>طلب مرتفع على الإيجار طوال العام</span></li>
-            <li><span class="dot"></span><span>عائدات سنوية نموذجية بين 6-9% (حسب الموقع وفئة الأصل)</span></li>
-            <li><span class="dot"></span><span>تملك حر للأجانب في مناطق محددة</span></li>
-            <li><span class="dot"></span><span>رقابة هيئة التنظيم العقاري وحسابات ضمان للمشاريع على الخارطة</span></li>
-            <li><span class="dot"></span><span>ارتباط الدرهم الإماراتي بالدولار الأمريكي يقلل مخاطر سعر الصرف</span></li>
-            <li><span class="dot"></span><span>خطط سداد مرنة من المطور (تشمل خيارات ما بعد التسليم)</span></li>
-            <li><span class="dot"></span><span>بنية تحتية عالمية واتصال عالمي</span></li>
-            <li><span class="dot"></span><span>أسواق أولية وثانوية عالية السيولة</span></li>
-            <li><span class="dot"></span><span>عمولة 0% عند الشراء مباشرة من المطور</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+    <div class="progress"><span id="progressBar"></span></div>
+    <div id="stepIndex" class="step-index"></div>
 
-  <section class="tax">
-    <div class="container">
-      <div class="tax-inner">
-        <div class="panel">
-          <div class="label">وفّر في الضرائب</div>
-          <div style="margin-top:16px;">
-            <div class="tax-row">
-              <div class="tax-value">0%</div>
-              <p class="tax-text">ضريبة أرباح رأس المال عند إعادة البيع (للأفراد)</p>
-            </div>
-            <div class="split"></div>
-            <div class="tax-row">
-              <div class="tax-value">0%</div>
-              <p class="tax-text">ضريبة الدخل الشخصي على دخل الإيجار</p>
-            </div>
+    <div class="card">
+      <h2 id="question" class="question"></h2>
+
+      <div id="options" class="options"></div>
+
+      <div id="contact" style="display:none">
+        <p class="contact-lead">يرجى إدخال الاسم ورقم الهاتف الذي سنرسل إليه الاختيارات</p>
+
+        <div class="field">
+          <label>الاسم *</label>
+          <input id="name" placeholder="Name" />
+        </div>
+
+        <div class="field">
+          <label>رقم الهاتف *</label>
+          <div class="phone-row">
+            <select id="country">
+              <option value="+971" data-mask="50 123 4567">🇦🇪 الإمارات +971</option>
+              <option value="+966" data-mask="50 123 4567">🇸🇦 السعودية +966</option>
+              <option value="+20" data-mask="100 123 4567">🇪🇬 مصر +20</option>
+              <option value="+213" data-mask="555 12 34 56">🇩🇿 الجزائر +213</option>
+              <option value="+1" data-mask="(201) 555-0123">🇺🇸 الولايات المتحدة +1</option>
+              <option value="+44" data-mask="7400 123456">🇬🇧 المملكة المتحدة +44</option>
+            </select>
+            <input id="phone" placeholder="50 123 4567" inputmode="numeric" />
           </div>
         </div>
-        <div class="panel">
-          <div class="label">الإقامة عبر التملك</div>
-          <div style="margin-top:16px;">
-            <div class="tax-block">
-              <div>
-                <h4 style="margin:0 0 4px;">تأشيرة مستثمر (سنتان):</h4>
-                <p class="tax-text">ابتداءً من قيمة عقار 750,000 درهم إماراتي</p>
-              </div>
-            </div>
-            <div class="split"></div>
-            <div class="tax-block">
-              <div>
-                <h4 style="margin:0 0 4px;">الإقامة الذهبية (10 سنوات):</h4>
-                <p class="tax-text">ابتداءً من قيمة عقار 2,000,000 درهم إماراتي</p>
-              </div>
-            </div>
-          </div>
+
+        <div class="field">
+          <label>البريد الإلكتروني</label>
+          <input id="email" placeholder="Email" />
         </div>
+
+        <label class="agree">
+          <input id="agree" type="checkbox" />
+          <span>I agree to the Privacy Policy</span>
+        </label>
       </div>
+
+      <div class="actions">
+        <button id="prevBtn" class="btn prev">السابق</button>
+        <button id="nextBtn" class="btn next">التالي</button>
+      </div>
+
+      <p class="hint" id="hint"></p>
     </div>
-  </section>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        title: "ما نوع العقار الذي تهتم به؟",
+        options: ["لا أعرف بعد", "شقق", "فلل", "تاون هاوس"]
+      },
+      {
+        title: "ما هدفك من الشراء؟",
+        options: ["لنفسي", "للاستثمار"]
+      },
+      {
+        title: "كم عدد غرف النوم التي تريدها؟",
+        options: ["لا أعرف بعد", "غرفة نوم واحدة", "غرفتا نوم", "3 غرف نوم", "4 غرف نوم فأكثر"]
+      },
+      {
+        title: "حدد نطاق السعر المقبول",
+        options: ["250,000$ - 300,000$", "300,000$ - 500,000$", "500,000$ - 1,000,000$", "1,000,000$ - 1,500,000$", "1,500,000$ فأكثر"]
+      },
+      {
+        title: "موعد تسليم المشروع أو الاستلام؟",
+        options: ["إطلاق جديد", "2026", "2027", "2028", "2029", "2030"]
+      },
+      {
+        title: "كيف تفضل أن نتواصل معك لمناقشة استفسارك بشكل أوسع؟",
+        options: ["عبر مكالمة هاتفية", "عبر واتساب", "عبر تيليجرام"]
+      },
+      {
+        title: "Provide your name and phone number where we will send you the selection",
+        contact: true
+      }
+    ];
+
+    const state = {
+      step: 0,
+      answers: {},
+      contact: {
+        name: "",
+        phone: "",
+        email: "",
+        country: "+971",
+        agree: false
+      }
+    };
+
+    const question = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const contactEl = document.getElementById('contact');
+    const stepIndex = document.getElementById('stepIndex');
+    const progressBar = document.getElementById('progressBar');
+    const hint = document.getElementById('hint');
+
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    const nameInput = document.getElementById('name');
+    const phoneInput = document.getElementById('phone');
+    const emailInput = document.getElementById('email');
+    const countrySelect = document.getElementById('country');
+    const agreeInput = document.getElementById('agree');
+
+    function updatePhoneMaskHint() {
+      const selected = countrySelect.options[countrySelect.selectedIndex];
+      phoneInput.placeholder = selected.dataset.mask || '000 000 0000';
+    }
+
+    function digitsOnly(v) {
+      return (v || '').replace(/\D/g, '');
+    }
+
+    function formatByMask(digits, mask) {
+      let i = 0;
+      return mask.replace(/\d/g, () => digits[i++] || '').replace(/[\s-]+$/g, '');
+    }
+
+    function render() {
+      const current = steps[state.step];
+      const total = steps.length;
+
+      question.textContent = current.title;
+      stepIndex.textContent = `الخطوة ${state.step + 1} من ${total}`;
+      progressBar.style.width = `${((state.step + 1) / total) * 100}%`;
+
+      optionsEl.innerHTML = '';
+      contactEl.style.display = current.contact ? 'block' : 'none';
+      optionsEl.style.display = current.contact ? 'none' : 'grid';
+
+      if (!current.contact) {
+        current.options.forEach((opt) => {
+          const btn = document.createElement('button');
+          btn.className = 'opt';
+          if (state.answers[state.step] === opt) btn.classList.add('active');
+          btn.textContent = opt;
+          btn.onclick = () => {
+            state.answers[state.step] = opt;
+            render();
+          };
+          optionsEl.appendChild(btn);
+        });
+      }
+
+      prevBtn.disabled = state.step === 0;
+      nextBtn.textContent = state.step === total - 1 ? 'إرسال' : 'التالي';
+      nextBtn.disabled = !canProceed();
+
+      hint.textContent = current.contact
+        ? 'الحقول المطلوبة: Name, Phone, Privacy Policy'
+        : '';
+    }
+
+    function canProceed() {
+      const current = steps[state.step];
+      if (!current.contact) return Boolean(state.answers[state.step]);
+
+      return (
+        state.contact.name.trim().length > 0 &&
+        state.contact.phone.trim().length > 0 &&
+        state.contact.agree
+      );
+    }
+
+    prevBtn.onclick = () => {
+      if (state.step > 0) {
+        state.step -= 1;
+        render();
+      }
+    };
+
+    nextBtn.onclick = () => {
+      if (!canProceed()) return;
+      if (state.step < steps.length - 1) {
+        state.step += 1;
+        render();
+        return;
+      }
+
+      alert('تم الإرسال (معاينة فقط)');
+      console.log('Preview payload', {
+        ...state.answers,
+        fullName: state.contact.name,
+        phone: `${state.contact.country} ${state.contact.phone}`,
+        email: state.contact.email
+      });
+    };
+
+    nameInput.oninput = (e) => {
+      state.contact.name = e.target.value;
+      render();
+    };
+
+    emailInput.oninput = (e) => {
+      state.contact.email = e.target.value;
+    };
+
+    countrySelect.onchange = (e) => {
+      state.contact.country = e.target.value;
+      updatePhoneMaskHint();
+      phoneInput.dispatchEvent(new Event('input'));
+    };
+
+    phoneInput.oninput = (e) => {
+      const selected = countrySelect.options[countrySelect.selectedIndex];
+      const mask = selected.dataset.mask || '000 000 0000';
+      const cleaned = digitsOnly(e.target.value).slice(0, (mask.match(/\d/g) || []).length);
+      e.target.value = formatByMask(cleaned, mask);
+      state.contact.phone = e.target.value;
+      render();
+    };
+
+    agreeInput.onchange = (e) => {
+      state.contact.agree = e.target.checked;
+      render();
+    };
+
+    state.contact.country = countrySelect.value;
+    updatePhoneMaskHint();
+    render();
+  </script>
 </body>
 </html>

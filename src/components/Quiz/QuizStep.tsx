@@ -9,10 +9,12 @@ interface QuizStepProps {
   contactInfo: {
     fullName: string;
     phone: string;
-    contactMethod: string;
+    email: string;
+    privacyAgreed: boolean;
   };
   onSelect: (value: string) => void;
-  onContactChange: (field: string, value: string) => void;
+  onContactChange: (field: string, value: string | boolean) => void;
+  onPrivacyChange: (checked: boolean) => void;
 }
 
 export default function QuizStep({
@@ -21,13 +23,9 @@ export default function QuizStep({
   contactInfo,
   onSelect,
   onContactChange,
+  onPrivacyChange,
 }: QuizStepProps) {
-  const isSelected = (optionValue: string) => {
-    if (step.type === 'contact') {
-      return contactInfo.contactMethod === optionValue;
-    }
-    return selectedValue === optionValue;
-  };
+  const isSelected = (optionValue: string) => selectedValue === optionValue;
 
   return (
     <div className="quiz-step-animate">
@@ -52,13 +50,7 @@ export default function QuizStep({
           {step.options.map((option, index) => (
             <button
               key={option.id}
-              onClick={() => {
-                if (step.type === 'contact') {
-                  onContactChange('contactMethod', option.value);
-                } else {
-                  onSelect(option.value);
-                }
-              }}
+              onClick={() => onSelect(option.value)}
               className={`
                 quiz-card group relative px-6 py-5 rounded-2xl transition-all duration-500 flex items-center justify-center min-h-[70px]
                 ${isSelected(option.value)
@@ -108,6 +100,11 @@ export default function QuizStep({
       {/* Contact Fields */}
       {step.type === 'contact' && step.fields && (
         <div className="max-w-lg mx-auto mt-10 space-y-6">
+          {step.description && (
+            <p className="text-[#c9c9c9] text-center text-lg leading-relaxed">
+              {step.description}
+            </p>
+          )}
           {step.fields.map((field) => (
             <div key={field.name} className="group">
               <label className="block text-[#a39466] text-sm font-medium mb-3 tracking-wide">
@@ -122,14 +119,33 @@ export default function QuizStep({
               ) : (
                 <input
                   type={field.type}
-                  value={contactInfo.fullName}
-                  onChange={(e) => onContactChange('fullName', e.target.value)}
+                  value={
+                    field.name === 'fullName'
+                      ? contactInfo.fullName
+                      : field.name === 'email'
+                        ? contactInfo.email
+                        : ''
+                  }
+                  onChange={(e) => onContactChange(field.name, e.target.value)}
                   placeholder={field.placeholder}
+                  required={field.required}
                   className="w-full bg-[#1f1f1f] border-2 border-[#333] rounded-xl px-5 py-4 text-white text-lg focus:outline-none focus:border-[#a39466] focus:shadow-[0_0_20px_rgba(163,148,102,0.2)] transition-all duration-300 placeholder:text-[#555]"
                 />
               )}
             </div>
           ))}
+
+          {step.checkboxLabel && (
+            <label className="flex items-start gap-3 text-[#c9c9c9] text-sm cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={contactInfo.privacyAgreed}
+                onChange={(e) => onPrivacyChange(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-[#555] bg-[#1f1f1f] accent-[#a39466]"
+              />
+              <span>{step.checkboxLabel}</span>
+            </label>
+          )}
         </div>
       )}
     </div>
