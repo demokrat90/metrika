@@ -34,9 +34,8 @@ export async function POST(request: NextRequest) {
           noteText: [
             'Lead source: popup form',
             `Full name: ${data.fullName}`,
-            `Category: ${data.category}`,
-            `Source: ${data.source}`,
             `Phone: ${data.phone}`,
+            'Email: -',
             '',
             requestContextNote,
           ].join('\n'),
