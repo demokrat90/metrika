@@ -3,11 +3,15 @@ import { NextRequest } from 'next/server';
 function sanitizeReferer(rawReferer: string): string {
   if (!rawReferer || rawReferer === '-') return '-';
 
+  const trimmed = rawReferer.trim();
+  const withoutFragment = trimmed.split('#', 1)[0] || trimmed;
+  const withoutQuery = withoutFragment.split('?', 1)[0] || withoutFragment;
+
   try {
-    const url = new URL(rawReferer);
+    const url = new URL(withoutQuery);
     return `${url.origin}${url.pathname}`;
   } catch {
-    return rawReferer;
+    return withoutQuery;
   }
 }
 
