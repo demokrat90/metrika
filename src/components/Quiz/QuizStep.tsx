@@ -26,6 +26,7 @@ export default function QuizStep({
   onPrivacyChange,
 }: QuizStepProps) {
   const isSelected = (optionValue: string) => selectedValue === optionValue;
+  const isNumericRangeLabel = (label: string) => /[0-9$]/.test(label) && !/[\u0600-\u06FF]/.test(label);
 
   return (
     <div className="quiz-step-animate">
@@ -52,7 +53,7 @@ export default function QuizStep({
               key={option.id}
               onClick={() => onSelect(option.value)}
               className={`
-                quiz-card group relative px-6 py-5 rounded-2xl transition-all duration-500 flex items-center justify-center min-h-[70px]
+                quiz-card group relative px-6 py-5 rounded-2xl transition-all duration-500 flex items-center gap-4 min-h-[70px]
                 ${isSelected(option.value)
                   ? 'quiz-card-selected bg-gradient-to-br from-[#a39466]/20 to-[#a39466]/5 border-[#a39466] shadow-[0_0_30px_rgba(163,148,102,0.4)]'
                   : 'bg-[#1f1f1f] border-[#333] hover:border-[#a39466]/50 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:-translate-y-1'
@@ -66,15 +67,8 @@ export default function QuizStep({
                 <div className="absolute inset-0 bg-gradient-to-br from-[#a39466]/10 to-transparent pointer-events-none" />
               )}
 
-              {/* Label */}
-              <span className={`text-lg font-medium transition-colors duration-300 relative z-10 ${
-                isSelected(option.value) ? 'text-[#a39466]' : 'text-white group-hover:text-[#a39466]'
-              }`}>
-                {option.label}
-              </span>
-
               {/* Selection indicator */}
-              <div className={`absolute top-4 left-4 w-6 h-6 rounded-full border-2 transition-all duration-300 flex items-center justify-center ${
+              <div className={`w-6 h-6 shrink-0 rounded-full border-2 transition-all duration-300 flex items-center justify-center relative z-10 ${
                 isSelected(option.value)
                   ? 'border-[#a39466] bg-[#a39466]'
                   : 'border-[#444] group-hover:border-[#a39466]/50'
@@ -85,6 +79,17 @@ export default function QuizStep({
                   </svg>
                 )}
               </div>
+
+              {/* Label */}
+              <span
+                dir={isNumericRangeLabel(option.label) ? 'ltr' : 'rtl'}
+                className={`block flex-1 min-w-0 text-center text-lg font-medium leading-tight transition-colors duration-300 relative z-10 ${
+                isSelected(option.value) ? 'text-[#a39466]' : 'text-white group-hover:text-[#a39466]'
+              }`}
+                style={{ unicodeBidi: 'plaintext' }}
+              >
+                {option.label}
+              </span>
 
               {/* Corner accent */}
               <div className={`absolute bottom-0 right-0 w-12 h-12 transition-opacity duration-300 ${
