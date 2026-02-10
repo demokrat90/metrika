@@ -13,6 +13,7 @@ interface PhoneInputProps {
 
 export default function PhoneInput({ value, onChange, placeholder }: PhoneInputProps) {
   const [defaultCountry, setDefaultCountry] = useState<CountryCode>('AE');
+  const MAX_E164_DIGITS = 15;
 
   // Auto-detect country on mount
   useEffect(() => {
@@ -39,7 +40,14 @@ export default function PhoneInput({ value, onChange, placeholder }: PhoneInputP
         countryCallingCodeEditable={false}
         defaultCountry={defaultCountry}
         value={value}
-        onChange={(newValue) => onChange(newValue || '')}
+        onChange={(newValue) => {
+          const nextValue = newValue || '';
+          const digits = nextValue.replace(/\D/g, '');
+          if (digits.length > MAX_E164_DIGITS) {
+            return;
+          }
+          onChange(nextValue);
+        }}
         placeholder={placeholder}
         className="phone-input-field"
       />
