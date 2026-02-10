@@ -52,7 +52,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
         contactInfo.privacyAgreed
       );
     }
-    return answers[currentStep] !== undefined;
+    return true;
   };
 
   const handleNext = () => {
