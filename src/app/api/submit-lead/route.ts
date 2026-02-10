@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
+import { buildRequestContextNote } from '@/lib/request-context';
 
 interface LeadData {
   fullName: string;
@@ -11,6 +12,7 @@ interface LeadData {
 export async function POST(request: NextRequest) {
   try {
     const data: LeadData = await request.json();
+    const requestContextNote = buildRequestContextNote(request);
     const amoConfigured = isAmoConfigured();
     let amoSynced = !amoConfigured;
     let amoError = '';
@@ -28,12 +30,15 @@ export async function POST(request: NextRequest) {
       try {
         await submitAmoLead({
           leadName: `${data.category} - ${data.fullName}`,
-          tags: [data.category, data.source, 'popup-form'],
+          tags: ['Arab'],
           noteText: [
             'Lead source: popup form',
+            `Full name: ${data.fullName}`,
             `Category: ${data.category}`,
             `Source: ${data.source}`,
             `Phone: ${data.phone}`,
+            '',
+            requestContextNote,
           ].join('\n'),
           contact: {
             fullName: data.fullName,

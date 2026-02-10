@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
+import { buildRequestContextNote } from '@/lib/request-context';
 
 interface QuizData {
   fullName?: string;
@@ -11,6 +12,7 @@ interface QuizData {
 export async function POST(request: NextRequest) {
   try {
     const data: QuizData = await request.json();
+    const requestContextNote = buildRequestContextNote(request);
     const fullName = data.fullName?.trim() || 'Unknown';
     const phone = data.phone?.trim() || '';
     const amoConfigured = isAmoConfigured();
@@ -46,21 +48,24 @@ export async function POST(request: NextRequest) {
     // If AmoCRM is configured, send the lead
     if (amoConfigured) {
       try {
-        const answersText = Object.entries(quizAnswers)
-          .map(([key, value]) => `${key}: ${value}`)
+        const answersText = Object.entries(quizAnswersLabels)
+          .map(([index, label]) => `${label}: ${data[Number(index)] || '-'}`)
           .join('\n');
 
         await submitAmoLead({
           leadName: `Quiz Lead - ${fullName}`,
-          tags: ['quiz-form', data[0], data[1], data[5]].filter(Boolean) as string[],
+          tags: ['Arab'],
           noteText: [
             'Lead source: quiz form',
+            `Full name: ${fullName}`,
             `Contact method: ${data[5] || '-'}`,
             `Phone: ${phone || '-'}`,
             `Email: ${data.email || '-'}`,
             '',
             'Quiz answers:',
             answersText || '-',
+            '',
+            requestContextNote,
           ].join('\n'),
           contact: {
             fullName,

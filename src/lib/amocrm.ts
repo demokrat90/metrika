@@ -5,6 +5,7 @@ const AMOCRM_PIPELINE_ID = process.env.AMOCRM_PIPELINE_ID?.trim();
 const AMOCRM_STATUS_ID = process.env.AMOCRM_STATUS_ID?.trim();
 const AMOCRM_PIPELINE_NAME = process.env.AMOCRM_PIPELINE_NAME?.trim() || 'Administrators';
 const AMOCRM_STATUS_NAME = process.env.AMOCRM_STATUS_NAME?.trim() || 'Incoming';
+const AMOCRM_MAX_NOTE_LENGTH = 12000;
 
 type AmoLeadContactValue = {
   value: string;
@@ -146,7 +147,10 @@ function toAmoTags(tags: string[] | undefined): AmoTag[] {
 }
 
 async function addLeadNote(baseUrl: string, leadId: number, noteText: string): Promise<void> {
-  const text = noteText.trim();
+  const normalizedText = noteText.trim();
+  const text = normalizedText.length <= AMOCRM_MAX_NOTE_LENGTH
+    ? normalizedText
+    : `${normalizedText.slice(0, AMOCRM_MAX_NOTE_LENGTH)}\n...[truncated]`;
   if (!text) return;
 
   const response = await fetch(`${baseUrl}/api/v4/leads/notes`, {
@@ -247,11 +251,11 @@ export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
   };
 
   const leadId = result?._embedded?.leads?.[0]?.id;
+  if (payload.noteText && !leadId) {
+    throw new Error('AmoCRM lead created without id, cannot attach note.');
+  }
+
   if (payload.noteText && leadId) {
-    try {
-      await addLeadNote(baseUrl, leadId, payload.noteText);
-    } catch (noteError) {
-      console.error('Error adding AmoCRM lead note:', noteError);
-    }
+    await addLeadNote(baseUrl, leadId, payload.noteText);
   }
 }
