@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
 import { buildRequestContextNote, extractRequestTracking } from '@/lib/request-context';
+import { notifyTelegram } from '@/lib/telegram';
 
 interface LeadData {
   fullName: string;
@@ -27,6 +28,14 @@ export async function POST(request: NextRequest) {
       phone: data.phone,
       category: data.category,
       source: data.source,
+    });
+
+    // Telegram notification (fire-and-forget)
+    notifyTelegram({
+      source: 'popup',
+      fullName: data.fullName,
+      phone: data.phone,
+      category: data.category,
     });
 
     // If AmoCRM is configured, send the lead
