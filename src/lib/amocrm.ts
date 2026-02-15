@@ -14,6 +14,7 @@ const AMOCRM_COOKIES_MAX_LENGTH = 3500;
 type AmoLeadContactValue = {
   value: string;
   enum_code?: string;
+  enum_id?: number;
 };
 
 type AmoCustomFieldByCode = {
@@ -469,6 +470,12 @@ export async function submitAmoLead(payload: AmoLeadPayload): Promise<void> {
   } catch (error) {
     console.warn('Could not map tracking fields to AmoCRM custom fields:', error);
   }
+
+  // Set "Source" field to "promo.metrika.ae"
+  leadCustomFields.push({
+    field_id: 947903,
+    values: [{ value: 'promo.metrika.ae', enum_id: 678011 }],
+  } as AmoCustomField);
 
   const requestBody: {
     name: string;
