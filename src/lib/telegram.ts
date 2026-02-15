@@ -1,6 +1,6 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN?.trim();
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID?.trim();
-const SITE_URL = 'https://metrika.ae/arabic';
+const SITE_URL = 'https://promo.metrika.ae';
 
 function isTelegramConfigured(): boolean {
   return Boolean(TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID);
