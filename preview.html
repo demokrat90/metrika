@@ -63,6 +63,28 @@
       backdrop-filter: blur(3px);
     }
 
+    .hero-demo {
+      width: min(1152px, calc(100% - 32px));
+      margin: 110px auto 12px;
+      text-align: center;
+    }
+
+    .hero-demo h1 {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 4.5vw, 56px);
+      line-height: 1.25;
+      font-weight: 400;
+      color: #fff;
+    }
+
+    .hero-demo p {
+      margin: 0 auto;
+      max-width: 820px;
+      color: #c9c9c9;
+      font-size: clamp(16px, 2vw, 24px);
+      line-height: 1.6;
+    }
+
     h1 {
       margin: 0 0 10px;
       font-size: clamp(22px, 3vw, 32px);
@@ -240,6 +262,10 @@
       .page-header { top: 12px; }
       .page-header__inner { width: calc(100% - 24px); }
       .page-header__logo img { height: 42px; }
+      .hero-demo {
+        width: calc(100% - 24px);
+        margin-top: 90px;
+      }
     }
   </style>
 </head>
@@ -251,6 +277,11 @@
       </a>
     </div>
   </header>
+
+  <section class="hero-demo">
+    <h1>شقق جديدة للبيع في دبي بأسعار تبدأ من 750,000 درهم إماراتي</h1>
+    <p>مجموعة كاملة من العقارات من المطور. وفر وقتك في استكشاف السوق ، مع استشارة مجانية حول جميع المشاريع في مكان واحد</p>
+  </section>
 
   <div class="wrap">
     <h1>معاينة الكويز</h1>

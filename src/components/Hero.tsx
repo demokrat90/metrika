@@ -21,15 +21,11 @@ export default function Hero({ onCtaClick }: HeroProps) {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-normal text-white leading-tight mb-6 animate-fade-in">
-          شقق جديدة للبيع في دبي
-          <br />
-          <span className="text-[#a39466]">
-            بأسعار تبدأ من 750,000 درهم إماراتي
-          </span>
+          شقق جديدة للبيع في دبي بأسعار تبدأ من 750,000 درهم إماراتي
         </h1>
 
         <p className="text-lg md:text-xl text-[#c9c9c9] mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          استثمر في العقارات الفاخرة في دبي مع خبراء السوق المحليين
+          مجموعة كاملة من العقارات من المطور. وفر وقتك في استكشاف السوق ، مع استشارة مجانية حول جميع المشاريع في مكان واحد
         </p>
 
         <button
