@@ -26,11 +26,11 @@ export async function POST(request: NextRequest) {
 
     // Build quiz answers summary
     const quizAnswersLabels: Record<number, string> = {
-      0: 'نوع العقار',
-      1: 'هدف الشراء',
-      2: 'عدد غرف النوم',
-      3: 'نطاق السعر',
-      4: 'موعد التسليم',
+      0: 'عدد غرف النوم',
+      1: 'الغرض من الشراء',
+      2: 'الميزانية المطلوبة',
+      3: 'حالة العقار',
+      4: 'طريقة الدفع المفضلة',
       5: 'طريقة التواصل المفضلة',
     };
 
