@@ -237,11 +237,11 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
           {currentStep === totalSteps - 1 ? (
             <button
               onClick={handleSubmit}
-              disabled={!canProceed() || isSubmitting}
+              disabled={isSubmitting}
               className={`group relative px-12 py-4 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden ${
-                canProceed() && !isSubmitting
-                  ? 'quiz-btn-glow bg-gradient-to-l from-[#a39466] to-[#b8a775] text-[#171717] hover:shadow-[0_8px_32px_rgba(163,148,102,0.4)] hover:-translate-y-0.5'
-                  : 'bg-[#333] text-[#555] cursor-not-allowed'
+                isSubmitting
+                  ? 'bg-[#333] text-[#555] cursor-not-allowed'
+                  : 'quiz-btn-glow bg-gradient-to-l from-[#a39466] to-[#b8a775] text-[#171717] hover:shadow-[0_8px_32px_rgba(163,148,102,0.4)] hover:-translate-y-0.5'
               }`}
             >
               <span className="relative z-10">
