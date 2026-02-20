@@ -24,6 +24,7 @@ export default function QuizStep({
 }: QuizStepProps) {
   const isSelected = (optionValue: string) => selectedValue === optionValue;
   const isNumericRangeLabel = (label: string) => /[0-9$]/.test(label) && !/[\u0600-\u06FF]/.test(label);
+  const isBudgetStep = step.id === 2;
 
   return (
     <div className="quiz-step-animate">
@@ -39,13 +40,15 @@ export default function QuizStep({
       {/* Options Grid */}
       {step.options && (
         <div className={`grid gap-5 max-w-3xl mx-auto ${
-          step.options.length <= 3
+          isBudgetStep
+            ? 'grid-cols-1 md:grid-cols-2'
+            : step.options.length <= 3
             ? 'grid-cols-1 md:grid-cols-3'
             : step.options.length === 4
               ? 'grid-cols-2 md:grid-cols-2 lg:grid-cols-4'
               : 'grid-cols-2 md:grid-cols-3'
         }`}>
-          {step.options.map((option, index) => (
+          {step.options.map((option) => (
             <button
               key={option.id}
               onClick={() => onSelect(option.value)}
