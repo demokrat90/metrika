@@ -27,6 +27,32 @@
       min-height: 100vh;
     }
 
+    .page-header {
+      position: absolute;
+      top: 16px;
+      left: 0;
+      right: 0;
+      z-index: 50;
+    }
+
+    .page-header__inner {
+      width: min(1152px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .page-header__logo {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .page-header__logo img {
+      display: block;
+      height: 48px;
+      width: auto;
+    }
+
     .wrap {
       width: min(980px, 92vw);
       margin: 32px auto;
@@ -211,10 +237,21 @@
       .options { grid-template-columns: 1fr; }
       .phone-row { grid-template-columns: 1fr; }
       .wrap { padding: 16px; margin: 16px auto; }
+      .page-header { top: 12px; }
+      .page-header__inner { width: calc(100% - 24px); }
+      .page-header__logo img { height: 42px; }
     }
   </style>
 </head>
 <body>
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a href="#" class="page-header__logo" aria-label="Metrika home">
+        <img src="/images/logo.png" alt="Metrika" />
+      </a>
+    </div>
+  </header>
+
   <div class="wrap">
     <h1>معاينة الكويز</h1>
     <p class="sub">نفس الأسئلة الجديدة مع نموذج تواصل قابل للتجربة</p>
