@@ -323,10 +323,6 @@
           <input id="email" placeholder="Email" />
         </div>
 
-        <label class="agree">
-          <input id="agree" type="checkbox" />
-          <span>I agree to the Privacy Policy</span>
-        </label>
       </div>
 
       <div class="actions">
@@ -377,8 +373,7 @@
         name: "",
         phone: "",
         email: "",
-        country: "+971",
-        agree: false
+        country: "+971"
       }
     };
 
@@ -396,7 +391,6 @@
     const phoneInput = document.getElementById('phone');
     const emailInput = document.getElementById('email');
     const countrySelect = document.getElementById('country');
-    const agreeInput = document.getElementById('agree');
 
     function updatePhoneMaskHint() {
       const selected = countrySelect.options[countrySelect.selectedIndex];
@@ -443,7 +437,7 @@
       nextBtn.disabled = !canProceed();
 
       hint.textContent = current.contact
-        ? 'الحقول المطلوبة: Name, Phone, Privacy Policy'
+        ? 'الحقول المطلوبة: Name, Phone'
         : '';
     }
 
@@ -453,8 +447,7 @@
 
       return (
         state.contact.name.trim().length > 0 &&
-        state.contact.phone.trim().length > 0 &&
-        state.contact.agree
+        state.contact.phone.trim().length > 0
       );
     }
 
@@ -503,11 +496,6 @@
       const cleaned = digitsOnly(e.target.value).slice(0, (mask.match(/\d/g) || []).length);
       e.target.value = formatByMask(cleaned, mask);
       state.contact.phone = e.target.value;
-      render();
-    };
-
-    agreeInput.onchange = (e) => {
-      state.contact.agree = e.target.checked;
       render();
     };
 

@@ -16,7 +16,6 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
     fullName: '',
     phone: '',
     email: '',
-    privacyAgreed: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -38,7 +37,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
     }
   }, [currentStep, totalSteps]);
 
-  const handleContactChange = useCallback((field: string, value: string | boolean) => {
+  const handleContactChange = useCallback((field: string, value: string) => {
     setContactInfo((prev) => ({
       ...prev,
       [field]: value,
@@ -49,8 +48,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
     if (currentStep === totalSteps - 1) {
       return (
         contactInfo.fullName.trim() !== '' &&
-        contactInfo.phone.trim() !== '' &&
-        contactInfo.privacyAgreed
+        contactInfo.phone.trim() !== ''
       );
     }
     return true;
@@ -231,7 +229,6 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
             contactInfo={contactInfo}
             onSelect={handleSelect}
             onContactChange={handleContactChange}
-            onPrivacyChange={(checked) => handleContactChange('privacyAgreed', checked)}
           />
         </div>
 

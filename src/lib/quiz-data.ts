@@ -91,7 +91,6 @@ export const quizSteps: QuizStep[] = [
     title: 'معلومات التواصل',
     type: 'contact',
     description: 'يرجى إدخال الاسم ورقم الهاتف الذي سنرسل إليه الخيارات',
-    checkboxLabel: 'أوافق على سياسة الخصوصية',
     fields: [
       {
         name: 'fullName',

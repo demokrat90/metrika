@@ -10,11 +10,9 @@ interface QuizStepProps {
     fullName: string;
     phone: string;
     email: string;
-    privacyAgreed: boolean;
   };
   onSelect: (value: string) => void;
-  onContactChange: (field: string, value: string | boolean) => void;
-  onPrivacyChange: (checked: boolean) => void;
+  onContactChange: (field: string, value: string) => void;
 }
 
 export default function QuizStep({
@@ -23,7 +21,6 @@ export default function QuizStep({
   contactInfo,
   onSelect,
   onContactChange,
-  onPrivacyChange,
 }: QuizStepProps) {
   const isSelected = (optionValue: string) => selectedValue === optionValue;
   const isNumericRangeLabel = (label: string) => /[0-9$]/.test(label) && !/[\u0600-\u06FF]/.test(label);
@@ -138,18 +135,6 @@ export default function QuizStep({
               )}
             </div>
           ))}
-
-          {step.checkboxLabel && (
-            <label className="flex items-start gap-3 text-[#c9c9c9] text-sm cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={contactInfo.privacyAgreed}
-                onChange={(e) => onPrivacyChange(e.target.checked)}
-                className="mt-0.5 h-4 w-4 rounded border-[#555] bg-[#1f1f1f] accent-[#a39466]"
-              />
-              <span>{step.checkboxLabel}</span>
-            </label>
-          )}
         </div>
       )}
     </div>
