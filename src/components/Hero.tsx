@@ -22,7 +22,8 @@ export default function Hero({ onCtaClick }: HeroProps) {
       <div className="relative z-10 container mx-auto px-4 text-center">
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-normal text-white leading-tight mb-10 md:mb-12 animate-fade-in">
           شقق جديدة للبيع في دبي بأسعار تبدأ
-          <br />
+          <br className="hidden md:block" />
+          <span className="md:hidden"> </span>
           من 750,000 درهم إماراتي
         </h1>
 
