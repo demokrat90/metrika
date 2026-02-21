@@ -234,6 +234,18 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
 
         {/* Navigation Buttons */}
         <div className="max-w-3xl mx-auto mt-16 flex justify-between gap-6">
+          <button
+            onClick={handlePrev}
+            disabled={currentStep === 0}
+            className={`group relative px-10 py-4 rounded-xl font-medium text-lg transition-all duration-300 overflow-hidden ${
+              currentStep === 0
+                ? 'border-2 border-[#333] text-[#444] cursor-not-allowed'
+                : 'border-2 border-[#a39466] text-[#a39466] hover:bg-[#a39466]/10 hover:shadow-[0_4px_20px_rgba(163,148,102,0.2)]'
+            }`}
+          >
+            <span className="relative z-10">السابق</span>
+          </button>
+
           {currentStep === totalSteps - 1 ? (
             <button
               onClick={handleSubmit}
@@ -257,18 +269,6 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
               <span className="relative z-10">التالي</span>
             </button>
           )}
-
-          <button
-            onClick={handlePrev}
-            disabled={currentStep === 0}
-            className={`group relative px-10 py-4 rounded-xl font-medium text-lg transition-all duration-300 overflow-hidden ${
-              currentStep === 0
-                ? 'border-2 border-[#333] text-[#444] cursor-not-allowed'
-                : 'border-2 border-[#a39466] text-[#a39466] hover:bg-[#a39466]/10 hover:shadow-[0_4px_20px_rgba(163,148,102,0.2)]'
-            }`}
-          >
-            <span className="relative z-10">السابق</span>
-          </button>
         </div>
         {submitError && (
           <p className="mt-4 text-center text-sm text-[#ff8d8d]">{submitError}</p>
