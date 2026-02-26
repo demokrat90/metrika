@@ -242,6 +242,62 @@ export default function VillasFrLanding() {
         <div className="vf-hero__media" aria-hidden="true" />
       </section>
 
+      <section className="vf-info">
+        <div className="vf-info__inner">
+          <div className="vf-info__media">
+            <Image src="/images/dubai-skyline.jpg" alt="Skyline de Dubaï" width={900} height={1150} />
+          </div>
+          <div className="vf-info__content">
+            <h2>Investissez aux Émirats arabes unis en toute sécurité et de manière rentable</h2>
+            <ul>
+              <li>Demande locative élevée toute l&apos;année</li>
+              <li>Rendement moyen de 6 à 9 % selon l&apos;emplacement et le type de bien</li>
+              <li>Propriété en pleine propriété pour les étrangers dans les zones autorisées</li>
+              <li>Supervision RERA et comptes séquestres pour les projets sur plan</li>
+              <li>Dirham indexé sur le dollar américain, réduisant le risque de change</li>
+              <li>Paiements flexibles chez les promoteurs, y compris après livraison</li>
+              <li>Infrastructures de classe mondiale et connectivité internationale</li>
+              <li>Marché primaire et secondaire liquide</li>
+              <li>0 % de commission à l&apos;achat direct auprès des promoteurs</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="vf-benefits">
+        <div className="vf-benefits__inner">
+          <article className="vf-benefit-card">
+            <p className="vf-benefit-card__eyebrow">économies fiscales</p>
+            <div className="vf-benefit-card__row">
+              <span className="vf-benefit-card__value">0 %</span>
+              <p>impôt sur les plus-values à la revente (pour les particuliers)</p>
+            </div>
+            <div className="vf-benefit-card__divider" />
+            <div className="vf-benefit-card__row">
+              <span className="vf-benefit-card__value">0 %</span>
+              <p>impôt sur le revenu locatif pour les personnes physiques</p>
+            </div>
+          </article>
+
+          <article className="vf-benefit-card">
+            <p className="vf-benefit-card__eyebrow">résidence via l&apos;immobilier</p>
+            <div className="vf-benefit-card__stack">
+              <p>
+                <strong>Visa investisseur (2 ans) :</strong>
+                <br />
+                à partir de 750 000 AED de valeur immobilière
+              </p>
+              <div className="vf-benefit-card__divider" />
+              <p>
+                <strong>Golden Visa (10 ans) :</strong>
+                <br />
+                à partir de 2 000 000 AED de valeur immobilière
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section className="vf-quiz" id="quiz">
         <div className="vf-quiz__inner">
           <div className="vf-progress">
