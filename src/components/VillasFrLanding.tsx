@@ -333,7 +333,7 @@ export default function VillasFrLanding() {
                   >
                     Retour
                   </button>
-                  <button type="submit" className="vf-btn vf-btn--gold" disabled={quizDisabled}>
+                  <button type="submit" className="vf-btn vf-btn--gold vf-btn--quiz-submit" disabled={quizDisabled}>
                     {quizState === 'sending' ? 'Envoi...' : 'Envoyer'}
                   </button>
                 </div>
