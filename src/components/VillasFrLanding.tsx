@@ -53,6 +53,33 @@ const quizSteps: QuizStep[] = [
   },
 ];
 
+function formatFrenchPhone(value: string): string {
+  const digits = value.replace(/\D/g, '');
+  if (!digits) {
+    return '';
+  }
+
+  let normalized = digits;
+  if (normalized.startsWith('33')) {
+    normalized = normalized.slice(2);
+  }
+  if (normalized.startsWith('0')) {
+    normalized = normalized.slice(1);
+  }
+
+  const localDigits = normalized.slice(0, 9);
+  if (!localDigits) {
+    return '';
+  }
+
+  let result = `+33 ${localDigits[0]}`;
+  for (let index = 1; index < localDigits.length; index += 2) {
+    result += ` ${localDigits.slice(index, index + 2)}`;
+  }
+
+  return result;
+}
+
 export default function VillasFrLanding() {
   const [showModal, setShowModal] = useState(false);
 
@@ -292,8 +319,9 @@ export default function VillasFrLanding() {
                     <input
                       type="tel"
                       value={phone}
-                      onChange={(event) => setPhone(event.target.value)}
+                      onChange={(event) => setPhone(formatFrenchPhone(event.target.value))}
                       placeholder="+33 6 12 34 56 78"
+                      inputMode="tel"
                       required
                     />
                   </label>
@@ -380,8 +408,9 @@ export default function VillasFrLanding() {
                 <input
                   type="tel"
                   value={modalPhone}
-                  onChange={(event) => setModalPhone(event.target.value)}
+                  onChange={(event) => setModalPhone(formatFrenchPhone(event.target.value))}
                   placeholder="+33 6 12 34 56 78"
+                  inputMode="tel"
                   required
                 />
               </label>
