@@ -443,8 +443,8 @@
 }
 
 .vf-modal__form label {
-  font-size: 26px;
-  line-height: 1.2;
+  font-size: 16px;
+  line-height: 1.35;
   font-weight: 400;
   margin-bottom: var(--vf-space-2);
   color: #000;
@@ -553,8 +553,8 @@
   }
 
   .vf-modal__form label {
-    font-size: 22px;
-    margin-bottom: 16px;
+    font-size: 15px;
+    margin-bottom: 12px;
   }
 
   .vf-contact-grid input,
