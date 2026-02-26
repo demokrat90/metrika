@@ -175,8 +175,8 @@
 }
 
 .vf-form__step--quiz {
-  height: 460px;
-  max-height: 460px;
+  height: 400px;
+  max-height: 400px;
 }
 
 .vf-form__step--contact {
