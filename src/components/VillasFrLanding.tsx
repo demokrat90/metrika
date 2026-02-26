@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import './villas-fr.css';
 
 type QuizStep = {
@@ -69,6 +69,26 @@ export default function VillasFrLanding() {
   const [email, setEmail] = useState('');
   const [quizState, setQuizState] = useState<SubmitState>('idle');
   const [quizError, setQuizError] = useState('');
+
+  useEffect(() => {
+    const previousDir = document.documentElement.getAttribute('dir');
+    const previousBodyDir = document.body.style.direction;
+    const previousBodyAlign = document.body.style.textAlign;
+
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.body.style.direction = 'ltr';
+    document.body.style.textAlign = 'left';
+
+    return () => {
+      if (previousDir) {
+        document.documentElement.setAttribute('dir', previousDir);
+      } else {
+        document.documentElement.removeAttribute('dir');
+      }
+      document.body.style.direction = previousBodyDir;
+      document.body.style.textAlign = previousBodyAlign;
+    };
+  }, []);
 
   const totalSteps = quizSteps.length + 1;
   const inContactStep = currentStep === quizSteps.length;
