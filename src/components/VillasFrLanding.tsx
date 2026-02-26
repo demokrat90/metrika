@@ -169,9 +169,9 @@ export default function VillasFrLanding() {
     if (stepId === undefined) return;
 
     setAnswers((prev) => ({ ...prev, [stepId]: value }));
-    if (currentStep < quizSteps.length - 1) {
+    if (currentStep < quizSteps.length) {
       setTimeout(() => {
-        setCurrentStep((prev) => prev + 1);
+        setCurrentStep((prev) => Math.min(quizSteps.length, prev + 1));
       }, 180);
     }
   };
