@@ -109,7 +109,7 @@
 }
 
 .vf-info__content h2 {
-  margin: 0 0 20px;
+  margin: 0 0 40px;
   color: #0d2c5d;
   font-size: clamp(2rem, 3vw, 3.4rem);
   line-height: 1.15;
@@ -118,16 +118,18 @@
 
 .vf-info__content ul {
   margin: 0;
-  padding-left: 24px;
+  padding-left: 30px;
   display: grid;
   gap: 14px;
   color: #555;
   font-size: clamp(1rem, 1.08vw, 1.9rem);
   line-height: 1.42;
+  list-style: disc;
 }
 
 .vf-info__content li::marker {
   color: #0d2c5d;
+  font-size: 0.95em;
 }
 
 .vf-benefits {
