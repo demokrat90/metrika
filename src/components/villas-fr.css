@@ -483,12 +483,18 @@
 
 .vf-btn:focus-visible,
 .vf-option:focus-visible,
-.vf-contact-grid input:focus-visible,
-.vf-modal__form input:focus-visible,
 .vf-modal__close:focus-visible,
 .vf-footer a:focus-visible {
   outline: 2px solid var(--vf-color-focus);
   outline-offset: 2px;
+}
+
+.vf-contact-grid input:focus-visible,
+.vf-modal__form input:focus-visible,
+.vf-page .phone-input-shell:focus-within {
+  outline: none;
+  box-shadow: none;
+  border-color: #c9c9c9;
 }
 
 @media (max-width: 1320px) {
