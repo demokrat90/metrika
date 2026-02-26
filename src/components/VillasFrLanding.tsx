@@ -117,6 +117,19 @@ export default function VillasFrLanding() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!showModal) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showModal]);
+
   const totalSteps = quizSteps.length + 1;
   const inContactStep = currentStep === quizSteps.length;
   const progress = ((currentStep + 1) / totalSteps) * 100;
@@ -216,7 +229,7 @@ export default function VillasFrLanding() {
 
       if (!response.ok) {
         const responsePayload = (await response.json().catch(() => null)) as { message?: string } | null;
-        throw new Error(responsePayload?.message || 'Le formulaire na pas pu être envoyé.');
+        throw new Error(responsePayload?.message || "Le formulaire n'a pas pu être envoyé.");
       }
 
       setQuizState('success');
@@ -352,9 +365,15 @@ export default function VillasFrLanding() {
             )}
 
             {quizState === 'success' && (
-              <p className="vf-status vf-status--ok">Merci. Vos informations ont été envoyées avec succès.</p>
+              <p className="vf-status vf-status--ok" role="status" aria-live="polite">
+                Merci. Vos informations ont été envoyées avec succès.
+              </p>
             )}
-            {quizState === 'error' && <p className="vf-status vf-status--err">{quizError}</p>}
+            {quizState === 'error' && (
+              <p className="vf-status vf-status--err" role="alert">
+                {quizError}
+              </p>
+            )}
           </form>
         </div>
       </section>
@@ -429,9 +448,15 @@ export default function VillasFrLanding() {
               </button>
 
               {modalState === 'success' && (
-                <p className="vf-status vf-status--ok">Merci. Vos informations ont été envoyées avec succès.</p>
+                <p className="vf-status vf-status--ok" role="status" aria-live="polite">
+                  Merci. Vos informations ont été envoyées avec succès.
+                </p>
               )}
-              {modalState === 'error' && <p className="vf-status vf-status--err">{modalError}</p>}
+              {modalState === 'error' && (
+                <p className="vf-status vf-status--err" role="alert">
+                  {modalError}
+                </p>
+              )}
             </form>
           </div>
         </div>
