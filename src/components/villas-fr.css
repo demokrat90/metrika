@@ -1,8 +1,13 @@
 .vf-page {
+  --vf-space-1: 8px;
+  --vf-space-2: 16px;
+  --vf-space-3: 24px;
+  --vf-space-4: 32px;
+  --vf-space-5: 48px;
   background: #ffffff;
   color: #0f0f0f;
   min-height: 100vh;
-  font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'TildaSans', 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .vf-header {
@@ -43,25 +48,25 @@
 .vf-hero__content h1 {
   margin: 0;
   max-width: 13ch;
-  font-size: clamp(2rem, 4.9vw, 5.2rem);
-  line-height: 1.05;
+  font-size: clamp(2.94rem, 5.8vw, 4.375rem);
+  line-height: 1.1;
   letter-spacing: -0.02em;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .vf-hero__price {
-  margin: 26px 0 0;
+  margin: var(--vf-space-3) 0 0;
   max-width: 24ch;
-  font-size: clamp(1.18rem, 2vw, 1.7rem);
-  line-height: 1.3;
+  font-size: clamp(1.31rem, 1.95vw, 1.5rem);
+  line-height: 1.55;
   text-wrap: balance;
 }
 
 .vf-hero__sub {
-  margin: 18px 0 34px;
+  margin: var(--vf-space-2) 0 var(--vf-space-5);
   max-width: 31ch;
-  line-height: 1.38;
-  font-size: clamp(1rem, 1.5vw, 1.22rem);
+  line-height: 1.6;
+  font-size: clamp(1rem, 1.55vw, 1.25rem);
   text-wrap: pretty;
 }
 
@@ -76,11 +81,12 @@
 .vf-btn {
   border: 0;
   border-radius: 0;
-  min-height: 54px;
-  padding: 0 24px;
-  font-size: 0.88rem;
+  min-height: 55px;
+  padding: 0 32px;
+  font-size: 14px;
+  line-height: 1.55;
   letter-spacing: 0.02em;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
@@ -95,6 +101,10 @@
   background-image: linear-gradient(99deg, rgba(176, 119, 44, 1) 0%, rgba(251, 188, 105, 1) 100%);
 }
 
+.vf-hero .vf-btn {
+  width: 200px;
+}
+
 .vf-btn--ghost {
   border: 1px solid #b0772c;
   color: #b0772c;
@@ -103,7 +113,7 @@
 
 .vf-quiz {
   background: #fff;
-  padding: 90px 16px;
+  padding: 96px 16px;
 }
 
 .vf-quiz__inner {
@@ -113,7 +123,7 @@
 
 .vf-progress {
   background: rgba(176, 119, 44, 0.2);
-  height: 8px;
+  height: 5px;
 }
 
 .vf-progress span {
@@ -124,32 +134,37 @@
 }
 
 .vf-step {
-  margin: 14px 0 26px;
+  margin: var(--vf-space-2) 0 var(--vf-space-3);
   color: #7f7f7f;
-  font-size: 0.95rem;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .vf-form h2 {
-  margin: 0 0 20px;
-  font-size: clamp(1.35rem, 3vw, 2rem);
-  line-height: 1.25;
+  margin: 0 0 var(--vf-space-3);
+  font-size: clamp(1.38rem, 3vw, 2.25rem);
+  line-height: 1.23;
+  font-weight: 600;
   text-align: center;
 }
 
 .vf-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: var(--vf-space-2);
 }
 
 .vf-option {
-  min-height: 56px;
-  border: 1px solid #e2e2e2;
+  min-height: 60px;
+  border: 0;
   background: #f5f5f5;
   text-align: left;
-  padding: 10px 14px;
+  padding: 10px 15px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 300;
+  font-family: inherit;
 }
 
 .vf-option.is-active {
@@ -160,31 +175,60 @@
 .vf-contact-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: var(--vf-space-2);
 }
 
 .vf-contact-grid label,
 .vf-modal__form label {
   display: grid;
-  gap: 6px;
-  font-size: 0.9rem;
+  gap: var(--vf-space-1);
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #4a4a4a;
 }
 
 .vf-contact-grid input,
 .vf-modal__form input {
   width: 100%;
-  height: 46px;
+  height: 60px;
   border: 1px solid #c9c9c9;
-  padding: 0 12px;
-  font-size: 1rem;
+  padding: 0 20px;
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 300;
+  background: #f5f5f5;
   color: #111;
+  font-family: inherit;
+}
+
+.vf-contact-grid input::placeholder,
+.vf-modal__form input::placeholder {
+  color: #000;
+  opacity: 0.5;
+  font-weight: 400;
 }
 
 .vf-actions {
-  margin-top: 20px;
+  margin-top: var(--vf-space-3);
   display: flex;
-  gap: 10px;
+  gap: 8px;
   justify-content: space-between;
+}
+
+.vf-actions .vf-btn--gold {
+  min-height: 55px;
+}
+
+.vf-actions .vf-btn--ghost {
+  min-height: 48px;
+  padding: 0 22px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+  border-color: rgba(176, 119, 44, 0.75);
+  color: rgba(136, 89, 30, 0.95);
 }
 
 .vf-status {
@@ -203,17 +247,17 @@
 .vf-footer {
   background: #111;
   color: #fff;
-  padding: 68px 36px;
+  padding: 56px 36px;
 }
 
 .vf-footer__inner {
   width: min(1280px, 100%);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 300px 1.35fr 0.95fr 300px;
+  grid-template-columns: 280px 1.5fr 0.85fr 280px;
   align-items: center;
-  column-gap: 44px;
-  row-gap: 20px;
+  column-gap: 36px;
+  row-gap: var(--vf-space-2);
 }
 
 .vf-footer__brand {
@@ -228,8 +272,21 @@
 .vf-footer__col {
   display: grid;
   align-content: center;
-  gap: 9px;
+  gap: 6px;
+  font-size: 0.97rem;
+}
+
+.vf-footer__col--contact p,
+.vf-footer__col--contact a {
   font-size: 1rem;
+  line-height: 1.5;
+}
+
+.vf-footer__col--legal p,
+.vf-footer__col--legal a {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.68);
 }
 
 .vf-footer__col--cta .vf-btn {
@@ -241,8 +298,8 @@
 .vf-footer__col p,
 .vf-footer__col a {
   margin: 0;
-  font-size: 1.03rem;
-  line-height: 1.35;
+  font-size: 0.97rem;
+  line-height: 1.45;
 }
 
 .vf-footer a {
@@ -309,7 +366,7 @@
 .vf-modal__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.72);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .vf-modal__panel {
@@ -322,11 +379,11 @@
 
 .vf-modal__close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 10px;
+  right: 10px;
   border: 0;
   background: transparent;
-  font-size: 2.2rem;
+  font-size: 23px;
   line-height: 1;
   cursor: pointer;
 }
@@ -334,30 +391,32 @@
 .vf-modal__panel h3 {
   margin: 0;
   text-align: center;
-  font-size: clamp(2rem, 2.8vw, 2.3rem);
-  line-height: 1.2;
+  font-size: 36px;
+  line-height: 1.23;
   font-weight: 600;
 }
 
 .vf-modal__panel p {
-  margin: 12px auto 22px;
+  margin: 0 auto 24px;
   max-width: 33ch;
-  color: #555;
+  color: #000;
   text-align: center;
-  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  font-size: 16px;
   line-height: 1.55;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .vf-modal__form {
   display: grid;
-  gap: 12px;
+  gap: 0;
 }
 
 .vf-modal__form label {
-  font-size: clamp(1.5rem, 2.2vw, 1.65rem);
-  line-height: 1.23;
+  font-size: 26px;
+  line-height: 1.2;
   font-weight: 400;
+  margin-bottom: var(--vf-space-2);
+  color: #000;
 }
 
 .vf-modal__form input {
@@ -365,10 +424,10 @@
   border-color: #c9c9c9;
   border-radius: 0;
   background: #fff;
-  font-size: 1.25rem;
+  font-size: 16px;
   padding: 0 20px;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .vf-modal__form input::placeholder {
@@ -377,11 +436,11 @@
 }
 
 .vf-modal__form .vf-btn {
-  margin-top: 6px;
-  min-height: 60px;
-  font-size: 1.75rem;
+  margin-top: 0;
+  min-height: 54px;
+  font-size: 16px;
   letter-spacing: 0.02em;
-  font-weight: 700;
+  font-weight: 600;
   border-radius: 0;
 }
 
@@ -420,7 +479,7 @@
 
   .vf-hero__content h1 {
     max-width: 10ch;
-    font-size: clamp(2.25rem, 10vw, 3.2rem);
+    font-size: clamp(2.9375rem, 14.7vw, 4.4375rem);
     line-height: 1.06;
   }
 
@@ -430,38 +489,41 @@
   }
 
   .vf-hero__price {
-    margin-top: 22px;
-    line-height: 1.28;
+    margin-top: var(--vf-space-3);
+    line-height: 1.55;
   }
 
   .vf-hero__sub {
-    margin-top: 14px;
-    line-height: 1.35;
+    margin-top: var(--vf-space-2);
+    line-height: 1.58;
+    font-size: 19px;
   }
 
   .vf-modal__panel {
     width: min(560px, calc(100% - 16px));
-    padding: 22px 18px 20px;
+    padding: 20px;
   }
 
   .vf-modal__panel p {
-    margin: 8px auto 14px;
+    margin: 0 auto 14px;
     max-width: 28ch;
-    font-size: clamp(0.95rem, 4vw, 1rem);
+    font-size: 14px;
   }
 
   .vf-modal__form label {
-    font-size: clamp(1.25rem, 5vw, 1.45rem);
+    font-size: 22px;
+    margin-bottom: 16px;
   }
 
+  .vf-contact-grid input,
   .vf-modal__form input {
-    height: 54px;
-    font-size: clamp(1.05rem, 5vw, 1.2rem);
+    height: 50px;
+    font-size: 16px;
     padding: 0 14px;
   }
 
   .vf-modal__form .vf-btn {
-    min-height: 54px;
-    font-size: clamp(1.05rem, 5vw, 1.2rem);
+    min-height: 50px;
+    font-size: 16px;
   }
 }
