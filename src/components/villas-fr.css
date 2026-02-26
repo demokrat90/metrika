@@ -42,9 +42,10 @@
 
 .vf-hero__content h1 {
   margin: 0;
-  max-width: 12ch;
-  font-size: clamp(2.1rem, 5vw, 5.8rem);
-  line-height: 1.08;
+  max-width: 13ch;
+  font-size: clamp(2rem, 4.9vw, 5.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   font-weight: 700;
 }
 
@@ -310,5 +311,16 @@
     margin-right: 16px;
     padding-top: 108px;
     padding-bottom: 26px;
+  }
+
+  .vf-hero__content h1 {
+    max-width: 10ch;
+    font-size: clamp(2.25rem, 10vw, 3.2rem);
+    line-height: 1.06;
+  }
+
+  .vf-hero__price,
+  .vf-hero__sub {
+    max-width: 20ch;
   }
 }

@@ -195,9 +195,9 @@ export default function VillasFrLanding() {
       <section className="vf-hero">
         <div className="vf-hero__content">
           <h1>
-            Villas et maisons de ville
+            Villas et maisons
             <br />
-            à Dubaï
+            de ville à Dubaï
           </h1>
           <p className="vf-hero__price">Villas et maisons de ville à partir de 816 900 $</p>
           <p className="vf-hero__sub">Recevez les offres les plus récentes avec les prix en 1 minute.</p>
