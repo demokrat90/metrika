@@ -86,7 +86,7 @@
 }
 
 .vf-info {
-  padding: 72px 16px;
+  padding: 88px 16px;
   background: #f5f5f5;
 }
 
@@ -97,11 +97,14 @@
   grid-template-columns: 1.1fr 1fr;
   gap: 56px;
   align-items: center;
+  min-height: 760px;
 }
 
 .vf-info__media img {
   width: 100%;
-  height: auto;
+  height: 760px;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -768,6 +771,14 @@
 @media (max-width: 760px) {
   .vf-info {
     padding: 40px 16px;
+  }
+
+  .vf-info__inner {
+    min-height: 0;
+  }
+
+  .vf-info__media img {
+    height: auto;
   }
 
   .vf-info__content h2 {
