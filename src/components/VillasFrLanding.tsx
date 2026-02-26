@@ -245,7 +245,7 @@ export default function VillasFrLanding() {
       <section className="vf-info">
         <div className="vf-info__inner">
           <div className="vf-info__media">
-            <Image src="/images/invest-dubai-day.jpg" alt="Skyline de Dubaï" width={1680} height={944} />
+            <Image src="/images/rectangle-43-1.jpg" alt="Skyline de Dubaï" width={1000} height={1490} />
           </div>
           <div className="vf-info__content">
             <h2>Investissez aux Émirats arabes unis en toute sécurité et de manière rentable</h2>
