@@ -421,9 +421,15 @@ export default function VillasFrLanding() {
             <a href="tel:+97143376775">+971 4 337 67 75</a>
           </div>
           <div className="vf-footer__col vf-footer__col--legal">
-            <a href="/privacy-policy">Politique de confidentialité</a>
-            <a href="/cookie-policy">Politique des cookies</a>
-            <a href="/terms_of_use">Conditions d&apos;utilisation</a>
+            <a href="https://metrika.ae/privacy-policy" target="_blank" rel="noreferrer">
+              Politique de confidentialité
+            </a>
+            <a href="https://metrika.ae/cookie-policy" target="_blank" rel="noreferrer">
+              Politique des cookies
+            </a>
+            <a href="https://metrika.ae/terms_of_use" target="_blank" rel="noreferrer">
+              Conditions d&apos;utilisation
+            </a>
           </div>
           <div className="vf-footer__col vf-footer__col--cta">
             <button className="vf-btn vf-btn--gold" type="button" onClick={openModal}>
