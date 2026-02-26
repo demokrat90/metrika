@@ -304,7 +304,7 @@
 .vf-step-layout h2 {
   margin: 0;
   text-align: left;
-  font-size: clamp(1.9rem, 2.8vw, 3.25rem);
+  font-size: clamp(1.6rem, 2.2vw, 2.4rem);
   line-height: 1.2;
 }
 
@@ -818,7 +818,7 @@
   }
 
   .vf-step-layout h2 {
-    font-size: clamp(1.5rem, 8vw, 2.1rem);
+    font-size: clamp(1.25rem, 6.2vw, 1.7rem);
     text-align: left;
   }
 
