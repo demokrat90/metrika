@@ -1,0 +1,306 @@
+.vf-page {
+  background: #ffffff;
+  color: #0f0f0f;
+  min-height: 100vh;
+  font-family: 'TildaSans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.vf-header {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.vf-logo {
+  display: block;
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.vf-logo img {
+  width: auto;
+  height: 50px;
+}
+
+.vf-hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  align-items: center;
+}
+
+.vf-hero__content {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding-top: 80px;
+}
+
+.vf-hero__content h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 6vw, 4.35rem);
+  line-height: 1.08;
+  font-weight: 700;
+}
+
+.vf-hero__price {
+  margin: 22px 0 0;
+  font-size: clamp(1.06rem, 2.2vw, 1.55rem);
+}
+
+.vf-hero__sub {
+  margin: 12px 0 30px;
+  max-width: 560px;
+  line-height: 1.55;
+  font-size: 1.1rem;
+}
+
+.vf-hero__media {
+  height: 100%;
+  min-height: 100vh;
+  background-image: url('https://static.tildacdn.com/tild3766-3730-4664-a633-396665616332/page6_image21.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.vf-btn {
+  border: 0;
+  border-radius: 0;
+  min-height: 54px;
+  padding: 0 24px;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.vf-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vf-btn--gold {
+  color: #fff;
+  background-image: linear-gradient(99deg, rgba(176, 119, 44, 1) 0%, rgba(251, 188, 105, 1) 100%);
+}
+
+.vf-btn--ghost {
+  border: 1px solid #b0772c;
+  color: #b0772c;
+  background: transparent;
+}
+
+.vf-quiz {
+  background: #fff;
+  padding: 90px 16px;
+}
+
+.vf-quiz__inner {
+  width: min(1000px, 100%);
+  margin: 0 auto;
+}
+
+.vf-progress {
+  background: rgba(176, 119, 44, 0.2);
+  height: 8px;
+}
+
+.vf-progress span {
+  display: block;
+  height: 100%;
+  background: #b0772c;
+  transition: width 0.25s ease;
+}
+
+.vf-step {
+  margin: 14px 0 26px;
+  color: #7f7f7f;
+  font-size: 0.95rem;
+}
+
+.vf-form h2 {
+  margin: 0 0 20px;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.25;
+}
+
+.vf-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.vf-option {
+  min-height: 56px;
+  border: 1px solid #e2e2e2;
+  background: #f5f5f5;
+  text-align: left;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.vf-option.is-active {
+  border-color: #b0772c;
+  box-shadow: inset 0 0 0 1px #b0772c;
+}
+
+.vf-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.vf-contact-grid label,
+.vf-modal__form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.vf-contact-grid input,
+.vf-modal__form input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #c9c9c9;
+  padding: 0 12px;
+  font-size: 1rem;
+  color: #111;
+}
+
+.vf-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.vf-status {
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+.vf-status--ok {
+  color: #177a31;
+}
+
+.vf-status--err {
+  color: #b42318;
+}
+
+.vf-footer {
+  background: #111;
+  color: #fff;
+  padding: 70px 16px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.4fr 1fr;
+  width: 100%;
+  gap: 20px;
+}
+
+.vf-footer__brand,
+.vf-footer__col {
+  width: min(1200px, 100%);
+}
+
+.vf-footer__col {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.vf-footer__col p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.vf-footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.vf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+}
+
+.vf-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.vf-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(620px, calc(100% - 24px));
+  background: #fff;
+  padding: 28px;
+}
+
+.vf-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: 0;
+  background: transparent;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.vf-modal__panel h3 {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+}
+
+.vf-modal__panel p {
+  margin: 0 0 16px;
+  color: #555;
+}
+
+.vf-modal__form {
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 1024px) {
+  .vf-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .vf-hero__media {
+    min-height: 360px;
+  }
+
+  .vf-footer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .vf-contact-grid,
+  .vf-options,
+  .vf-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .vf-actions {
+    flex-direction: column;
+  }
+
+  .vf-btn {
+    width: 100%;
+  }
+
+  .vf-hero__content {
+    padding-top: 108px;
+    padding-bottom: 26px;
+  }
+}
