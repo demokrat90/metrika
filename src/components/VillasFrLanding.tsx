@@ -35,11 +35,11 @@ const quizSteps: QuizStep[] = [
     id: 3,
     title: 'Indiquez une fourchette de prix acceptable',
     options: [
-      '816 900 $ - 1 000 000 $',
-      '1 000 000 $ - 1 500 000 $',
-      '1 500 000 $ - 2 000 000 $',
-      '2 000 000 $ - 4 000 000 $',
-      '4 000 000 $ et plus',
+      '692 000 € - 847 000 €',
+      '847 000 € - 1 271 000 €',
+      '1 271 000 € - 1 695 000 €',
+      '1 695 000 € - 3 389 000 €',
+      '3 389 000 € et plus',
     ],
   },
   {
@@ -233,7 +233,7 @@ export default function VillasFrLanding() {
             <br />
             de ville à Dubaï
           </h1>
-          <p className="vf-hero__price">Villas et maisons de ville à partir de 816 900 $</p>
+          <p className="vf-hero__price">Villas et maisons de ville à partir de 692 000 €</p>
           <p className="vf-hero__sub">Recevez les offres les plus récentes avec les prix en 1 minute.</p>
           <button className="vf-btn vf-btn--gold" type="button" onClick={openModal}>
             OBTENIR LES OFFRES
