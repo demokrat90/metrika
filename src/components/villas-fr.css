@@ -26,7 +26,7 @@
 .vf-logo {
   display: block;
   width: fit-content;
-  margin-left: clamp(72px, 11vw, 220px);
+  margin-left: clamp(88px, 12vw, 250px);
   margin-right: 0;
 }
 
@@ -45,7 +45,7 @@
 .vf-hero__content {
   width: 100%;
   max-width: 760px;
-  margin-left: clamp(72px, 11vw, 220px);
+  margin-left: clamp(88px, 12vw, 250px);
   margin-right: auto;
   padding-top: 80px;
   text-align: left;
