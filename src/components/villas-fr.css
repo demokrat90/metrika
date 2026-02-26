@@ -1,3 +1,5 @@
+@import url('https://static.tildacdn.com/css/fonts-tildasans.css');
+
 .vf-page {
   --vf-space-1: 8px;
   --vf-space-2: 16px;
@@ -10,7 +12,7 @@
   background: #ffffff;
   color: #0f0f0f;
   min-height: 100vh;
-  font-family: 'TildaSans', 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'TildaSans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .vf-header {
