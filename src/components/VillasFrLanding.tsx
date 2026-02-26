@@ -336,11 +336,6 @@ export default function VillasFrLanding() {
           <div className="vf-footer__brand">
             <Image src="/images/logo.png" alt="Metrika" width={160} height={54} />
           </div>
-          <div className="vf-footer__col vf-footer__col--cta">
-            <button className="vf-btn vf-btn--gold" type="button" onClick={openModal}>
-              DEMANDER UN RAPPEL
-            </button>
-          </div>
           <div className="vf-footer__col">
             <p>Dubai, The Onyx Tower 2, office 1004</p>
             <a href="mailto:metrika.realestate@metrika.ae">metrika.realestate@metrika.ae</a>
@@ -350,6 +345,11 @@ export default function VillasFrLanding() {
             <a href="/privacy-policy">Politique de confidentialité</a>
             <a href="/cookie-policy">Politique des cookies</a>
             <a href="/terms_of_use">Conditions d&apos;utilisation</a>
+          </div>
+          <div className="vf-footer__col vf-footer__col--cta">
+            <button className="vf-btn vf-btn--gold" type="button" onClick={openModal}>
+              DEMANDER UN RAPPEL
+            </button>
           </div>
         </div>
       </footer>
