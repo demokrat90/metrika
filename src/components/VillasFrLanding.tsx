@@ -252,37 +252,42 @@ export default function VillasFrLanding() {
           <form onSubmit={submitQuiz} className="vf-form">
             {!inContactStep && (
               <>
-                <h2>{quizSteps[currentStep].title}</h2>
-                <div className="vf-options">
-                  {quizSteps[currentStep].options.map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      className={`vf-option ${answers[quizSteps[currentStep].id] === option ? 'is-active' : ''}`}
-                      onClick={() => handleOptionClick(option)}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
+                <div className="vf-step-layout">
+                  <h2>{quizSteps[currentStep].title}</h2>
+                  <div className="vf-step-layout__right">
+                    <div className="vf-options">
+                      {quizSteps[currentStep].options.map((option) => (
+                        <button
+                          key={option}
+                          type="button"
+                          className={`vf-option ${answers[quizSteps[currentStep].id] === option ? 'is-active' : ''}`}
+                          onClick={() => handleOptionClick(option)}
+                        >
+                          <span className="vf-option__dot" aria-hidden="true" />
+                          <span className="vf-option__label">{option}</span>
+                        </button>
+                      ))}
+                    </div>
 
-                <div className="vf-actions">
-                  <button
-                    type="button"
-                    className="vf-btn vf-btn--ghost"
-                    onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
-                    disabled={currentStep === 0}
-                  >
-                    Retour
-                  </button>
-                  <button
-                    type="button"
-                    className="vf-btn vf-btn--gold"
-                    onClick={() => setCurrentStep((prev) => Math.min(quizSteps.length, prev + 1))}
-                    disabled={!answers[quizSteps[currentStep].id]}
-                  >
-                    Suivant
-                  </button>
+                    <div className="vf-actions vf-actions--step">
+                      <button
+                        type="button"
+                        className="vf-btn vf-btn--ghost"
+                        onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
+                        disabled={currentStep === 0}
+                      >
+                        Retour
+                      </button>
+                      <button
+                        type="button"
+                        className="vf-btn vf-btn--gold"
+                        onClick={() => setCurrentStep((prev) => Math.min(quizSteps.length, prev + 1))}
+                        disabled={!answers[quizSteps[currentStep].id]}
+                      >
+                        Suivant
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </>
             )}
