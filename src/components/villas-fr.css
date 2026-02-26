@@ -164,11 +164,13 @@
 }
 
 .vf-form {
-  min-height: 760px;
+  height: 760px;
 }
 
 .vf-form__step {
-  min-height: 640px;
+  height: 640px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
 .vf-step-layout {
