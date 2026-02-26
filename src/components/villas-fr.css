@@ -173,8 +173,8 @@
 .vf-step-layout h2 {
   margin: 0;
   text-align: left;
-  font-size: clamp(2rem, 3.5vw, 4.25rem);
-  line-height: 1.22;
+  font-size: clamp(1.9rem, 2.8vw, 3.25rem);
+  line-height: 1.2;
 }
 
 .vf-step-layout__right {
@@ -229,8 +229,8 @@
 }
 
 .vf-option__label {
-  font-size: clamp(1.2rem, 1.5vw, 2rem);
-  line-height: 1.25;
+  font-size: clamp(1rem, 1.1vw, 1.5rem);
+  line-height: 1.3;
 }
 
 .vf-contact-grid {
@@ -623,7 +623,7 @@
   }
 
   .vf-step-layout h2 {
-    font-size: clamp(1.7rem, 10vw, 2.5rem);
+    font-size: clamp(1.5rem, 8vw, 2.1rem);
     text-align: left;
   }
 
@@ -640,8 +640,8 @@
   }
 
   .vf-option__label {
-    font-size: 1.5rem;
-    line-height: 1.15;
+    font-size: 1.1rem;
+    line-height: 1.25;
   }
 
   .vf-logo {
