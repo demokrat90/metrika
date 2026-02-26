@@ -188,7 +188,7 @@ export default function VillasFrLanding() {
     <main className="vf-page" dir="ltr">
       <header className="vf-header">
         <a href="#" className="vf-logo" aria-label="Metrika">
-          <Image src="/images/logo-dark.png" alt="Metrika" width={168} height={56} />
+          <Image src="/images/logo.png" alt="Metrika" width={500} height={210} />
         </a>
       </header>
 

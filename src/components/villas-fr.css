@@ -21,7 +21,7 @@
 
 .vf-logo img {
   width: auto;
-  height: 50px;
+  height: 64px;
 }
 
 .vf-hero {
@@ -32,26 +32,32 @@
 }
 
 .vf-hero__content {
-  width: min(1200px, calc(100% - 32px));
-  margin: 0 auto;
+  width: 100%;
+  max-width: 760px;
+  margin-left: clamp(28px, 7vw, 130px);
+  margin-right: auto;
   padding-top: 80px;
+  text-align: left;
 }
 
 .vf-hero__content h1 {
   margin: 0;
-  font-size: clamp(2.2rem, 6vw, 4.35rem);
+  max-width: 12ch;
+  font-size: clamp(2.1rem, 5vw, 5.8rem);
   line-height: 1.08;
   font-weight: 700;
 }
 
 .vf-hero__price {
   margin: 22px 0 0;
+  max-width: 28ch;
   font-size: clamp(1.06rem, 2.2vw, 1.55rem);
+  line-height: 1.4;
 }
 
 .vf-hero__sub {
   margin: 12px 0 30px;
-  max-width: 560px;
+  max-width: 34ch;
   line-height: 1.55;
   font-size: 1.1rem;
 }
@@ -300,6 +306,8 @@
   }
 
   .vf-hero__content {
+    margin-left: 16px;
+    margin-right: 16px;
     padding-top: 108px;
     padding-bottom: 26px;
   }
