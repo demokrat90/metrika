@@ -315,18 +315,18 @@
 .vf-modal__panel {
   position: relative;
   z-index: 1;
-  width: min(740px, calc(100% - 24px));
+  width: min(560px, calc(100% - 24px));
   background: #efefef;
-  padding: 34px 34px 30px;
+  padding: 40px 45px;
 }
 
 .vf-modal__close {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  top: 14px;
+  right: 14px;
   border: 0;
   background: transparent;
-  font-size: 2rem;
+  font-size: 2.2rem;
   line-height: 1;
   cursor: pointer;
 }
@@ -334,41 +334,41 @@
 .vf-modal__panel h3 {
   margin: 0;
   text-align: center;
-  font-size: clamp(2.15rem, 4.2vw, 3.4rem);
-  line-height: 1.08;
+  font-size: clamp(2rem, 2.8vw, 2.3rem);
+  line-height: 1.2;
   font-weight: 600;
 }
 
 .vf-modal__panel p {
-  margin: 14px auto 20px;
+  margin: 12px auto 22px;
   max-width: 33ch;
   color: #555;
   text-align: center;
-  font-size: clamp(1.02rem, 1.65vw, 1.7rem);
-  line-height: 1.3;
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  line-height: 1.55;
   font-weight: 400;
 }
 
 .vf-modal__form {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .vf-modal__form label {
-  font-size: clamp(1.15rem, 2vw, 1.95rem);
-  line-height: 1.2;
-  font-weight: 500;
+  font-size: clamp(1.5rem, 2.2vw, 1.65rem);
+  line-height: 1.23;
+  font-weight: 400;
 }
 
 .vf-modal__form input {
-  height: 64px;
-  border-color: #bcbcbc;
-  border-radius: 10px;
+  height: 60px;
+  border-color: #c9c9c9;
+  border-radius: 0;
   background: #fff;
-  font-size: clamp(1.15rem, 2vw, 1.95rem);
-  padding: 0 18px;
+  font-size: 1.25rem;
+  padding: 0 20px;
   font-family: inherit;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .vf-modal__form input::placeholder {
@@ -377,11 +377,12 @@
 }
 
 .vf-modal__form .vf-btn {
-  margin-top: 4px;
-  min-height: 68px;
-  font-size: clamp(1.3rem, 2.1vw, 2rem);
-  letter-spacing: 0.01em;
+  margin-top: 6px;
+  min-height: 60px;
+  font-size: 1.75rem;
+  letter-spacing: 0.02em;
   font-weight: 700;
+  border-radius: 0;
 }
 
 @media (max-width: 1024px) {
@@ -439,28 +440,28 @@
   }
 
   .vf-modal__panel {
-    width: min(740px, calc(100% - 16px));
-    padding: 20px 16px 18px;
+    width: min(560px, calc(100% - 16px));
+    padding: 22px 18px 20px;
   }
 
   .vf-modal__panel p {
-    margin: 10px auto 14px;
+    margin: 8px auto 14px;
     max-width: 28ch;
-    font-size: clamp(0.98rem, 4.8vw, 1.24rem);
+    font-size: clamp(0.95rem, 4vw, 1rem);
   }
 
   .vf-modal__form label {
-    font-size: clamp(1.15rem, 6vw, 1.55rem);
+    font-size: clamp(1.25rem, 5vw, 1.45rem);
   }
 
   .vf-modal__form input {
     height: 54px;
-    font-size: clamp(1.12rem, 6vw, 1.4rem);
+    font-size: clamp(1.05rem, 5vw, 1.2rem);
     padding: 0 14px;
   }
 
   .vf-modal__form .vf-btn {
-    min-height: 58px;
-    font-size: clamp(1.15rem, 5.6vw, 1.45rem);
+    min-height: 54px;
+    font-size: clamp(1.05rem, 5vw, 1.2rem);
   }
 }
