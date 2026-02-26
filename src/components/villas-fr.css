@@ -428,7 +428,7 @@
 }
 
 .vf-modal__panel p {
-  margin: 0 auto 24px;
+  margin: 20px auto 24px;
   max-width: 33ch;
   color: #000;
   text-align: center;
@@ -547,7 +547,7 @@
   }
 
   .vf-modal__panel p {
-    margin: 0 auto 14px;
+    margin: 14px auto 14px;
     max-width: 28ch;
     font-size: 14px;
   }
