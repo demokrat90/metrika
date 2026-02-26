@@ -62,18 +62,18 @@
 
 .vf-hero__price {
   margin: var(--vf-space-3) 0 0;
-  max-width: 24ch;
+  max-width: none;
   font-size: clamp(1.31rem, 1.95vw, 1.5rem);
   line-height: 1.55;
-  text-wrap: balance;
+  white-space: nowrap;
 }
 
 .vf-hero__sub {
   margin: var(--vf-space-2) 0 var(--vf-space-5);
-  max-width: 31ch;
+  max-width: none;
   line-height: 1.6;
   font-size: clamp(1rem, 1.55vw, 1.25rem);
-  text-wrap: pretty;
+  white-space: nowrap;
 }
 
 .vf-hero__media {
@@ -528,6 +528,7 @@
   .vf-hero__price,
   .vf-hero__sub {
     max-width: 21ch;
+    white-space: normal;
   }
 
   .vf-hero__price {
