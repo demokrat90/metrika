@@ -163,6 +163,14 @@
   text-align: center;
 }
 
+.vf-form {
+  min-height: 760px;
+}
+
+.vf-form__step {
+  min-height: 640px;
+}
+
 .vf-step-layout {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) minmax(320px, 1fr);
@@ -617,6 +625,11 @@
 }
 
 @media (max-width: 760px) {
+  .vf-form,
+  .vf-form__step {
+    min-height: 0;
+  }
+
   .vf-step-layout {
     grid-template-columns: 1fr;
     gap: 16px;

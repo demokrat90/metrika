@@ -251,7 +251,7 @@ export default function VillasFrLanding() {
 
           <form onSubmit={submitQuiz} className="vf-form">
             {!inContactStep && (
-              <>
+              <div className="vf-form__step vf-form__step--quiz">
                 <div className="vf-step-layout">
                   <h2>{quizSteps[currentStep].title}</h2>
                   <div className="vf-step-layout__right">
@@ -289,11 +289,11 @@ export default function VillasFrLanding() {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {inContactStep && (
-              <>
+              <div className="vf-form__step vf-form__step--contact">
                 <h2>Indiquez votre nom et votre téléphone pour recevoir la sélection</h2>
                 <div className="vf-contact-grid">
                   <label>
@@ -337,7 +337,7 @@ export default function VillasFrLanding() {
                     {quizState === 'sending' ? 'Envoi...' : 'Envoyer'}
                   </button>
                 </div>
-              </>
+              </div>
             )}
 
             {quizState === 'success' && (
