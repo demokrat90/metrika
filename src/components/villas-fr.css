@@ -1,18 +1,19 @@
-@import url('https://static.tildacdn.com/css/fonts-tildasans.css');
-
 .vf-page {
   --vf-space-1: 8px;
   --vf-space-2: 16px;
   --vf-space-3: 24px;
   --vf-space-4: 32px;
   --vf-space-5: 48px;
+  --vf-radius-control: 12px;
+  --vf-radius-card: 14px;
+  --vf-radius-panel: 16px;
   --vf-color-accent: #b0772c;
   --vf-color-accent-hover: #8f5f22;
   --vf-color-focus: #7c511d;
   background: #ffffff;
   color: #0f0f0f;
   min-height: 100vh;
-  font-family: 'TildaSans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--vf-font-body), 'Helvetica Neue', Arial, sans-serif;
 }
 
 .vf-header {
@@ -62,19 +63,25 @@
 }
 
 .vf-hero__price {
-  margin: var(--vf-space-3) 0 0;
+  margin: 34px 0 0;
   max-width: none;
   font-size: clamp(1.31rem, 1.95vw, 1.5rem);
-  line-height: 1.55;
+  line-height: 1.58;
   white-space: nowrap;
 }
 
 .vf-hero__sub {
-  margin: var(--vf-space-2) 0 var(--vf-space-5);
+  margin: 20px 0 30px;
   max-width: none;
-  line-height: 1.6;
+  line-height: 1.65;
   font-size: clamp(1rem, 1.55vw, 1.25rem);
   white-space: nowrap;
+}
+
+.vf-hero__cta {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
 }
 
 .vf-hero__media {
@@ -123,7 +130,7 @@
   gap: 14px;
   color: #555;
   font-size: clamp(1rem, 0.95vw, 1.3rem);
-  line-height: 1.42;
+  line-height: 1.6;
   list-style: disc;
 }
 
@@ -147,7 +154,7 @@
 
 .vf-benefit-card {
   border: 1px solid rgba(180, 208, 255, 0.25);
-  border-radius: 24px;
+  border-radius: var(--vf-radius-card);
   padding: 36px 34px;
   color: #fff;
   background: rgba(8, 42, 90, 0.55);
@@ -193,7 +200,7 @@
 
 .vf-btn {
   border: 0;
-  border-radius: 0;
+  border-radius: var(--vf-radius-control);
   min-height: 55px;
   padding: 0 32px;
   font-size: 14px;
@@ -332,6 +339,7 @@
 .vf-option {
   min-height: 55px;
   border: 0;
+  border-radius: var(--vf-radius-control);
   background: #f5f5f5;
   text-align: left;
   padding: 10px 14px;
@@ -392,6 +400,7 @@
   width: 100%;
   height: 60px;
   border: 1px solid #c9c9c9;
+  border-radius: var(--vf-radius-control);
   padding: 0 20px;
   font-size: 16px;
   line-height: 1.55;
@@ -410,7 +419,7 @@
   height: 60px;
   background: #fff;
   border: 1px solid #c9c9c9;
-  border-radius: 0;
+  border-radius: var(--vf-radius-control);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -445,7 +454,7 @@
   padding: 0 14px;
   color: #111;
   font-size: 16px;
-  font-family: 'TildaSans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--vf-font-body), 'Helvetica Neue', Arial, sans-serif;
 }
 
 .vf-page .phone-input-wrapper .phone-number-input::placeholder {
@@ -457,7 +466,7 @@
   max-height: 320px;
   background: #f3f3f3;
   border: 1px solid #d8d8d8;
-  border-radius: 12px;
+  border-radius: var(--vf-radius-control);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
 
@@ -666,6 +675,7 @@
   z-index: 1;
   width: min(560px, calc(100% - 24px));
   background: #efefef;
+  border-radius: var(--vf-radius-panel);
   padding: 40px 45px;
 }
 
@@ -719,7 +729,7 @@
 .vf-modal__form input {
   height: 60px;
   border-color: #c9c9c9;
-  border-radius: 0;
+  border-radius: var(--vf-radius-control);
   background: #fff;
   font-size: 16px;
   padding: 0 20px;
@@ -738,7 +748,7 @@
   font-size: 16px;
   letter-spacing: 0.02em;
   font-weight: 600;
-  border-radius: 0;
+  border-radius: var(--vf-radius-control);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -793,7 +803,7 @@
 
   .vf-benefit-card {
     padding: 22px 18px;
-    border-radius: 16px;
+    border-radius: var(--vf-radius-card);
   }
 
   .vf-benefit-card__row {
@@ -876,14 +886,18 @@
   }
 
   .vf-hero__price {
-    margin-top: var(--vf-space-3);
+    margin-top: 24px;
     line-height: 1.55;
   }
 
   .vf-hero__sub {
-    margin-top: var(--vf-space-2);
+    margin: 16px 0 24px;
     line-height: 1.58;
     font-size: 19px;
+  }
+
+  .vf-hero__cta {
+    gap: 8px;
   }
 
   .vf-modal__panel {

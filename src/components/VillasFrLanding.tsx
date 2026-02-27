@@ -235,9 +235,11 @@ export default function VillasFrLanding() {
           </h1>
           <p className="vf-hero__price">Villas et maisons de ville à partir de 692 000 €</p>
           <p className="vf-hero__sub">Recevez les offres les plus récentes avec les prix en 1 minute.</p>
-          <button className="vf-btn vf-btn--gold" type="button" onClick={openModal}>
-            OBTENIR LES OFFRES
-          </button>
+          <div className="vf-hero__cta">
+            <button className="vf-btn vf-btn--gold" type="button" onClick={openModal}>
+              OBTENIR LES OFFRES
+            </button>
+          </div>
         </div>
         <div className="vf-hero__media" aria-hidden="true" />
       </section>
