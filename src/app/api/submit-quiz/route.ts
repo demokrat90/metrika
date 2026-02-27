@@ -13,6 +13,25 @@ interface QuizData {
   [key: number]: string;
 }
 
+const QUIZ_QUESTION_LABELS: Record<'arab' | 'fr', Record<number, string>> = {
+  arab: {
+    0: 'عدد غرف النوم',
+    1: 'الغرض من الشراء',
+    2: 'الميزانية المطلوبة',
+    3: 'حالة العقار',
+    4: 'طريقة الدفع المفضلة',
+    5: 'طريقة التواصل المفضلة',
+  },
+  fr: {
+    0: 'Type de bien immobilier',
+    1: "Objectif d'achat",
+    2: 'Nombre de chambres',
+    3: 'Budget souhaité',
+    4: 'Date de livraison du projet',
+    5: 'Méthode de contact préférée',
+  },
+};
+
 export async function POST(request: NextRequest) {
   try {
     const data: QuizData = await request.json();
@@ -31,14 +50,9 @@ export async function POST(request: NextRequest) {
     let amoError = '';
 
     // Build quiz answers summary
-    const quizAnswersLabels: Record<number, string> = {
-      0: 'عدد غرف النوم',
-      1: 'الغرض من الشراء',
-      2: 'الميزانية المطلوبة',
-      3: 'حالة العقار',
-      4: 'طريقة الدفع المفضلة',
-      5: 'طريقة التواصل المفضلة',
-    };
+    const normalizedLanding = data.landing?.trim().toLowerCase();
+    const quizAnswersLabels =
+      normalizedLanding === 'fr' ? QUIZ_QUESTION_LABELS.fr : QUIZ_QUESTION_LABELS.arab;
 
     const quizAnswers: Record<string, string> = {};
     for (let i = 0; i <= 5; i++) {
