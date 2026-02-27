@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
 import { buildRequestContextNote, extractRequestTracking } from '@/lib/request-context';
 import { notifyTelegram } from '@/lib/telegram';
+import { resolveLeadTag } from '@/lib/lead-tag';
 
 interface LeadData {
   fullName: string;
   phone: string;
   category: string;
   source: string;
+  landing?: string;
   trackingCookies?: string;
 }
 
@@ -17,6 +19,12 @@ export async function POST(request: NextRequest) {
     const requestContextNote = buildRequestContextNote(request);
     const requestTracking = extractRequestTracking(request, {
       rawCookieHeader: data.trackingCookies,
+    });
+    const leadTag = resolveLeadTag({
+      request,
+      landing: data.landing,
+      source: data.source,
+      category: data.category,
     });
     const amoConfigured = isAmoConfigured();
     let amoSynced = !amoConfigured;
@@ -43,7 +51,7 @@ export async function POST(request: NextRequest) {
       try {
         await submitAmoLead({
           leadName: `${data.category} - ${data.fullName}`,
-          tags: ['Arab'],
+          tags: [leadTag],
           noteText: [
             'Lead source: popup form',
             `Full name: ${data.fullName}`,

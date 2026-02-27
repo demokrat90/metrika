@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAmoConfigured, submitAmoLead } from '@/lib/amocrm';
 import { buildRequestContextNote, extractRequestTracking } from '@/lib/request-context';
 import { notifyTelegram } from '@/lib/telegram';
+import { resolveLeadTag } from '@/lib/lead-tag';
 
 interface QuizData {
   fullName?: string;
   phone?: string;
   email?: string;
+  landing?: string;
   trackingCookies?: string;
   [key: number]: string;
 }
@@ -17,6 +19,10 @@ export async function POST(request: NextRequest) {
     const requestContextNote = buildRequestContextNote(request);
     const requestTracking = extractRequestTracking(request, {
       rawCookieHeader: data.trackingCookies,
+    });
+    const leadTag = resolveLeadTag({
+      request,
+      landing: data.landing,
     });
     const fullName = data.fullName?.trim() || 'Unknown';
     const phone = data.phone?.trim() || '';
@@ -73,7 +79,7 @@ export async function POST(request: NextRequest) {
 
         await submitAmoLead({
           leadName: `Quiz Lead - ${fullName}`,
-          tags: ['Arab'],
+          tags: [leadTag],
           noteText: [
             'Lead source: quiz form',
             `Full name: ${fullName}`,

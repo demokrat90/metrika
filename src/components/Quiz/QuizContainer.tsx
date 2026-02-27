@@ -77,6 +77,7 @@ export default function QuizContainer({ onComplete }: QuizContainerProps) {
       fullName: contactInfo.fullName,
       phone: contactInfo.phone,
       email: contactInfo.email,
+      landing: 'arab',
       trackingCookies: typeof document !== 'undefined' ? document.cookie : '',
     };
 

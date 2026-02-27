@@ -145,6 +145,7 @@ export default function VillasFrLanding() {
           phone: modalPhone.trim(),
           category: 'Villas FR - Offres',
           source: 'villas-fr-popup',
+          landing: 'fr',
           trackingCookies: typeof document !== 'undefined' ? document.cookie : '',
         }),
       });
@@ -191,6 +192,7 @@ export default function VillasFrLanding() {
       fullName: fullName.trim(),
       phone: phone.trim(),
       email: email.trim(),
+      landing: 'fr',
       trackingCookies: typeof document !== 'undefined' ? document.cookie : '',
     };
 
