@@ -18,12 +18,12 @@ type SubmitState = 'idle' | 'sending' | 'success' | 'error';
 const quizSteps: QuizStep[] = [
   {
     id: 0,
-    title: 'Quel type de bien immobilier vous intéresse ?',
+    title: 'Quel type de bien immobilier vous intéresse\u202f?',
     options: ['Je ne sais pas encore', 'Villas', 'Maisons de ville'],
   },
   {
     id: 1,
-    title: "Quel est votre objectif d'achat ?",
+    title: "Quel est votre objectif d'achat\u202f?",
     options: ['Pour moi', 'Investissement'],
   },
   {
@@ -44,12 +44,12 @@ const quizSteps: QuizStep[] = [
   },
   {
     id: 4,
-    title: 'Date de livraison du projet ?',
+    title: 'Date de livraison du projet\u202f?',
     options: ['Nouveau lancement', '2026', '2027', '2028', '2029', '2030'],
   },
   {
     id: 5,
-    title: 'Comment préférez-vous être contacté pour discuter de votre demande ?',
+    title: 'Comment préférez-vous être contacté pour discuter de votre demande\u202f?',
     options: ['Appel téléphonique', 'WhatsApp', 'Telegram'],
   },
 ];
@@ -229,12 +229,15 @@ export default function VillasFrLanding() {
       <section className="vf-hero">
         <div className="vf-hero__content">
           <h1>
-            Villas et maisons
+            <span className="vf-hero__title-line">Villas et maisons</span>
             <br />
-            de ville à Dubaï
+            <span className="vf-hero__title-line">de ville à Dubaï</span>
           </h1>
           <p className="vf-hero__price">Villas et maisons de ville à partir de 692 000 €</p>
-          <p className="vf-hero__sub">Recevez les offres les plus récentes avec les prix en 1 minute.</p>
+          <p className="vf-hero__sub">
+            <span className="vf-hero__sub-line">Recevez les offres les plus</span>
+            <span className="vf-hero__sub-line"> récentes avec les prix en 1 minute.</span>
+          </p>
           <div className="vf-hero__cta">
             <button className="vf-btn vf-btn--gold" type="button" onClick={openModal}>
               OBTENIR LES OFFRES
