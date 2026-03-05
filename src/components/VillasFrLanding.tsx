@@ -55,9 +55,10 @@ const quizSteps: QuizStep[] = [
 ];
 
 export default function VillasFrLanding() {
-  const successToastMessage = 'Merci ! Votre demande a été envoyée.';
+  const successTitle = 'Merci pour votre demande';
+  const successDescription = 'Nous vous contacterons dans les plus brefs délais.';
   const [showModal, setShowModal] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  const [showSuccessNotice, setShowSuccessNotice] = useState(false);
 
   const [modalName, setModalName] = useState('');
   const [modalPhone, setModalPhone] = useState('');
@@ -107,14 +108,14 @@ export default function VillasFrLanding() {
   }, [showModal]);
 
   useEffect(() => {
-    if (!toastMessage) return;
+    if (!showSuccessNotice) return;
 
     const timeoutId = window.setTimeout(() => {
-      setToastMessage('');
+      setShowSuccessNotice(false);
     }, 4000);
 
     return () => window.clearTimeout(timeoutId);
-  }, [toastMessage]);
+  }, [showSuccessNotice]);
 
   const totalSteps = quizSteps.length + 1;
   const inContactStep = currentStep === quizSteps.length;
@@ -139,6 +140,11 @@ export default function VillasFrLanding() {
     setShowModal(false);
     setModalError('');
     setModalState('idle');
+  };
+
+  const revealSuccessNotice = () => {
+    setShowSuccessNotice(false);
+    window.setTimeout(() => setShowSuccessNotice(true), 10);
   };
 
   const submitPopup = async (event: FormEvent<HTMLFormElement>) => {
@@ -171,7 +177,8 @@ export default function VillasFrLanding() {
       setModalName('');
       setModalPhone('');
       setModalEmail('');
-      setToastMessage(successToastMessage);
+      closeModal();
+      revealSuccessNotice();
     } catch (error) {
       setModalState('error');
       setModalError(error instanceof Error ? error.message : "Erreur d'envoi.");
@@ -227,7 +234,7 @@ export default function VillasFrLanding() {
       setFullName('');
       setPhone('');
       setEmail('');
-      setToastMessage(successToastMessage);
+      revealSuccessNotice();
     } catch (error) {
       setQuizState('error');
       setQuizError(error instanceof Error ? error.message : 'Erreur de connexion au serveur.');
@@ -508,9 +515,15 @@ export default function VillasFrLanding() {
         </div>
       )}
 
-      {toastMessage && (
-        <div className="vf-toast" role="status" aria-live="polite">
-          {toastMessage}
+      {showSuccessNotice && (
+        <div className="vf-success-overlay" role="status" aria-live="polite">
+          <div className="vf-success-card">
+            <span className="vf-success-card__icon" aria-hidden="true">
+              ✓
+            </span>
+            <p className="vf-success-card__title">{successTitle}</p>
+            <p className="vf-success-card__text">{successDescription}</p>
+          </div>
         </div>
       )}
     </main>
