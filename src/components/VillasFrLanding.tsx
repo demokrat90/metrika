@@ -55,7 +55,9 @@ const quizSteps: QuizStep[] = [
 ];
 
 export default function VillasFrLanding() {
+  const successToastMessage = 'Merci ! Votre demande a été envoyée.';
   const [showModal, setShowModal] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const [modalName, setModalName] = useState('');
   const [modalPhone, setModalPhone] = useState('');
@@ -103,6 +105,16 @@ export default function VillasFrLanding() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showModal]);
+
+  useEffect(() => {
+    if (!toastMessage) return;
+
+    const timeoutId = window.setTimeout(() => {
+      setToastMessage('');
+    }, 4000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [toastMessage]);
 
   const totalSteps = quizSteps.length + 1;
   const inContactStep = currentStep === quizSteps.length;
@@ -159,6 +171,7 @@ export default function VillasFrLanding() {
       setModalName('');
       setModalPhone('');
       setModalEmail('');
+      setToastMessage(successToastMessage);
     } catch (error) {
       setModalState('error');
       setModalError(error instanceof Error ? error.message : "Erreur d'envoi.");
@@ -214,6 +227,7 @@ export default function VillasFrLanding() {
       setFullName('');
       setPhone('');
       setEmail('');
+      setToastMessage(successToastMessage);
     } catch (error) {
       setQuizState('error');
       setQuizError(error instanceof Error ? error.message : 'Erreur de connexion au serveur.');
@@ -403,11 +417,6 @@ export default function VillasFrLanding() {
               </div>
             )}
 
-            {quizState === 'success' && (
-              <p className="vf-status vf-status--ok" role="status" aria-live="polite">
-                Merci. Vos informations ont été envoyées avec succès.
-              </p>
-            )}
             {quizState === 'error' && (
               <p className="vf-status vf-status--err" role="alert">
                 {quizError}
@@ -489,11 +498,6 @@ export default function VillasFrLanding() {
                 {modalState === 'sending' ? 'Envoi...' : 'OBTENIR LES OFFRES'}
               </button>
 
-              {modalState === 'success' && (
-                <p className="vf-status vf-status--ok" role="status" aria-live="polite">
-                  Merci. Vos informations ont été envoyées avec succès.
-                </p>
-              )}
               {modalState === 'error' && (
                 <p className="vf-status vf-status--err" role="alert">
                   {modalError}
@@ -501,6 +505,12 @@ export default function VillasFrLanding() {
               )}
             </form>
           </div>
+        </div>
+      )}
+
+      {toastMessage && (
+        <div className="vf-toast" role="status" aria-live="polite">
+          {toastMessage}
         </div>
       )}
     </main>
