@@ -296,8 +296,8 @@
 }
 
 .vf-form__step--quiz {
-  height: 350px;
-  max-height: 350px;
+  height: 400px;
+  max-height: 400px;
   overflow: hidden;
   padding-right: 0;
 }
