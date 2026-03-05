@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strand — Variant 1: Classic Centered Hero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --gold: #b0772c;
+            --gold-light: #fbbc69;
+            --dark: #171717;
+            --white: #ffffff;
+            --off-white: #fafafa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'TildaSans', Arial, sans-serif;
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        .font-serif {
+            font-family: 'PT Serif', serif;
+        }
+
+        .hero-bg {
+            background:
+                linear-gradient(180deg,
+                    rgba(23,23,23,0.55) 0%,
+                    rgba(23,23,23,0.35) 40%,
+                    rgba(23,23,23,0.65) 100%
+                ),
+                url('images/section-wide.webp');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Gold gradient button */
+        .btn-gold {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            min-height: 55px;
+            padding: 0 32px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.08em;
+            box-shadow: 0 8px 32px rgba(163, 148, 102, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(163, 148, 102, 0.55);
+        }
+
+        /* Shimmer animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .btn-gold::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255,255,255,0.25) 50%,
+                transparent 100%
+            );
+            animation: shimmer 2.5s ease-in-out infinite;
+        }
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-delay-1 {
+            animation: fadeIn 0.8s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .animate-fade-in-delay-2 {
+            animation: fadeIn 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .animate-fade-in-delay-3 {
+            animation: fadeIn 0.8s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+
+        /* Gold line decorative */
+        .gold-line {
+            width: 64px;
+            height: 2px;
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+        }
+
+        /* Headline sizing */
+        .hero-headline {
+            font-size: clamp(2.94rem, 5.8vw, 4.375rem);
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-headline {
+                font-size: clamp(2rem, 7vw, 2.94rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- VARIANT 1: Classic Centered Hero — Full viewport, text centered vertically and horizontally -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+
+        <!-- Subtle top nav bar -->
+        <div class="absolute top-0 left-0 right-0 z-20">
+            <div class="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-6 flex items-center justify-between">
+                <div class="text-white font-serif text-xl tracking-widest uppercase opacity-80">
+                    The Strand
+                </div>
+                <div class="hidden md:flex items-center gap-8 text-sm text-white/60">
+                    <span>Ras Al Khaimah</span>
+                    <span class="w-1 h-1 rounded-full bg-white/30"></span>
+                    <span>UAE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="relative z-10 max-w-[1440px] mx-auto px-4 md:px-10 lg:px-20 text-center">
+            <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-radius: 20px; padding: 48px 40px; max-width: 720px; margin: 0 auto;">
+
+                <!-- Pre-headline badge -->
+                <div class="animate-fade-in mb-8">
+                    <span class="inline-flex items-center gap-3 text-xs tracking-[0.2em] uppercase" style="color: var(--gold);">
+                        <span class="gold-line"></span>
+                        Pre-Launch Opportunity
+                        <span class="gold-line"></span>
+                    </span>
+                </div>
+
+                <!-- Headline -->
+                <h1 class="hero-headline animate-fade-in-delay-1 mb-6 max-w-4xl mx-auto" style="color: #171717;">
+                    The Strand — Beachfront Living Next&nbsp;to&nbsp;Wynn. From&nbsp;AED&nbsp;1.28M.
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="animate-fade-in-delay-2 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-10" style="color: #555555; line-height: 1.55;">
+                    A new connected community in Ras Al Khaimah with direct bridge access to UAE's first casino-resort. Pre-launch pricing. 10% down payment.
+                </p>
+
+                <!-- CTA Button -->
+                <div class="animate-fade-in-delay-3">
+                    <button class="btn-gold">
+                        Check Available Units
+                    </button>
+                </div>
+
+                <!-- Trust indicators -->
+                <div class="animate-fade-in-delay-3 mt-10 flex items-center justify-center gap-8 text-xs uppercase tracking-wider" style="color: rgba(0,0,0,0.35);">
+                    <span>Beachfront</span>
+                    <span class="w-1 h-1 rounded-full" style="background: var(--gold); opacity: 0.5;"></span>
+                    <span>10% Down</span>
+                    <span class="w-1 h-1 rounded-full" style="background: var(--gold); opacity: 0.5;"></span>
+                    <span>Next to Wynn</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom gradient fade -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#171717] to-transparent z-10"></div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-fade-in-delay-3">
+            <div class="flex flex-col items-center gap-2 text-white/30">
+                <span class="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
+                <div class="w-px h-8 bg-gradient-to-b from-white/30 to-transparent"></div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

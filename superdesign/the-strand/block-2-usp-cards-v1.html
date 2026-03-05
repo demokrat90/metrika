@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strand — 4 Reasons | Variant 1 — Light Elegance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --gold: #b0772c;
+            --gold-light: #fbbc69;
+            --dark: #ffffff;
+            --dark-surface: #f5f5f5;
+            --white: #171717;
+            --off-white: #fafafa;
+            --gray: #555555;
+            --dark-border: #e5e5e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'TildaSans', Arial, sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+        }
+
+        .font-serif { font-family: 'PT Serif', serif !important; }
+
+        .gold-gradient {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%) !important;
+        }
+
+        .gold-text {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .strip-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--dark-border);
+        }
+
+        @media (max-width: 768px) {
+            .strip-divider { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <section class="py-16 md:py-24 px-4 md:px-10 lg:px-20" style="background-color: var(--dark);">
+        <div class="max-w-[1440px] mx-auto">
+
+            <!-- Section Header -->
+            <div class="text-center mb-12 md:mb-16 animate-fade-in-up">
+                <p class="text-xs font-medium tracking-[0.09em] uppercase mb-4" style="color: var(--gold);">Why The Strand</p>
+                <h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold" style="color: var(--white); line-height: 1.32;">
+                    4 Reasons to Invest Now
+                </h2>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 md:mb-12">
+
+                <!-- Card 1: Wynn -->
+                <div class="card-hover animate-fade-in-up delay-1 rounded-2xl p-8 md:p-10 border"
+                     style="background: #ffffff; border-color: #dcdcdc;">
+                    <div class="card-icon mb-6 gold-gradient" style="border-radius: 12px;">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        Direct Access to Wynn Resort
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        5-minute bridge connection to the UAE's first casino-resort — a once-in-a-generation catalyst for property values.
+                    </p>
+                </div>
+
+                <!-- Card 2: Price -->
+                <div class="card-hover animate-fade-in-up delay-2 rounded-2xl p-8 md:p-10 border"
+                     style="background: #ffffff; border-color: #dcdcdc;">
+                    <div class="card-icon mb-6 gold-gradient" style="border-radius: 12px;">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        Apartments from AED 1.28M
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        Beachfront community pricing before the area's full infrastructure is complete. Early entry, maximum upside.
+                    </p>
+                </div>
+
+                <!-- Card 3: RAK Growth -->
+                <div class="card-hover animate-fade-in-up delay-3 rounded-2xl p-8 md:p-10 border"
+                     style="background: #ffffff; border-color: #dcdcdc;">
+                    <div class="card-icon mb-6 gold-gradient" style="border-radius: 12px;">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        UAE's Fastest-Growing Emirate
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        Ras Al Khaimah is transforming under Vision 2030 — new tourism corridor, infrastructure boom, rising demand.
+                    </p>
+                </div>
+
+                <!-- Card 4: Payment Plan -->
+                <div class="card-hover animate-fade-in-up delay-4 rounded-2xl p-8 md:p-10 border"
+                     style="background: #ffffff; border-color: #dcdcdc;">
+                    <div class="card-icon mb-6 gold-gradient" style="border-radius: 12px;">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        10% Down Payment
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        40/60 payment plan. 5% every 3 months during construction. 60% on completion in Q1 2029.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tier 2 Strip -->
+            <div class="animate-fade-in-up delay-5 rounded-2xl p-6 md:p-8 border"
+                 style="background: #ffffff; border-color: #dcdcdc;">
+
+                <!-- Line 1: The Community -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-6 pb-6" style="border-bottom: 1px solid var(--dark-border);">
+                    <p class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">The Community</p>
+                    <div class="hidden md:block strip-divider"></div>
+                    <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+                        <span class="text-sm" style="color: var(--gray);">3 Districts</span>
+                        <span style="color: #c0c0c0;">·</span>
+                        <span class="text-sm" style="color: var(--gray);">6,000+ Homes</span>
+                        <span style="color: #c0c0c0;">·</span>
+                        <span class="text-sm" style="color: var(--gray);">1.5 km Walkable Paths</span>
+                        <span style="color: #c0c0c0;">·</span>
+                        <span class="text-sm" style="color: var(--gray);">2 min to Beach</span>
+                    </div>
+                </div>
+
+                <!-- Line 2: The Developer -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                    <p class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">The Developer</p>
+                    <div class="hidden md:block strip-divider"></div>
+                    <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+                        <span class="text-sm" style="color: var(--gray);">RAK Properties</span>
+                        <span style="color: #c0c0c0;">·</span>
+                        <span class="text-sm" style="color: var(--gray);">20+ Years</span>
+                        <span style="color: #c0c0c0;">·</span>
+                        <span class="text-sm" style="color: var(--gray);">Listed on ADX</span>
+                        <span style="color: #c0c0c0;">·</span>
+                        <span class="text-sm" style="color: var(--gray);">34% Government Ownership</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strand — Variant 2: Split Layout with Feature Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --gold: #b0772c;
+            --gold-light: #fbbc69;
+            --dark: #171717;
+            --white: #ffffff;
+            --off-white: #fafafa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'TildaSans', Arial, sans-serif;
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        .font-serif {
+            font-family: 'PT Serif', serif;
+        }
+
+        .hero-bg {
+            background:
+                linear-gradient(180deg,
+                    rgba(23,23,23,0.7) 0%,
+                    rgba(23,23,23,0.4) 30%,
+                    rgba(23,23,23,0.5) 70%,
+                    rgba(23,23,23,0.85) 100%
+                ),
+                url('images/section-wide.webp');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Gold gradient button */
+        .btn-gold {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            min-height: 55px;
+            padding: 0 32px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.08em;
+            box-shadow: 0 8px 32px rgba(163, 148, 102, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(163, 148, 102, 0.55);
+        }
+
+        /* Shimmer animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-150%); }
+            50% { transform: translateX(150%); }
+            100% { transform: translateX(150%); }
+        }
+
+        .btn-gold::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255,255,255,0.2) 50%,
+                transparent 100%
+            );
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        /* Fade in animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-32px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .animate-up { animation: fadeInUp 0.7s ease-out forwards; }
+        .animate-up-d1 { animation: fadeInUp 0.7s ease-out 0.15s forwards; opacity: 0; }
+        .animate-up-d2 { animation: fadeInUp 0.7s ease-out 0.3s forwards; opacity: 0; }
+        .animate-up-d3 { animation: fadeInUp 0.7s ease-out 0.45s forwards; opacity: 0; }
+        .animate-up-d4 { animation: fadeInUp 0.7s ease-out 0.6s forwards; opacity: 0; }
+        .animate-up-d5 { animation: fadeInUp 0.7s ease-out 0.75s forwards; opacity: 0; }
+
+        /* Headline sizing */
+        .hero-headline {
+            font-size: clamp(2.94rem, 5.8vw, 4.375rem);
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-headline {
+                font-size: clamp(2rem, 7vw, 2.94rem);
+            }
+        }
+
+        /* Feature card */
+        .feature-card {
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(8px);
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(176,119,44,0.3);
+            background: rgba(255,255,255,0.97);
+        }
+
+        /* Gold accent line */
+        .gold-accent {
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+            border-radius: 2px;
+        }
+
+        /* Vertical divider */
+        .v-divider {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, transparent, rgba(176,119,44,0.4), transparent);
+        }
+    </style>
+</head>
+<body>
+    <!-- VARIANT 2: Left-aligned text with bottom feature cards row -->
+    <section class="hero-bg min-h-screen flex flex-col relative overflow-hidden">
+
+        <!-- Top bar -->
+        <div class="relative z-20">
+            <div class="max-w-[1440px] mx-auto px-4 md:px-10 lg:px-20 py-6 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
+                        <div class="w-3 h-3 rounded-full" style="background: linear-gradient(135deg, var(--gold), var(--gold-light));"></div>
+                    </div>
+                    <span class="font-serif text-lg tracking-[0.15em] uppercase text-white/90">The Strand</span>
+                </div>
+                <div class="hidden md:flex items-center gap-6 text-sm text-white/50">
+                    <span>Ras Al Khaimah, UAE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content — left aligned -->
+        <div class="flex-1 flex items-center relative z-10">
+            <div class="max-w-[1440px] mx-auto px-4 md:px-10 lg:px-20 w-full py-16">
+
+                <div class="max-w-3xl" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-radius: 20px; padding: 48px 40px;">
+                    <!-- Location tag -->
+                    <div class="animate-up mb-6">
+                        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs uppercase tracking-[0.15em] font-semibold"
+                              style="background: rgba(176,119,44,0.12); color: var(--gold); border: 1px solid rgba(176,119,44,0.2);">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Ras Al Khaimah, UAE
+                        </span>
+                    </div>
+
+                    <!-- Headline -->
+                    <h1 class="hero-headline animate-up-d1 mb-6" style="color: #171717;">
+                        The Strand — Beachfront Living Next&nbsp;to&nbsp;Wynn.
+                        <span class="block mt-2" style="color: var(--gold);">From AED 1.28M.</span>
+                    </h1>
+
+                    <!-- Subheadline -->
+                    <p class="animate-up-d2 text-base md:text-lg max-w-xl mb-10" style="color: #555555; line-height: 1.55;">
+                        A new connected community with direct bridge access to UAE's first casino-resort. Pre-launch pricing. 10% down payment.
+                    </p>
+
+                    <!-- CTA row -->
+                    <div class="animate-up-d3 flex flex-wrap items-center gap-6">
+                        <button class="btn-gold">
+                            Check Available Units
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="position: relative; z-index: 2;">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                        <span class="text-sm" style="color: rgba(0,0,0,0.4);">
+                            Limited units at pre-launch prices
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom feature cards -->
+        <div class="relative z-10 pb-12">
+            <div class="max-w-[1440px] mx-auto px-4 md:px-10 lg:px-20">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Card 1 -->
+                    <div class="feature-card animate-up-d3">
+                        <div class="gold-accent mb-4"></div>
+                        <div class="text-sm font-semibold mb-2" style="color: #171717;">Beachfront Community</div>
+                        <div class="text-sm leading-relaxed" style="color: #777;">
+                            Exclusive waterfront residences with private beach access and panoramic sea views.
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="feature-card animate-up-d4">
+                        <div class="gold-accent mb-4"></div>
+                        <div class="text-sm font-semibold mb-2" style="color: #171717;">Next to Wynn Resort</div>
+                        <div class="text-sm leading-relaxed" style="color: #777;">
+                            Direct bridge connection to UAE's first integrated casino-resort destination.
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="feature-card animate-up-d5">
+                        <div class="gold-accent mb-4"></div>
+                        <div class="text-sm font-semibold mb-2" style="color: #171717;">Pre-Launch Pricing</div>
+                        <div class="text-sm leading-relaxed" style="color: #777;">
+                            Starting from AED 1.28M with flexible 10% down payment and attractive payment plans.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative corner accents -->
+        <div class="absolute top-0 right-0 w-64 h-64 z-0" style="background: radial-gradient(circle at 100% 0%, rgba(176,119,44,0.06) 0%, transparent 70%);"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 z-0" style="background: radial-gradient(circle at 0% 100%, rgba(176,119,44,0.04) 0%, transparent 70%);"></div>
+    </section>
+</body>
+</html>

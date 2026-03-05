@@ -1,0 +1,35 @@
+{
+  "title": "The Strand — Landing Page",
+  "blocks": [
+    {
+      "id": "hero",
+      "title": "Hero",
+      "order": 1,
+      "variants": [
+        {"label": "Classic Centered Hero", "file": "block-1-hero-v1.html"},
+        {"label": "Split Layout with Feature Cards", "file": "block-1-hero-v2.html"},
+        {"label": "Cinematic Split with Stats", "file": "block-1-hero-v3.html"}
+      ]
+    },
+    {
+      "id": "usp-cards",
+      "title": "USP Cards",
+      "order": 2,
+      "variants": [
+        {"label": "Dark Elegance", "file": "block-2-usp-cards-v1.html"},
+        {"label": "Navy & Gold", "file": "block-2-usp-cards-v2.html"},
+        {"label": "Mixed Theme with Gold Accents", "file": "block-2-usp-cards-v3.html"}
+      ]
+    },
+    {
+      "id": "footer",
+      "title": "Footer",
+      "order": 3,
+      "variants": [
+        {"label": "V1", "file": "block-3-footer-v1.html"},
+        {"label": "V2", "file": "block-3-footer-v2.html"},
+        {"label": "V3", "file": "block-3-footer-v3.html"}
+      ]
+    }
+  ]
+}

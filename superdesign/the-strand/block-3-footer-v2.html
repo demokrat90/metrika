@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strand - Footer Variant 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .footer-link {
+            color: #555555 !important;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .footer-link:hover {
+            color: #b0772c !important;
+        }
+
+        .gold-line {
+            width: 40px;
+            height: 2px;
+            background: #b0772c;
+        }
+    </style>
+</head>
+<body>
+    <footer class="w-full" style="background-color: #f5f5f5; color: #171717;">
+
+        <!-- Gold top accent line -->
+        <div class="w-full" style="height: 1px; background: linear-gradient(90deg, transparent 0%, #b0772c 30%, #b0772c 70%, transparent 100%);"></div>
+
+        <div class="mx-auto" style="max-width: 1440px; padding: 56px 80px 0 80px;">
+
+            <!-- Main Footer Content -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pb-12">
+
+                <!-- Column 1: Logo - spans 5 cols -->
+                <div class="md:col-span-5 flex flex-col gap-6">
+                    <!-- Logo -->
+                    <div>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-2xl font-light tracking-widest uppercase" style="color: #171717; letter-spacing: 6px;">Metrika</span>
+                        </div>
+                        <div class="gold-line mt-2"></div>
+                        <div class="mt-2 text-xs tracking-widest uppercase" style="color: #b0772c; letter-spacing: 4px; font-size: 11px;">Real Estate</div>
+                    </div>
+                    <p class="text-sm" style="color: rgba(0,0,0,0.4); font-size: 13px; line-height: 1.7; max-width: 320px;">
+                        Elevating the standard of luxury living in Dubai's most prestigious neighborhoods.
+                    </p>
+                </div>
+
+                <!-- Column 2: Contact Us - spans 4 cols -->
+                <div class="md:col-span-4 flex flex-col gap-5">
+                    <h3 class="text-xs font-semibold tracking-widest uppercase" style="color: #b0772c; letter-spacing: 3px; font-size: 11px;">Contact Us</h3>
+                    <div class="flex flex-col gap-4">
+                        <div>
+                            <div class="text-xs uppercase tracking-wider mb-1" style="color: #999999; font-size: 10px; letter-spacing: 2px;">Address</div>
+                            <span class="footer-link">Dubai, Onyx Tower 2, Office 1004</span>
+                        </div>
+                        <div>
+                            <div class="text-xs uppercase tracking-wider mb-1" style="color: #999999; font-size: 10px; letter-spacing: 2px;">Email</div>
+                            <a href="mailto:metrika.realestate@metrika.ae" class="footer-link">metrika.realestate@metrika.ae</a>
+                        </div>
+                        <div>
+                            <div class="text-xs uppercase tracking-wider mb-1" style="color: #999999; font-size: 10px; letter-spacing: 2px;">Phone</div>
+                            <a href="tel:+97143376775" class="footer-link">+971 4 337 67 75</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Policies - spans 3 cols -->
+                <div class="md:col-span-3 flex flex-col gap-5">
+                    <h3 class="text-xs font-semibold tracking-widest uppercase" style="color: #b0772c; letter-spacing: 3px; font-size: 11px;">Legal</h3>
+                    <div class="flex flex-col gap-3">
+                        <a href="#" class="footer-link inline-flex items-center gap-2 group">
+                            <span class="inline-block w-0 group-hover:w-3 h-px transition-all duration-300" style="background: #b0772c;"></span>
+                            Privacy Policy
+                        </a>
+                        <a href="#" class="footer-link inline-flex items-center gap-2 group">
+                            <span class="inline-block w-0 group-hover:w-3 h-px transition-all duration-300" style="background: #b0772c;"></span>
+                            Cookie Policy
+                        </a>
+                        <a href="#" class="footer-link inline-flex items-center gap-2 group">
+                            <span class="inline-block w-0 group-hover:w-3 h-px transition-all duration-300" style="background: #b0772c;"></span>
+                            Terms of Use
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separator -->
+            <div class="w-full" style="height: 1px; background: rgba(0,0,0,0.1);"></div>
+
+            <!-- Bottom Bar -->
+            <div class="py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs" style="color: #999999; font-size: 13px;">&copy; 2026 Metrika. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="footer-link" style="font-size: 12px;">EN</a>
+                    <span style="color: rgba(0,0,0,0.15);">|</span>
+                    <a href="#" class="footer-link" style="font-size: 12px;">AR</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Responsive styles -->
+    <style>
+        @media (max-width: 768px) {
+            .mx-auto {
+                padding: 40px 16px 0 16px !important;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .mx-auto {
+                padding: 48px 40px 0 40px !important;
+            }
+        }
+    </style>
+</body>
+</html>

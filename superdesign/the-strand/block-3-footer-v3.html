@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strand - Footer Variant 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .footer-link {
+            color: #555555 !important;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            line-height: 1.55;
+            position: relative;
+        }
+
+        .footer-link:hover {
+            color: #b0772c !important;
+        }
+
+        .footer-link-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #b0772c;
+            transition: width 0.3s ease;
+        }
+
+        .footer-link-underline:hover::after {
+            width: 100%;
+        }
+
+        .contact-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 0;
+            padding: 24px;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: rgba(176, 119, 44, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <footer class="w-full" style="background-color: #f5f5f5; color: #171717;">
+
+        <div class="mx-auto" style="max-width: 1440px; padding: 0 80px;">
+
+            <!-- Upper section: centered logo -->
+            <div class="text-center pt-16 pb-10">
+                <div class="inline-flex flex-col items-center gap-2">
+                    <div class="flex items-center gap-3">
+                        <div class="h-px w-8" style="background: #b0772c;"></div>
+                        <span class="text-xl font-light tracking-widest uppercase" style="color: #171717; letter-spacing: 8px; font-size: 18px;">Metrika</span>
+                        <div class="h-px w-8" style="background: #b0772c;"></div>
+                    </div>
+                    <span class="text-xs tracking-widest uppercase" style="color: #b0772c; letter-spacing: 4px; font-size: 10px;">Real Estate</span>
+                </div>
+            </div>
+
+            <!-- Thin separator -->
+            <div class="w-full" style="height: 1px; background: rgba(0,0,0,0.06);"></div>
+
+            <!-- Main 3-column content -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 py-0">
+
+                <!-- Column 1: Address -->
+                <div class="contact-card flex flex-col items-center text-center gap-3 md:border-r-0" style="border-right: 1px solid rgba(0,0,0,0.06);">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center mb-1" style="border: 1px solid rgba(176,119,44,0.4);">
+                        <svg class="w-4 h-4" style="color: #b0772c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs uppercase tracking-wider font-semibold" style="color: #171717; letter-spacing: 2px; font-size: 11px;">Our Office</div>
+                    <span class="footer-link" style="font-size: 13px;">Dubai, Onyx Tower 2<br>Office 1004</span>
+                </div>
+
+                <!-- Column 2: Email & Phone -->
+                <div class="contact-card flex flex-col items-center text-center gap-3" style="border-right: 1px solid rgba(0,0,0,0.06);">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center mb-1" style="border: 1px solid rgba(176,119,44,0.4);">
+                        <svg class="w-4 h-4" style="color: #b0772c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs uppercase tracking-wider font-semibold" style="color: #171717; letter-spacing: 2px; font-size: 11px;">Contact Us</div>
+                    <a href="mailto:metrika.realestate@metrika.ae" class="footer-link footer-link-underline" style="font-size: 13px;">metrika.realestate@metrika.ae</a>
+                    <a href="tel:+97143376775" class="footer-link footer-link-underline" style="font-size: 13px;">+971 4 337 67 75</a>
+                </div>
+
+                <!-- Column 3: Policies -->
+                <div class="contact-card flex flex-col items-center text-center gap-3">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center mb-1" style="border: 1px solid rgba(176,119,44,0.4);">
+                        <svg class="w-4 h-4" style="color: #b0772c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs uppercase tracking-wider font-semibold" style="color: #171717; letter-spacing: 2px; font-size: 11px;">Policies</div>
+                    <a href="#" class="footer-link footer-link-underline" style="font-size: 13px;">Privacy Policy</a>
+                    <a href="#" class="footer-link footer-link-underline" style="font-size: 13px;">Cookie Policy</a>
+                    <a href="#" class="footer-link footer-link-underline" style="font-size: 13px;">Terms of Use</a>
+                </div>
+            </div>
+
+            <!-- Separator -->
+            <div class="w-full" style="height: 1px; background: rgba(0,0,0,0.06);"></div>
+
+            <!-- Bottom Bar -->
+            <div class="py-6 text-center">
+                <p class="text-xs" style="color: #999999; font-size: 13px; letter-spacing: 1px;">&copy; 2026 Metrika. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Responsive styles -->
+    <style>
+        @media (max-width: 768px) {
+            .mx-auto {
+                padding: 0 16px !important;
+            }
+            .contact-card {
+                border-right: none !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            }
+            .contact-card:last-child {
+                border-bottom: none;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .mx-auto {
+                padding: 0 40px !important;
+            }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strand — 4 Reasons | Variant 2 — Light & Gold</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --gold: #b0772c;
+            --gold-light: #fbbc69;
+            --dark: #ffffff;
+            --dark-surface: #f5f5f5;
+            --navy: #ffffff;
+            --navy-border: #dcdcdc;
+            --white: #171717;
+            --off-white: #fafafa;
+            --gray: #555555;
+            --dark-border: #e5e5e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'TildaSans', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #171717;
+        }
+
+        .font-serif { font-family: 'PT Serif', serif !important; }
+
+        .gold-gradient-bg {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%) !important;
+        }
+
+        .gold-text-gradient {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            opacity: 0;
+        }
+
+        .d1 { animation-delay: 0.05s; }
+        .d2 { animation-delay: 0.15s; }
+        .d3 { animation-delay: 0.25s; }
+        .d4 { animation-delay: 0.35s; }
+        .d5 { animation-delay: 0.45s; }
+
+        .navy-card {
+            background: var(--navy);
+            border: 1px solid var(--navy-border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        .navy-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+            border-color: rgba(176, 119, 44, 0.4);
+        }
+
+        .number-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gold);
+            background: linear-gradient(99deg, rgba(176,119,44,0.1) 0%, rgba(251,188,105,0.1) 100%);
+            border: 1px solid rgba(176,119,44,0.4);
+        }
+
+        .gold-line {
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 8px 16px;
+        }
+
+        .stat-value {
+            font-family: 'PT Serif', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #171717;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <section class="py-16 md:py-24 px-4 md:px-10 lg:px-20" style="background: #ffffff;">
+        <div class="max-w-[1440px] mx-auto">
+
+            <!-- Section Header -->
+            <div class="text-center mb-12 md:mb-16 animate-in d1">
+                <div class="gold-line mx-auto mb-6"></div>
+                <h2 class="font-serif text-3xl md:text-4xl lg:text-[44px] font-bold mb-4" style="color: var(--white); line-height: 1.25;">
+                    Why The Strand
+                </h2>
+                <p class="text-base md:text-lg max-w-xl mx-auto" style="color: var(--gray); line-height: 1.55;">
+                    Four compelling reasons to secure your position in RAK's premier beachfront community.
+                </p>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 md:mb-10">
+
+                <!-- Card 1: Wynn -->
+                <div class="navy-card animate-in d1 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 opacity-5" style="background: radial-gradient(circle at top right, var(--gold-light), transparent 70%);"></div>
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="number-badge">01</div>
+                        <div class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">Proximity</div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        Direct Access to Wynn Resort
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: #555555;">
+                        5-minute bridge connection to the UAE's first casino-resort — a once-in-a-generation catalyst for property values.
+                    </p>
+                </div>
+
+                <!-- Card 2: Price -->
+                <div class="navy-card animate-in d2 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 opacity-5" style="background: radial-gradient(circle at top right, var(--gold-light), transparent 70%);"></div>
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="number-badge">02</div>
+                        <div class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">Value</div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        Apartments from AED 1.28M
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: #555555;">
+                        Beachfront community pricing before the area's full infrastructure is complete. Early entry, maximum upside.
+                    </p>
+                </div>
+
+                <!-- Card 3: RAK Growth -->
+                <div class="navy-card animate-in d3 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 opacity-5" style="background: radial-gradient(circle at top right, var(--gold-light), transparent 70%);"></div>
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="number-badge">03</div>
+                        <div class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">Growth</div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        UAE's Fastest-Growing Emirate
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: #555555;">
+                        Ras Al Khaimah is transforming under Vision 2030 — new tourism corridor, infrastructure boom, rising demand.
+                    </p>
+                </div>
+
+                <!-- Card 4: Payment Plan -->
+                <div class="navy-card animate-in d4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 opacity-5" style="background: radial-gradient(circle at top right, var(--gold-light), transparent 70%);"></div>
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="number-badge">04</div>
+                        <div class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">Flexibility</div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        10% Down Payment
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: #555555;">
+                        40/60 payment plan. 5% every 3 months during construction. 60% on completion in Q1 2029.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tier 2 Strip -->
+            <div class="animate-in d5 rounded-2xl overflow-hidden border" style="border-color: var(--dark-border);">
+                <!-- Community Row -->
+                <div class="flex flex-col md:flex-row items-center justify-between px-6 md:px-10 py-5" style="background: #fafafa;">
+                    <div class="flex items-center gap-3 mb-3 md:mb-0">
+                        <div class="w-2 h-2 rounded-full gold-gradient-bg"></div>
+                        <span class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">The Community</span>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Districts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">6,000+</div>
+                            <div class="stat-label">Homes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1.5 km</div>
+                            <div class="stat-label">Walkable Paths</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2 min</div>
+                            <div class="stat-label">to Beach</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Divider -->
+                <div style="height: 1px; background: var(--dark-border);"></div>
+                <!-- Developer Row -->
+                <div class="flex flex-col md:flex-row items-center justify-between px-6 md:px-10 py-5" style="background: #fafafa;">
+                    <div class="flex items-center gap-3 mb-3 md:mb-0">
+                        <div class="w-2 h-2 rounded-full gold-gradient-bg"></div>
+                        <span class="text-xs font-medium tracking-[0.09em] uppercase" style="color: var(--gold);">The Developer</span>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+                        <div class="stat-item">
+                            <div class="stat-value" style="font-size: 16px;">RAK Properties</div>
+                            <div class="stat-label">Developer</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">20+</div>
+                            <div class="stat-label">Years</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="font-size: 16px;">ADX</div>
+                            <div class="stat-label">Listed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">34%</div>
+                            <div class="stat-label">Gov. Ownership</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+</html>

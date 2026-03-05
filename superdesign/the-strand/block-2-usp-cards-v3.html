@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strand — 4 Reasons | Variant 3 — Light Theme with Gold Accents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --gold: #b0772c;
+            --gold-light: #fbbc69;
+            --dark: #ffffff;
+            --dark-surface: #f5f5f5;
+            --white: #171717;
+            --off-white: #fafafa;
+            --gray: #555555;
+            --dark-border: #e5e5e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'TildaSans', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #171717;
+        }
+
+        .font-serif { font-family: 'PT Serif', serif !important; }
+
+        .gold-gradient-bg {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%) !important;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .anim { animation: fadeInUp 0.65s ease forwards; opacity: 0; }
+        .anim-d1 { animation-delay: 0.08s; }
+        .anim-d2 { animation-delay: 0.16s; }
+        .anim-d3 { animation-delay: 0.24s; }
+        .anim-d4 { animation-delay: 0.32s; }
+        .anim-d5 { animation-delay: 0.4s; }
+
+        .feature-card {
+            position: relative;
+            padding: 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(99deg, rgba(176,119,44,1) 0%, rgba(251,188,105,1) 100%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-dark {
+            background: #ffffff;
+            border: 1px solid #dcdcdc;
+        }
+
+        .card-gold-accent {
+            background: #fafafa;
+            border: 1px solid rgba(176,119,44,0.2);
+        }
+
+        .icon-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(176,119,44,0.08);
+            border: 1px solid rgba(176,119,44,0.2);
+            flex-shrink: 0;
+        }
+
+        .highlight-value {
+            font-family: 'PT Serif', serif;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .strip-container {
+            background: #fafafa;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .strip-row {
+            display: flex;
+            align-items: center;
+            padding: 20px 32px;
+        }
+
+        @media (max-width: 768px) {
+            .strip-row {
+                flex-direction: column;
+                padding: 16px;
+                gap: 12px;
+            }
+            .feature-card {
+                padding: 32px 24px;
+            }
+        }
+
+        .strip-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--gold);
+            min-width: 120px;
+            padding-right: 24px;
+            border-right: 1px solid #e5e5e5;
+            margin-right: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .strip-label {
+                border-right: none;
+                margin-right: 0;
+                padding-right: 0;
+                text-align: center;
+            }
+        }
+
+        .strip-items {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 24px;
+        }
+
+        @media (max-width: 768px) {
+            .strip-items {
+                justify-content: center;
+            }
+        }
+
+        .strip-item {
+            font-size: 14px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .strip-item::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <section class="py-16 md:py-24 px-4 md:px-10 lg:px-20" style="background: #ffffff;">
+        <div class="max-w-[1440px] mx-auto">
+
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16 anim anim-d1">
+                <div>
+                    <p class="text-xs font-medium tracking-[0.09em] uppercase mb-4" style="color: var(--gold);">Investment Highlights</p>
+                    <h2 class="font-serif text-3xl md:text-4xl lg:text-[48px] font-bold" style="color: var(--white); line-height: 1.2;">
+                        4 Reasons to<br>Choose The Strand
+                    </h2>
+                </div>
+                <p class="text-base mt-4 md:mt-0 max-w-sm" style="color: var(--gray); line-height: 1.55;">
+                    A rare convergence of location, timing, and value in RAK's transformation story.
+                </p>
+            </div>
+
+            <!-- Cards Grid — asymmetric 2x2 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+                <!-- Card 1: Wynn — Featured card with large highlight -->
+                <div class="feature-card card-gold-accent anim anim-d1">
+                    <div class="flex items-start gap-5 mb-6">
+                        <div class="icon-circle">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke="var(--gold)" stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke="var(--gold)" stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="highlight-value gold-gradient-text mb-1">5 min</div>
+                            <p class="text-xs uppercase tracking-[0.09em]" style="color: var(--gray);">to Wynn Resort</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        Direct Access to Wynn Resort
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        5-minute bridge connection to the UAE's first casino-resort — a once-in-a-generation catalyst for property values.
+                    </p>
+                </div>
+
+                <!-- Card 2: Price -->
+                <div class="feature-card card-dark anim anim-d2">
+                    <div class="flex items-start gap-5 mb-6">
+                        <div class="icon-circle">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke="var(--gold)" stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="highlight-value gold-gradient-text mb-1">1.28M</div>
+                            <p class="text-xs uppercase tracking-[0.09em]" style="color: var(--gray);">AED Starting Price</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        Apartments from AED 1.28M
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        Beachfront community pricing before the area's full infrastructure is complete. Early entry, maximum upside.
+                    </p>
+                </div>
+
+                <!-- Card 3: RAK Growth -->
+                <div class="feature-card card-dark anim anim-d3">
+                    <div class="flex items-start gap-5 mb-6">
+                        <div class="icon-circle">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke="var(--gold)" stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="highlight-value gold-gradient-text mb-1">#1</div>
+                            <p class="text-xs uppercase tracking-[0.09em]" style="color: var(--gray);">Growth in UAE</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        UAE's Fastest-Growing Emirate
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        Ras Al Khaimah is transforming under Vision 2030 — new tourism corridor, infrastructure boom, rising demand.
+                    </p>
+                </div>
+
+                <!-- Card 4: Payment Plan — Featured -->
+                <div class="feature-card card-gold-accent anim anim-d4">
+                    <div class="flex items-start gap-5 mb-6">
+                        <div class="icon-circle">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke="var(--gold)" stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="highlight-value gold-gradient-text mb-1">10%</div>
+                            <p class="text-xs uppercase tracking-[0.09em]" style="color: var(--gray);">Down Payment</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl md:text-[22px] font-semibold mb-3" style="line-height: 1.32; color: var(--white);">
+                        10% Down Payment
+                    </h3>
+                    <p class="text-base" style="line-height: 1.55; color: var(--gray);">
+                        40/60 payment plan. 5% every 3 months during construction. 60% on completion in Q1 2029.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tier 2 Strip -->
+            <div class="strip-container anim anim-d5">
+                <!-- Community -->
+                <div class="strip-row">
+                    <div class="strip-label">The Community</div>
+                    <div class="strip-items">
+                        <span class="strip-item">3 Districts</span>
+                        <span class="strip-item">6,000+ Homes</span>
+                        <span class="strip-item">1.5 km Walkable Paths</span>
+                        <span class="strip-item">2 min to Beach</span>
+                    </div>
+                </div>
+                <div style="height: 1px; background: var(--dark-border); margin: 0 32px;"></div>
+                <!-- Developer -->
+                <div class="strip-row">
+                    <div class="strip-label">The Developer</div>
+                    <div class="strip-items">
+                        <span class="strip-item">RAK Properties</span>
+                        <span class="strip-item">20+ Years</span>
+                        <span class="strip-item">Listed on ADX</span>
+                        <span class="strip-item">34% Government Ownership</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+</html>
